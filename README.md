@@ -26,6 +26,17 @@ The day starts off with few sessions on:-
 - RISC-V instruction set architecture is introduced along with the mention of other popular architectures like ARM and x86. This is done because the design on which we are gonna work is RISC-V based picorv32a CPU core.
 - An introduction to SoC is given i.e. what is a SoC, how is it laid out is explained using examples of processors, memories and IPs.
 
+
+![Screenshot (2207)](https://user-images.githubusercontent.com/120498080/214276571-820ed6d4-ea62-4fe5-8a88-642562bca8c0.png)![Screenshot (2210)]
+- **Pads** are something through which we can send the signal inside the chip.
+- **Core** all the digital logic of the chip are placed
+- The whole chip is called as **Die** which is placed in silicon wafer.
+(https://user-images.githubusercontent.com/120498080/214276342-31d5e527-b74a-4b96-9d8f-98c0b272dc98.png)
+- **Foundry IP's** refers to all intellectual property (IP), whether Background IP or Foreground IP, developed for genetic components, pathways, and strains as well as methods and tools for design, genetic engineering, testing, and/or small-scale fermentation of microbial strains, regardless of when or for what purpose.
+- **Macro-cells** are substantial building pieces that might be thought of as "black boxes." These macro-cells' logic and electronic activity are described, but the internal structure may or may not be known.
+- We can understand that **Macros** are like pure digital logic whereas **IP's** dose the intelegent work
+- Wo communicate to foundries through some interface files provided be the foundries. 
+- 
 ### SoC design and openLANE
 ---
 The 3 important factors in ASIC design process are, 
