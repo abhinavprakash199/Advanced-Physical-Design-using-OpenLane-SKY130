@@ -54,7 +54,35 @@ The 3 important factors in Digital ASIC Design process are,
 ### ASIC Design Flow
 The main objective of **ASIC Design Flow** is to take the design from RTL to GDSII tool which is the final format used for the final layouts. It as also called as **Automated PnR** or **Physical Implemantation**
 
-- Specification
+#### RTL to GDSII flow
+![Screenshot (2215)](https://user-images.githubusercontent.com/120498080/214388866-7fca1a62-2bf5-4f68-93b8-051b9a636fc0.png)
+
+1.**Synthesis**
+- Designed RTL is transilated into a circuit made out of components from SCL(Standard Cell Library). The resulatant curcuit is described in HDL and usually refered to as a gate level netlist. The gate level netlist is functionally equivalent to the RTL.
+- The Standard Cells have regular layouts. Cell layouts are enclosed by fixed height rectangle and cell width is variable, its an integer multiple of the units called the site width.
+- Each cells comes under differnet models/views utilized by different EDA tools like - Libraty View(includes electrical modles for cells such as delay and power modles), HDL View of the Cells,SPICE View of the Cells,Layout View of the Cells(GDSII view which is the detailed view and Delev view which is the abstract view)
+
+2.**Floor and Power Planning**
+- The objective here is the plan the silicon area and create the robous power distribution network to power the circuits.
+- In Chip Floor-Planning the chip die is partition between different system building blocks and place the I/O Pads.
+- In Macro Floor-Planning we define the micro dimensions and its pin locations and rows definitions.
+- In power planning the power network is constructed using horizontal and vertical parallel metal straps(parallel structures are ment to reduce resistance and to address electromagnetic radiation problem)
+
+3.**Placements**
+- For macros we place the gate level netlist cells on wafer rows.
+- Cell placements are done 2 steps: Global placement followed be a Detailed placements (**Global Placement** tries to find the optimal positions for all the cells, such positions are not necessarly leagel, so cells may overlap of go off rows where as in **Detailed Placement** the positions obtained from global placements are minimally altered to be leagel.
+
+4.**Clock Tree Synthesis (CTS)**
+-
+
+5.**Routing**
+
+
+
+
+
+
+- Specification 
 - RTL design
 - Verification
 - Synthesis 
