@@ -34,3 +34,14 @@ The 3 important factors in ASIC design process are,
 3. Process design Kits (PDKs) 
 
 And openLANE has made them OPENSOURCE !
+
+
+
+
+
+
+
+## Acknowledgement
+---
+- [Kunal Ghosh, Co-founder (VSD Corp. Pvt. Ltd)](https://www.linkedin.com/in/kunal-ghosh-vlsisystemdesign-com-28084836/)
+- [Nickson Jose, VLSI Engineer](https://www.linkedin.com/in/nickson-jose/)
