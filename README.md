@@ -20,6 +20,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 ### Talking to Computers
 ---
 Introduced to the internal structure of a computer using an example of a RISC-V processor. 
+
 ![Screenshot (2207)](https://user-images.githubusercontent.com/120498080/214276571-820ed6d4-ea62-4fe5-8a88-642562bca8c0.png)
 - The exposed area of metal on a circuit board known as a **Pad** is where the component lead is soldered. Pads are used to send the signal inside the chip.
 - A **Core** is a compact processor or CPU placed into a bigger processor or CPU socket. It is capable of handling all computing operations on its own.All the digital logic of the chip are placed in Core.
@@ -29,7 +30,6 @@ Introduced to the internal structure of a computer using an example of a RISC-V 
 - **Macro-cells** are substantial building pieces that might be thought of as "black boxes." These macro-cells' logic and electronic activity are described, but the internal structure may or may not be known.
 - We can understand that **Macros** are like pure digital logic whereas **IP's** dose the intelegent work.
 - Wo communicate to foundries through some interface files provided be the foundries. 
-
 #### RISC-V Instruction Set Architecture(ISA)
 Along with the introduction of RISC-V, other well-known architectures like ARM and x86 are discussed. This is necessary since the architecture on which we will be working is a picorv32a CPU core based on RISC-V.
 - For example if a C program is to be run on the hardware of given layout then the given C program is first compiled in its assembly language program (here it is the RISC-V assembly level program). Then this assemble level program is converted to machine level program which is the binary level program which is understood by the hardware of the computer and finally the bits get executed in the particular layout.
