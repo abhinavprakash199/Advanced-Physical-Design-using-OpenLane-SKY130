@@ -94,6 +94,7 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
 - Routing
 - Sign-off 
 
+
 The flow can be divided into 2 parts the front end (Specifications to Verification) and the back end ( Synthesis to Sign-off). The openLANE flow is the biggest open-source automated facilitator of the Back end flow, taking input as the RTL, SDC (constraint file) and the technology files (in this case the skywater 130nm PDK) and giving GDSII as the output which can be send to the foundry for physical implementation.
 The *striVe* SoC is the example of an open source flow producing a fully funtional chip.
 
