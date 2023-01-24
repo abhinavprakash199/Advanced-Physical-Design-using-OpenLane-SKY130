@@ -17,12 +17,9 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 
 ## Day 1
 ---
-
-The day starts off with few sessions on:-
 ### Talking to Computers
 ---
-Introduced to the internal structure of a computer using an example of a RISC-V provessor. 
-
+Introduced to the internal structure of a computer using an example of a RISC-V processor. 
 ![Screenshot (2207)](https://user-images.githubusercontent.com/120498080/214276571-820ed6d4-ea62-4fe5-8a88-642562bca8c0.png)
 - The exposed area of metal on a circuit board known as a **Pad** is where the component lead is soldered. Pads are used to send the signal inside the chip.
 - A **Core** is a compact processor or CPU placed into a bigger processor or CPU socket. It is capable of handling all computing operations on its own.All the digital logic of the chip are placed in Core.
@@ -43,8 +40,7 @@ Along with the introduction of RISC-V, other well-known architectures like ARM a
 
 - The `.exe` file generated be the compiler contain the instruction whose syntax depend on the type of hardware we are using. This instruction set basically acts as an interface between the C level program and harware and this instruction set is called as **Instruction Set Architecture(ISA)** of the Architecture of the Computer(here a RISC-V Architecture). It is the language though which user speaks to the computer
 - The assempler take this instructions and convert it into its respective machine language programe(binary language).
-- We get the specifications of the instruction set and write a HDL of this instructions and synthesis it to gate level and then this is converted into its respective layout using the generl RTL to GDS flow.
-
+- We get the specifications of the instruction set and write a HDL of this instructions and synthesis it to gate level and then this is converted into its respective layout using the general RTL to GDS flow.
 
 ### SoC design and openLANE
 ---
