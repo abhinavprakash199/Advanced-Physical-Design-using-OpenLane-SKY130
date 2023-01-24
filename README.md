@@ -29,7 +29,7 @@ Introduced to the internal structure of a computer using an example of a RISC-V 
 - **Foundry IP's** refers to all intellectual property (IP), whether Background IP or Foreground IP, developed for genetic components, pathways, and strains as well as methods and tools for design, genetic engineering, testing, and/or small-scale fermentation of microbial strains, regardless of when or for what purpose.
 - **Macro-cells** are substantial building pieces that might be thought of as "black boxes." These macro-cells' logic and electronic activity are described, but the internal structure may or may not be known.
 - We can understand that **Macros** are like pure digital logic whereas **IP's** dose the intelegent work.
-- Wo communicate to foundries through some interface files provided be the foundries. 
+- Wo communicate to foundries through some interface files(PDKs) provided be the foundries. 
 #### RISC-V Instruction Set Architecture(ISA)
 Along with the introduction of RISC-V, other well-known architectures like ARM and x86 are discussed. This is necessary since the architecture on which we will be working is a picorv32a CPU core based on RISC-V.
 - For example if a C program is to be run on the hardware of given layout then the given C program is first compiled in its assembly language program (here it is the RISC-V assembly level program). Then this assemble level program is converted to machine level program which is the binary level program which is understood by the hardware of the computer and finally the bits get executed in the particular layout.
@@ -44,12 +44,13 @@ Along with the introduction of RISC-V, other well-known architectures like ARM a
 
 ### SoC design and openLANE
 ---
-The 3 important factors in ASIC design process are, 
-1. RTL designs 
-2. EDA tools 
-3. Process design Kits (PDKs) 
+The 3 important factors in Digital ASIC Design process are, 
+1. RTL(Register Transfer Level) designs {*many RTL design is available in opensource like `librecores.org`,`openecores.org`,`github.com`*}
+2. EDA(Electronic Design Automation) tools {*many EDA tools are available like spice simulator, sis, magic, etc but now a days Qflow, openROAD, openLANE are used*}
+3. PDKs(Process Design Kits) data {*130nm PDK is provided by skywater *}
 
-And openLANE has made them OPENSOURCE !
+*openLANE has beign made OPENSOURCE !*
+- The main objective of **ASIC Design Flow** is to take the design from RTL to GDS tool which is the final format used for the final layouts. It as also called as **Automated PnR** or **Physical Implemantation**
 
 
 
