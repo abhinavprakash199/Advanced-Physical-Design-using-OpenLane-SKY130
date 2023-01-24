@@ -38,7 +38,7 @@ Along with the introduction of RISC-V, other well-known architectures like ARM a
 - There is another interface which need to present between RISC-V Architecture and layout is the HDL. We need to implement this RISC-V specification using some RTL. So this RTL implement the RISC-V Architecture specification using the standard RTL to GDS flow.
 - So the entire flow starts from the RISC-V architecture, it has been implemented using an RTL and then finally implemented in layout.
 
-![Screenshot (2214)](https://user-images.githubusercontent.com/120498080/214361259-261fdc90-d67d-48db-814c-99c5854cd265.png)
+![Screenshot (2214)](https://user-images.githubusercontent.com/120498080/214389623-05de9e7c-75a3-45c4-aef8-0c50a7c2bc95.png)
 
 - The `.exe` file generated be the compiler contain the instruction whose syntax depend on the type of hardware we are using. This instruction set basically acts as an interface between the C level program and harware and this instruction set is called as **Instruction Set Architecture(ISA)** of the Architecture of the Computer(here a RISC-V Architecture). It is the language though which user speaks to the computer
 - The assempler take this instructions and convert it into its respective machine language programe(binary language).
