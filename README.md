@@ -7,7 +7,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
   * [Day 1](#day-1)
     + [Talking to Computers](#talking-to-computers)
     + [SoC design and openLANE](#soc-design-and-openlane)
-    + [ASIC Design Flow](#ASIC Design Flow)
+    + [ASIC Design Flow](#ASIC-Design-Flow)
     + [Getting familiar to EDA tools](#getting-familiar-to-eda-tools)
     + [Synthesis for the first time !!](https://github.com/krunalbadlani/IS21MTECH14008-PD-workshop/blob/main/README.md#synthesis-for-the-first-time-)
 
