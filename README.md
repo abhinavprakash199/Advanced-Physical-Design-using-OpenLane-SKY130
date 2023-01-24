@@ -7,7 +7,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
   * [Day 1](#day-1)
     + [Talking to Computers](#talking-to-computers)
     + [SoC design and openLANE](#soc-design-and-openlane)
-    + [ASIC flow](#asic-flow)
+    + [ASIC Design Flow](#ASIC Design Flow)
     + [Getting familiar to EDA tools](#getting-familiar-to-eda-tools)
     + [Synthesis for the first time !!](https://github.com/krunalbadlani/IS21MTECH14008-PD-workshop/blob/main/README.md#synthesis-for-the-first-time-)
 
@@ -40,7 +40,7 @@ Along with the introduction of RISC-V, other well-known architectures like ARM a
 
 - The `.exe` file generated be the compiler contain the instruction whose syntax depend on the type of hardware we are using. This instruction set basically acts as an interface between the C level program and harware and this instruction set is called as **Instruction Set Architecture(ISA)** of the Architecture of the Computer(here a RISC-V Architecture). It is the language though which user speaks to the computer
 - The assempler take this instructions and convert it into its respective machine language programe(binary language).
-- We get the specifications of the instruction set and write a HDL of this instructions and synthesis it to gate level and then this is converted into its respective layout using the general RTL to GDS flow.
+- We get the specifications of the instruction set and write a HDL of this instructions and synthesis it to gate level and then this is converted into its respective layout using the general RTL to GDSII flow.
 
 ### SoC design and openLANE
 ---
@@ -51,9 +51,32 @@ The 3 important factors in Digital ASIC Design process are,
 
 *openLANE has beign made OPENSOURCE !*
 
-- The main objective of **ASIC Design Flow** is to take the design from RTL to GDS tool which is the final format used for the final layouts. It as also called as **Automated PnR** or **Physical Implemantation**
+### ASIC Design Flow
+The main objective of **ASIC Design Flow** is to take the design from RTL to GDSII tool which is the final format used for the final layouts. It as also called as **Automated PnR** or **Physical Implemantation**
+
+- Specification
+- RTL design
+- Verification
+- Synthesis 
+- Floorplanning and power planning
+- Placement
+- Clock Tree Synthesis (CTS)
+- Routing
+- Sign-off 
+
+The flow can be divided into 2 parts the front end (Specifications to Verification) and the back end ( Synthesis to Sign-off). The openLANE flow is the biggest open-source automated facilitator of the Back end flow, taking input as the RTL, SDC (constraint file) and the technology files (in this case the skywater 130nm PDK) and giving GDSII as the output which can be send to the foundry for physical implementation.
+The *striVe* SoC is the example of an open source flow producing a fully funtional chip.
+
+The openLANE flow differs slightly from the conventional ASIC flow, it can be seen below: 
+
+![openlane_flow](https://github.com/krunalbadlani/IS21MTECH14008-AdvancePDworkshopusingopenLANE-sky130pdk/blob/main/images/openlane_flow.png)
 
 
+- openLANE works in either autonomous or interactive mode, we will use the interactive one here to tweak something or other on each and every stage of the flow. 
+
+More data on openLANE can be found on its original github page [openLANE](https://github.com/efabless/openlane).
+
+Every step done by me in this workshop is explained below:-
 
 
 
