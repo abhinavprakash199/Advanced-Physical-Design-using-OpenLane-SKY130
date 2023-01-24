@@ -45,11 +45,12 @@ Along with the introduction of RISC-V, other well-known architectures like ARM a
 ### SoC design and openLANE
 ---
 The 3 important factors in Digital ASIC Design process are, 
-1. RTL(Register Transfer Level) designs {*many RTL design is available in opensource like `librecores.org`,`openecores.org`,`github.com`*}
-2. EDA(Electronic Design Automation) tools {*many EDA tools are available like spice simulator, sis, magic, etc but now a days Qflow, openROAD, openLANE are used*}
-3. PDKs(Process Design Kits) data {*130nm PDK is provided by skywater *}
+1. **RTL Designs**(Register Transfer Level) {*many RTL design is available in opensource like `librecores.org`,`openecores.org`,`github.com`*}
+2. **EDA Tools**(Electronic Design Automation) {*many EDA tools are available like spice simulator, sis, magic, etc but now a days Qflow, openROAD, openLANE are used*}
+3. **PDKs Data**(Process Design Kits) {*130nm PDK is provided by skywater *}
 
 *openLANE has beign made OPENSOURCE !*
+
 - The main objective of **ASIC Design Flow** is to take the design from RTL to GDS tool which is the final format used for the final layouts. It as also called as **Automated PnR** or **Physical Implemantation**
 
 
