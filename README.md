@@ -21,24 +21,21 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 The day starts off with few sessions on:-
 ### Talking to Computers
 ---
-- We are introduced to the internal structure of a computer using an example of a RISC-V provessor. 
-- Terms like Board and chip design, Integrated circuits, die,packaging, IP and Foundry IP, and macros are explained.
-- RISC-V instruction set architecture is introduced along with the mention of other popular architectures like ARM and x86. This is done because the design on which we are gonna work is RISC-V based picorv32a CPU core.
-- An introduction to SoC is given i.e. what is a SoC, how is it laid out is explained using examples of processors, memories and IPs.
-
+Introduced to the internal structure of a computer using an example of a RISC-V provessor. 
 
 ![Screenshot (2207)](https://user-images.githubusercontent.com/120498080/214276571-820ed6d4-ea62-4fe5-8a88-642562bca8c0.png)
-- **Pads** are something through which we can send the signal inside the chip.
-- **Core** all the digital logic of the chip are placed
-- The whole chip is called as **Die** which is placed in silicon wafer.
+- The exposed area of metal on a circuit board known as a **Pad** is where the component lead is soldered. Pads are used to send the signal inside the chip.
+- A **Core** is a compact processor or CPU placed into a bigger processor or CPU socket. It is capable of handling all computing operations on its own.All the digital logic of the chip are placed in Core.
+- The square of silicon that has been sliced off the wafer and contains an integrated circuit on the silicon wafer is called to as a **Die**.
 ![Screenshot (2210)](https://user-images.githubusercontent.com/120498080/214276342-31d5e527-b74a-4b96-9d8f-98c0b272dc98.png)
 - **Foundry IP's** refers to all intellectual property (IP), whether Background IP or Foreground IP, developed for genetic components, pathways, and strains as well as methods and tools for design, genetic engineering, testing, and/or small-scale fermentation of microbial strains, regardless of when or for what purpose.
 - **Macro-cells** are substantial building pieces that might be thought of as "black boxes." These macro-cells' logic and electronic activity are described, but the internal structure may or may not be known.
-- We can understand that **Macros** are like pure digital logic whereas **IP's** dose the intelegent work
+- We can understand that **Macros** are like pure digital logic whereas **IP's** dose the intelegent work.
 - Wo communicate to foundries through some interface files provided be the foundries. 
 
 #### RISC-V Instruction Set Architecture(ISA)
-- If a C program is to be run on the hardware of given layout then the given C program is first compiled in its assembly language program (here it is the RISC-V assembly level program). Then this assemble level program is converted to machine level program which is the binary level program which is understood by the hardware of the computer and finally the bits get executed in the particular layout.
+Along with the introduction of RISC-V, other well-known architectures like ARM and x86 are discussed. This is necessary since the architecture on which we will be working is a picorv32a CPU core based on RISC-V.
+- For example if a C program is to be run on the hardware of given layout then the given C program is first compiled in its assembly language program (here it is the RISC-V assembly level program). Then this assemble level program is converted to machine level program which is the binary level program which is understood by the hardware of the computer and finally the bits get executed in the particular layout.
 - There is another interface which need to present between RISC-V Architecture and layout is the HDL. We need to implement this RISC-V specification using some RTL. So this RTL implement the RISC-V Architecture specification using the standard RTL to GDS flow.
 - So the entire flow starts from the RISC-V architecture, it has been implemented using an RTL and then finally implemented in layout.
 
@@ -47,6 +44,8 @@ The day starts off with few sessions on:-
 - The `.exe` file generated be the compiler contain the instruction whose syntax depend on the type of hardware we are using. This instruction set basically acts as an interface between the C level program and harware and this instruction set is called as **Instruction Set Architecture(ISA)** of the Architecture of the Computer(here a RISC-V Architecture). It is the language though which user speaks to the computer
 - The assempler take this instructions and convert it into its respective machine language programe(binary language).
 - We get the specifications of the instruction set and write a HDL of this instructions and synthesis it to gate level and then this is converted into its respective layout using the generl RTL to GDS flow.
+
+
 ### SoC design and openLANE
 ---
 The 3 important factors in ASIC design process are, 
