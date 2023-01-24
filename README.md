@@ -11,7 +11,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Getting familiar to EDA tools](#getting-familiar-to-eda-tools)
     + [Synthesis for the first time !!](https://github.com/krunalbadlani/IS21MTECH14008-PD-workshop/blob/main/README.md#synthesis-for-the-first-time-)
 
-
+  * [References](#references)
   * [Acknowledgement](#acknowledgement)
 
 
@@ -40,6 +40,7 @@ And openLANE has made them OPENSOURCE !
 
 
 
+## References
 
 ## Acknowledgement
 ---
