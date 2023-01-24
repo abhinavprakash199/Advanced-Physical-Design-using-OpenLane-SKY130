@@ -41,6 +41,10 @@ And openLANE has made them OPENSOURCE !
 
 
 ## References
+---
+- [Advanced Physical Design](https://www.vlsisystemdesign.com/advanced-physical-design-using-openlane-sky130/?awt_a=5L_6&awt_l=H2Nw0&awt_m=3dG.7I1RDUA8._6)
+- 
+
 
 ## Acknowledgement
 ---
