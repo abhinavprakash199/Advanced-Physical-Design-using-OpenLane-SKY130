@@ -55,7 +55,7 @@ The 3 important factors in Digital ASIC Design process are,
 The main objective of **ASIC Design Flow** is to take the design from RTL to GDSII tool which is the final format used for the final layouts. It as also called as **Automated PnR** or **Physical Implemantation**
 
 #### RTL to GDSII flow
-![Screenshot (2215)](https://user-images.githubusercontent.com/120498080/214388866-7fca1a62-2bf5-4f68-93b8-051b9a636fc0.png)
+![Screenshot (2215)](https://user-images.githubusercontent.com/120498080/214389063-22158640-49c4-487f-ac99-06042eed53e2.png)
 
 1.**Synthesis**
 - Designed RTL is transilated into a circuit made out of components from SCL(Standard Cell Library). The resulatant curcuit is described in HDL and usually refered to as a gate level netlist. The gate level netlist is functionally equivalent to the RTL.
