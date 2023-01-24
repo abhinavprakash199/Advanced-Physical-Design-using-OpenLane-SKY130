@@ -25,7 +25,9 @@ Introduced to the internal structure of a computer using an example of a RISC-V 
 - The exposed area of metal on a circuit board known as a **Pad** is where the component lead is soldered. Pads are used to send the signal inside the chip.
 - A **Core** is a compact processor or CPU placed into a bigger processor or CPU socket. It is capable of handling all computing operations on its own.All the digital logic of the chip are placed in Core.
 - The square of silicon that has been sliced off the wafer and contains an integrated circuit on the silicon wafer is called to as a **Die**.
+
 ![Screenshot (2210)](https://user-images.githubusercontent.com/120498080/214276342-31d5e527-b74a-4b96-9d8f-98c0b272dc98.png)
+
 - **Foundry IP's** refers to all intellectual property (IP), whether Background IP or Foreground IP, developed for genetic components, pathways, and strains as well as methods and tools for design, genetic engineering, testing, and/or small-scale fermentation of microbial strains, regardless of when or for what purpose.
 - **Macro-cells** are substantial building pieces that might be thought of as "black boxes." These macro-cells' logic and electronic activity are described, but the internal structure may or may not be known.
 - We can understand that **Macros** are like pure digital logic whereas **IP's** dose the intelegent work.
