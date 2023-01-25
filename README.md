@@ -72,7 +72,9 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
 
 3.**Placements**
 - For macros we place the gate level netlist cells on wafer rows.
-- Cell placements are done 2 steps: Global placement followed be a Detailed placements (**Global Placement** tries to find the optimal positions for all the cells, such positions are not necessarly leagel, so cells may overlap of go off rows where as in **Detailed Placement** the positions obtained from global placements are minimally altered to be leagel.
+- Cell placements are done 2 steps: 
+   + **Global Placement** (Global Placement tries to find the optimal positions for all the cells, such positions are not necessarly leagel, so cells may overlap of go off rows)
+   + **Detailed placements** (In Detailed Placement the positions obtained from global placements are minimally altered to be leagel.
 
 4.**Clock Tree Synthesis (CTS)**
 - It is the clock distribution network to deliver the clock to all sequential elements with minimum skew(the arrival of the clock at different component at differnet time) and minimum latency. The clock network looks like a tree where the clock source are the roots and the clock elements are the entities.
@@ -80,10 +82,17 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
 5.**Routing**
 - After routing the clock comes signal routing. In given placement and fixed number of metal layers is require to find a valid pattern of horizontal and veritical wires to implement the nets that connects the cells together. The router uses the available metal layers as directed be the pdk, for each metal layer the pdk define the *thickness*, the *pitch*, the *tracks* and the *minimum width*. It also defines the wires that can be used to put nets, wire segments on different metal layers together.
 - The skywater pdk defines extra routing layers, the lowest layer is called the local interconnect layer(its titenum nitride layer) and the following five layer on the local interconnect layer are all aluminum layers.
-- Most of the routers are the grid routers, they construct the routing grids out of metal layer tracks. As the routing gris is hudge it use divide and conquer aproach is used for routing. First **Global Routing** is performed to generate the routing guids, then **Detail Routing** uses the fine grid and the routing guides to implement the actual wiring.
+- Most of the routers are the grid routers, they construct the routing grids out of metal layer tracks. As the routing grids is hudge it use divide and conquer aproach is used for routing. 
+   + First **Global Routing** is performed to generate the routing guids, then 
+   + **Detail Routing** uses the fine grid and the routing guides to implement the actual wiring.
 
 5.**Sign-off**
-- Here we construct the final layout which undergo verification, this includes **Physical Verification** which is done throgh **Design Rule Checking(DRC)** where we make sure that the final layout hones all design rules and **Layout vs Schematic(LVS)** which make sure that the final layout matchs the gate level netlist thet we started with and finally **Timing Verification** is done through **Static Time Analysis(STA)** to make sure that all timing constrains are met and circiut will run at designated clock frequency.
+- Here we construct the final layout which undergo verification, which includes 
+**Physical Verification** 
+    + **Design Rule Checking(DRC)** where we make sure that the final layout hones all design rules 
+    + **Layout vs Schematic(LVS)** which make sure that the final layout matchs the gate level netlist thet we started with 
+**Timing Verification** 
+    + **Static Time Analysis(STA)** to make sure that all timing constrains are met and circiut will run at designated clock frequency.
 
 #### Intriduction to OpenLANE
 For Open Source ASIC Flow we need to ba aware about the following in Open Source EDA
@@ -99,25 +108,40 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
 - OpenLINK is tuned for SkyWater130nm Open PDK, it also supports XFAB180 and Global Foundry 130G 
 - OpenLINK can be used to harden Macros and Chips(harden means creating GDSII or the final layout)
 - OpenLINK has two modes of operation
-    +  Autonomous
-    +  Interactive
+    +  **Autonomous** (it is the push buttton flow where we figure the flow and we directly get the final GDSII) 
+    +  **Interactive** (here we run comands and steps one be one so that we can do experimentation and look at the results of differnet flow steps)
+ - OpenLINK has very nice feature called as **Design Space Exploration** which can be used to find the best set of flow configurations.
+ - OpenLINK has large number of design examples(43 different design with their best configuration)
 
+#### OpenLANE ASIC Flow
+![Screenshot (2217)](https://user-images.githubusercontent.com/120498080/214488649-b4a76e24-a8f0-401d-a2aa-455f14c111ae.png)
 
-
-
-The flow can be divided into 2 parts the front end (Specifications to Verification) and the back end ( Synthesis to Sign-off). The openLANE flow is the biggest open-source automated facilitator of the Back end flow, taking input as the RTL, SDC (constraint file) and the technology files (in this case the skywater 130nm PDK) and giving GDSII as the output which can be send to the foundry for physical implementation.
-The *striVe* SoC is the example of an open source flow producing a fully funtional chip.
-
-The openLANE flow differs slightly from the conventional ASIC flow, it can be seen below: 
-
-![openlane_flow](https://github.com/krunalbadlani/IS21MTECH14008-AdvancePDworkshopusingopenLANE-sky130pdk/blob/main/images/openlane_flow.png)
-
-
-- openLANE works in either autonomous or interactive mode, we will use the interactive one here to tweak something or other on each and every stage of the flow. 
-
+- In **RTL Syntheses** the RTL is fead to *Yosys* with the design constrains, Yosys converts the RTL into a logic circuits, this circuit can be optimized and then mapped into a cell using STL using *abc* (abc has to be guided during optimization which comes as "abc script" from OpenLANE called synthesis statergies, these scrips are guided for least area or best timing)
+- **Synthesis Explorations** can be used to geneate reports that can show how delay are area are affrected be synthesis statergies.
+- **Design Explorations** can be used to sweep the design configurations for parameters such as RunTime, CellCount, RoutingStatrergies, etc. It is very useful to find best configuration from OpenLANE for any specific design. Design Explorations can also be used for regression testing for continues integration{OpenLANE run the exploration in 70 designs and compare the results to the best knonwn one}
+- If we want our design to get ready of testing after fabrication we enable **DFT(Design for Test)** step(which is optional) and this used open source project "Fault" to perform 
+   + Scan Insertion
+   +  Automatic Test Pattern Generation(ATPG)
+   +  Test Pattern Compaction
+   +  Fault Coverage 
+   +  Fault Simulation
+- **DFT(Design for Test)** also add the data controller which enables the external access to the internal structure.
+- **Physical Implemantation** also called as **Automated PnR(Placement and Route)** involve several steps and all of them are done be openROAD app
+   + Floor/Power Planning 
+   + End Decoupling Capacitors and Tap cells insertion 
+   + Placement: Global and Detailed 
+   + Post placement optimization
+   + Clock Tree Synthesis (CTS)
+   + Routing: Global and Detailed
+- During the Physical Implemantation we have a special step **Fake antenna diodes Insertion Script** which is required to address the antenna rules violation.
+- With OpenLANE we took a preventive approach and created a Fake Antenna Diode Cell  to SCL next to every cell input after placement. After the fake antenna routing we run the Antenna Checker `Magic` against the layout and if the checker reports a violation on the cell input pin then we replace the Fake Diode cell by a real one.
+- As we perform optimizarion which involves some transformations of the gate level netlist that was generated by the synthesis step so we need to perform **LEC(Logic Equivalence Checking)** which can be done using `yosys` where we compare the netlist resulted from the optimazation(done during Physical Implemantation) to the gate level netlist genreted from the synthesisis to make sure they are functinally equivalent.
+- Finally Sign-off of OpenLANE involves interconnects **RC Extraction** from the routed layout followed by **STA(Static Timing Analysis)** using "OpenSTA" which is on "OpenROAD". The result of this setp is set of timing reports highiliting timing violations if any.
+- **Physical Verification** involves DRC performed using `Magic` VLSI layout tool and LVS involve using `Magic` for several extraction followed by `Nitgen` to perform the comparision.
+ 
 More data on openLANE can be found on its original github page [openLANE](https://github.com/efabless/openlane).
 
-Every step done by me in this workshop is explained below:-
+
 
 
 
