@@ -213,7 +213,7 @@ package require openlane 0.9
 - Now we would be running our first step which is synthesis in openlane but before that we need to set the file system in the *design setup stage* which will be setting up the data for our data structure for our design. 
 - For that enter the given command in openlane :
 > prep -design picorv32a
-- So after this the `runs' directory has been created into picorv32a directory under which folder structures required by the openlink will be created in which all the folders will be empty except `tmp`
+- So after this the `runs` directory has been created into picorv32a directory under which folder structures required by the openlink will be created in which all the folders will be empty except `tmp`
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a$ 
 - The `run_synthesis` command will run bios synthesis as well as the abc.
 
