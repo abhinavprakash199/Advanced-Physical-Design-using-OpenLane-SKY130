@@ -18,7 +18,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
   * [Acknowledgement](#acknowledgement)
 
 
-## Day 1
+## Day 1:
 
 ---
 ### Talking to Computers
