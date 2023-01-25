@@ -75,24 +75,20 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
 - Cell placements are done 2 steps: Global placement followed be a Detailed placements (**Global Placement** tries to find the optimal positions for all the cells, such positions are not necessarly leagel, so cells may overlap of go off rows where as in **Detailed Placement** the positions obtained from global placements are minimally altered to be leagel.
 
 4.**Clock Tree Synthesis (CTS)**
--
+- It is the clock distribution network to deliver the clock to all sequential elements with minimum skew(the arrival of the clock at different component at differnet time) and minimum latency. The clock network looks like a tree where the clock source are the roots and the clock elements are the entities.
 
 5.**Routing**
+- After routing the clock comes signal routing. In given placement and fixed number of metal layers is require to find a valid pattern of horizontal and veritical wires to implement the nets that connects the cells together. The router uses the available metal layers as directed be the pdk, for each metal layer the pdk define the *thickness*, the *pitch*, the *tracks* and the *minimum width*. It also defines the wires that can be used to put nets, wire segments on different metal layers together.
+- The skywater pdk defines extra routing layers, the lowest layer is called the local interconnect layer(its titenum nitride layer) and the following five layer on the local interconnect layer are all aluminum layers.
+- Most of the routers are the grid routers, they construct the routing grids out of metal layer tracks. As the routing gris is hudge it use divide and conquer aproach is used for routing. First **Global Routing** is performed to generate the routing guids, then **Detail Routing** uses the fine grid and the routing guides to implement the actual wiring.
+
+5.**Sign-off **
+- Here we construct the final layout which undergo verification, this includes **Physical Verification** which is done throgh **Design Rule Checking(DRC)** where we make sure that the final layout hones all design rules and **Layout vs Schematic(LVS)** which make sure that the final layout matchs the gate level netlist thet we started with and finally **Timing Verification** is done through **Static Time Analysis(STA)** to make sure that all timing constrains are met and circiut will run at designated clock frequency.
+
+#### Open Source ASIC Flow
 
 
 
-
-
-
-- Specification 
-- RTL design
-- Verification
-- Synthesis 
-- Floorplanning and power planning
-- Placement
-- Clock Tree Synthesis (CTS)
-- Routing
-- Sign-off 
 
 
 The flow can be divided into 2 parts the front end (Specifications to Verification) and the back end ( Synthesis to Sign-off). The openLANE flow is the biggest open-source automated facilitator of the Back end flow, taking input as the RTL, SDC (constraint file) and the technology files (in this case the skywater 130nm PDK) and giving GDSII as the output which can be send to the foundry for physical implementation.
