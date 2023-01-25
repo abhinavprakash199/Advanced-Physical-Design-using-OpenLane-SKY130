@@ -83,8 +83,8 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
 - After routing the clock comes signal routing. In given placement and fixed number of metal layers is require to find a valid pattern of horizontal and veritical wires to implement the nets that connects the cells together. The router uses the available metal layers as directed be the pdk, for each metal layer the pdk define the *thickness*, the *pitch*, the *tracks* and the *minimum width*. It also defines the wires that can be used to put nets, wire segments on different metal layers together.
 - The skywater pdk defines extra routing layers, the lowest layer is called the local interconnect layer(its titenum nitride layer) and the following five layer on the local interconnect layer are all aluminum layers.
 - Most of the routers are the grid routers, they construct the routing grids out of metal layer tracks. As the routing grids is hudge it use divide and conquer aproach is used for routing. 
-   + First **Global Routing** is performed to generate the routing guids, then 
-   + **Detail Routing** uses the fine grid and the routing guides to implement the actual wiring.
+   + First **Global Routing** is performed to generate the routing guids, 
+   + then **Detail Routing** uses the fine grid and the routing guides to implement the actual wiring.
 
 5.**Sign-off**
 - Here we construct the final layout which undergo verification, which includes 
@@ -94,7 +94,7 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
 **Timing Verification** 
     + **Static Time Analysis(STA)** to make sure that all timing constrains are met and circiut will run at designated clock frequency.
 
-#### Intriduction to OpenLANE
+#### Introduction to OpenLANE
 For Open Source ASIC Flow we need to ba aware about the following in Open Source EDA
 - Tools Qualification
 - Tools Calibrations
@@ -140,6 +140,8 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
 - **Physical Verification** involves DRC performed using `Magic` VLSI layout tool and LVS involve using `Magic` for several extraction followed by `Nitgen` to perform the comparision.
  
 More data on openLANE can be found on its original github page [openLANE](https://github.com/efabless/openlane).
+
+### Getting familiar to EDA tools
 
 
 
