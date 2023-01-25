@@ -192,9 +192,19 @@ This `sky130A` pdk file contain 2 files:
 3. `config.tcl` file passes any configurations that has been already done like location of verilog files, location of sdc files, clock period, etc.
 
 #### Steps to Open openlane
-- used `docker` command to open the open lane in working directory
+
+Go to openlane  working directory 
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane$ 
+```
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+```
+- We use `docker` command to open the open lane in working directory.
 - Then use `./flow.tcl -interactive` which identifies using the script the flow has to move and intractive means we do a step by step process.
 - Then we need to import all the package that are required to run this program by `package require openlane 0.9`
+
+- Command to run fully automated run `./flow.tcl -design picorv32a`
 
 ![image](https://user-images.githubusercontent.com/120498080/214596626-8ca8164d-041a-47a6-934b-09403c9222cf.png)
 
@@ -206,6 +216,12 @@ This `sky130A` pdk file contain 2 files:
 - So after this the `runs' directory has been created into picorv32a directory under which folder structures required by the openlink will be created in which all the folders will be empty except `tmp`
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a$ 
 - The `run_synthesis` command will run bios synthesis as well as the abc.
+
+- [Github Repository for openlane by efabless](https://github.com/efabless/openlane)
+**NOTE** *Commands to same the github directory in local machine* - 
+> git clone https://github.com/The-OpenROAD-Project/OpenLane.git`
+
+- To learn more how openlink works and how its is designed [prefer this videos](https://www.youtube.com/playlist?list=PLUg3wIOWD8yoZCg9XpFSgEgljx6MSdm9L).
 
 
 
