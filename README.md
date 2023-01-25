@@ -208,7 +208,16 @@ package require openlane 0.9
 
 ![image](https://user-images.githubusercontent.com/120498080/214596626-8ca8164d-041a-47a6-934b-09403c9222cf.png)
 
-- **So now we are ready to execute the command**
+- [Github Repository for openlane by efabless](https://github.com/efabless/openlane)
+
+
+**NOTE** *Commands to save the github directory in local machine* - 
+> git clone https://github.com/The-OpenROAD-Project/OpenLane.git`
+
+- To learn more how openlink works and how its is designed [prefer this videos](https://www.youtube.com/playlist?list=PLUg3wIOWD8yoZCg9XpFSgEgljx6MSdm9L).
+
+
+**So now we are ready to execute the commands**
 
 - Now we would be running our first step which is synthesis in openlane but before that we need to set the file system in the *design setup stage* which will be setting up the data for our data structure for our design. 
 - For that enter the given command in openlane :
@@ -217,13 +226,12 @@ package require openlane 0.9
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a$ 
 - The `run_synthesis` command will run bios synthesis as well as the abc.
 
-- [Github Repository for openlane by efabless](https://github.com/efabless/openlane)
+#### Calculation of number of flop ratio 
+Flop ratio is defined as the ratio of number of D flip flop to total number of cell
 
 
-**NOTE** *Commands to save the github directory in local machine* - 
-> git clone https://github.com/The-OpenROAD-Project/OpenLane.git`
 
-- To learn more how openlink works and how its is designed [prefer this videos](https://www.youtube.com/playlist?list=PLUg3wIOWD8yoZCg9XpFSgEgljx6MSdm9L).
+
 
 
 
