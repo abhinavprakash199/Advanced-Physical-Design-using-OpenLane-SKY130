@@ -142,6 +142,14 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
 More data on openLANE can be found on its original github page [openLANE](https://github.com/efabless/openlane).
 
 ### Getting familiar to EDA tools
+We would be working on the OpenLINK  tool, but it is not exactly a tool, it is the flow which comprises of the many open source tool like `Viosis`, `OpenSTA`, etc. The basic aim of having this OpenLINK is to have complete RTL to GDSII flow and cut of the humain intervention.
+
+**NOTE** - *Linux command to open help for that particulat command `{command name} --help`*
+
+We have several pdk under `abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/pdks$`
+1. `skywater-pdk` has all the pdk related files like timing libraries, left files, techleft, cellleft files, etc. These are Silicon foundary files compatable with commertial EDA tools and not for open source EDA tool
+2. `open_psk` has set of scripts and files that convert these foundry level pdk is to get pdk compatable to open source EDA tools
+3. `sky130A`
 
 
 
@@ -156,9 +164,5 @@ More data on openLANE can be found on its original github page [openLANE](https:
 
 ## Acknowledgement
 ---
-- [Kunal Ghosh, Co-founder (VSD Corp. Pvt. Ltd)](https://www.linkedin.com/in/kunal-ghosh-vlsisystemdesign-com-28084836/)
-- [Nickson Jose, VLSI Engineer](https://www.linkedin.com/in/nickson-jose/)
-
-
 Finally, I would like to express my sincere gratitude to [Kunal Ghosh](https://www.linkedin.com/in/kunal-ghosh-vlsisystemdesign-com-28084836/){Co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd.} and [Nickson Jose, VLSI Engineer](https://www.linkedin.com/in/nickson-jose/) {ASoC Physical Design Engineer} for tremendous assistance in planning and presenting this workshop on Advanced-Physical-Design-using-OpenLane-SKY130. The workshop was excellent and well designed, this workshop taught me a lot of new things about the design of RISC-V processor in OpenLANE.   
 
