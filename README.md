@@ -82,7 +82,7 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
 - The skywater pdk defines extra routing layers, the lowest layer is called the local interconnect layer(its titenum nitride layer) and the following five layer on the local interconnect layer are all aluminum layers.
 - Most of the routers are the grid routers, they construct the routing grids out of metal layer tracks. As the routing gris is hudge it use divide and conquer aproach is used for routing. First **Global Routing** is performed to generate the routing guids, then **Detail Routing** uses the fine grid and the routing guides to implement the actual wiring.
 
-5.**Sign-off **
+5.**Sign-off**
 - Here we construct the final layout which undergo verification, this includes **Physical Verification** which is done throgh **Design Rule Checking(DRC)** where we make sure that the final layout hones all design rules and **Layout vs Schematic(LVS)** which make sure that the final layout matchs the gate level netlist thet we started with and finally **Timing Verification** is done through **Static Time Analysis(STA)** to make sure that all timing constrains are met and circiut will run at designated clock frequency.
 
 #### Open Source ASIC Flow
