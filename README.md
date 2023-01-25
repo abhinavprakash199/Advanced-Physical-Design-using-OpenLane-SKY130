@@ -162,7 +162,9 @@ More data on openLANE can be found on its original github page [openLANE](https:
 ### Getting familiar to EDA tools
 We would be working on the OpenLINK  tool, but it is not exactly a tool, it is the flow which comprises of the many open source tool like `Viosis`, `OpenSTA`, etc. The basic aim of having this OpenLINK is to have complete RTL to GDSII flow and cut of the humain intervention.
 
-**NOTE** - *Linux command to open help for that particulat command `{command name} --help`*
+**NOTE** - *Linux command to open help for that particular command `{command name} --help`*
+**NOTE** - *Linux command to open .tcl file `less config.tcl`*
+
 
 #### OpenLANE Directory structure in detail
 We have several pdk under:
@@ -201,8 +203,11 @@ This `sky130A` pdk file contain 2 files:
 - Now we would be running our first step which is synthesis in openlane but before that we need to set the file system in the *design setup stage* which will be setting up the data for our data structure for our design. 
 - For that enter the given command in openlane :
 > prep -design picorv32a
-- So after this the runs directory has been created into picorv32a directory.
+- So after this the `runs' directory has been created into picorv32a directory under which folder structures required by the openlink will be created in which all the folders will be empty except `tmp`
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a$ 
+- The `run_synthesis` command will run bios synthesis as well as the abc.
+
+
 
 
 
