@@ -110,7 +110,6 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
 - Missing Tools
 
 **OpenLANE** is the open source flow for a open source tapeout experiment. `striVe` is a family of open everything SoC(Open PDK, Open EDA and Open RTL)
-- [OpenLANE Documentation](https://openlane.readthedocs.io/en/latest/)
 
 ![Screenshot (2216)](https://user-images.githubusercontent.com/120498080/214480079-1bb1d6ad-8820-4acb-a7ef-b176e3c13a42.png)
 
