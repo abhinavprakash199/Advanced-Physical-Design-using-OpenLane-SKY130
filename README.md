@@ -268,7 +268,8 @@ All the results will be saved into the run folder and the following reports will
 ## References
 ---
 - [Advanced Physical Design](https://www.vlsisystemdesign.com/advanced-physical-design-using-openlane-sky130/?awt_a=5L_6&awt_l=H2Nw0&awt_m=3dG.7I1RDUA8._6)
-- 
+- [OpenLANE Documentation](https://openlane.readthedocs.io/en/latest/)
+
 
 
 ## Acknowledgement
