@@ -20,6 +20,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
+* [Inquiries](#inquiries)
 
 
 ## Day 1:
@@ -162,7 +163,6 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
 │   │   │  ├── libs.ref  -> files specific to node process (timing lib, cell lef, tech lef) for example is `sky130_fd_sc_hd` (Sky130nm Foundry Standard Cell High Density)  
 │   │   │  ├── libs.tech -> files specific for the tool (klayout,netgen,magic...) 
 ```
-More data on openLANE can be found on its original github page [openLANE](https://github.com/efabless/openlane).
 
 ### Getting familiar to EDA tools
 We would be working on the OpenLINK  tool, but it is not exactly a tool, it is the flow which comprises of the many open source tool like `Viosis`, `OpenSTA`, etc. The basic aim of having this OpenLINK is to have complete RTL to GDSII flow and cut of the humain intervention.
@@ -269,10 +269,15 @@ All the results will be saved into the run folder and the following reports will
 ---
 - [Advanced Physical Design](https://www.vlsisystemdesign.com/advanced-physical-design-using-openlane-sky130/?awt_a=5L_6&awt_l=H2Nw0&awt_m=3dG.7I1RDUA8._6)
 - [OpenLANE Documentation](https://openlane.readthedocs.io/en/latest/)
+- [OpenLANE github page](https://github.com/efabless/openlane).
+- [ABC Script](http://people.eecs.berkeley.edu/~alanmi/abc/)
 
 
 
 ## Acknowledgement
 ---
 Finally, I would like to express my sincere gratitude to [Kunal Ghosh](https://www.linkedin.com/in/kunal-ghosh-vlsisystemdesign-com-28084836/){Co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd.} and [Nickson Jose, VLSI Engineer](https://www.linkedin.com/in/nickson-jose/) {ASoC Physical Design Engineer} for tremendous assistance in planning and presenting this workshop on Advanced-Physical-Design-using-OpenLane-SKY130. The workshop was excellent and well designed, this workshop taught me a lot of new things about the design of RISC-V processor in OpenLANE.   
+
+## Inquiries
+- Connect with me at [LinkedIn](www.linkedin.com/in/abhinavprakash1999)
 
