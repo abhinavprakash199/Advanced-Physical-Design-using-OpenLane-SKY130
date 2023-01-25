@@ -148,8 +148,8 @@ We would be working on the OpenLINK  tool, but it is not exactly a tool, it is t
 
 We have several pdk under `abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/pdks$`
 1. `skywater-pdk` has all the pdk related files like timing libraries, left files, techleft, cellleft files, etc. These are Silicon foundary files compatable with commertial EDA tools and not for open source EDA tool
-2. `open_psk` has set of scripts and files that convert these foundry level pdk is to get pdk compatable to open source EDA tools
-3. `sky130A`
+2. `open_psk` has set of scripts and files that convert these foundry level pdk to be compatable to open source EDA tools like *Magic*, *Netgen*
+3. `sky130A` is the pdk varient which has been made compatable to *waber* open source enviroment.
 
 
 
