@@ -146,10 +146,19 @@ We would be working on the OpenLINK  tool, but it is not exactly a tool, it is t
 
 **NOTE** - *Linux command to open help for that particulat command `{command name} --help`*
 
-We have several pdk under `abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/pdks$`
+We have several pdk under 
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/pdks$
 1. `skywater-pdk` has all the pdk related files like timing libraries, left files, techleft, cellleft files, etc. These are Silicon foundary files compatable with commertial EDA tools and not for open source EDA tool
-2. `open_psk` has set of scripts and files that convert these foundry level pdk to be compatable to open source EDA tools like *Magic*, *Netgen*
+2. `open_psk` has set of scripts and files that convert these foundry level pdk to be compatable to open source EDA tools like *magic*, *netgen*
 3. `sky130A` is the pdk varient which has been made compatable to *waber* open source enviroment.
+
+
+`sky130A` pdk contain 2 files 
+1. `libs.ref` which contain all the process specific file specific to the technology like timimg files, cells files, etc. We would be working on `sky130_fd_sc_hd` pdk  varient
+2. `libs.tech` which contain files specific to the tool like *klayout, ngspice, netgen, magic, qflow, openlane, etc*
+
+- We would be working on openlane directory 
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane$ 
 
 
 
