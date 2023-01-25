@@ -242,8 +242,10 @@ Flop ratio is defined as the ratio of number of D flip flop to total number of c
 All the results will be saved into the run folder and the following reports will be generated:
 ![image](https://user-images.githubusercontent.com/120498080/214659318-48f9e2b4-465d-4b35-8f2e-0b92ae1ace8f.png)
 - Like **synthesis stastistics report** (will give information about number of cells used) will be saved in 
+
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/reports/synthesis$ vim 1-yosys_4.stat.rpt
 - So here we got flop ratio of 0.10843 
+
 ![Screenshot (2223)](https://user-images.githubusercontent.com/120498080/214655100-76ddbf8e-d648-4e91-8547-b681faa4ff9e.png)
 - The chip area report is given as 
 
