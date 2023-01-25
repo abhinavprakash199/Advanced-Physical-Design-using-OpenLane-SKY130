@@ -218,7 +218,9 @@ package require openlane 0.9
 - The `run_synthesis` command will run bios synthesis as well as the abc.
 
 - [Github Repository for openlane by efabless](https://github.com/efabless/openlane)
-**NOTE** *Commands to same the github directory in local machine* - 
+
+
+**NOTE** *Commands to save the github directory in local machine* - 
 > git clone https://github.com/The-OpenROAD-Project/OpenLane.git`
 
 - To learn more how openlink works and how its is designed [prefer this videos](https://www.youtube.com/playlist?list=PLUg3wIOWD8yoZCg9XpFSgEgljx6MSdm9L).
