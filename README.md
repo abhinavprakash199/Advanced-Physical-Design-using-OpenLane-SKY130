@@ -85,8 +85,20 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
 5.**Sign-off**
 - Here we construct the final layout which undergo verification, this includes **Physical Verification** which is done throgh **Design Rule Checking(DRC)** where we make sure that the final layout hones all design rules and **Layout vs Schematic(LVS)** which make sure that the final layout matchs the gate level netlist thet we started with and finally **Timing Verification** is done through **Static Time Analysis(STA)** to make sure that all timing constrains are met and circiut will run at designated clock frequency.
 
-#### Open Source ASIC Flow
+#### Intriduction to OpenLANE
+For Open Source ASIC Flow we need to ba aware about the following in Open Source EDA
+- Tools Qualification
+- Tools Calibrations
+- Missing Tools
 
+**OpenLANE** is the open source flow for a open source tapeout experiment. `striVe` is a family of open everything SoC(Open PDK, Open EDA and Open RTL)
+
+![Screenshot (2216)](https://user-images.githubusercontent.com/120498080/214478323-462873c1-b6b8-4935-b596-90113102866a.png)
+
+- So the main goal of OpenLANE is to produce clean GDSII(clean means no DRC, LVS and Timing voilations) with no human intervention.
+- OpenLINK is tuned for SkyWater130nm Open PDK, it also supports XFAB180 and Global Foundry 130G 
+- OpenLINK can be used to harden Macros and Chips(harden means creating GDSII or the final layout)
+- 
 
 
 
