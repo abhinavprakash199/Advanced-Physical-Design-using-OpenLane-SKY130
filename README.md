@@ -7,19 +7,23 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 
 ## *Table of Contents*
 
-  * [Day 1](#day-1): Inception of open-source EDA, OpenLANE and Sky130 PDK]
+* [Day 1](#day-1): Inception of open-source EDA, OpenLANE and Sky130 PDK
     + [Talking to Computers](#talking-to-computers)
     + [SoC design and openLANE](#soc-design-and-openlane)
     + [ASIC Design Flow](#ASIC-Design-Flow)
     + [Getting familiar to EDA tools](#getting-familiar-to-eda-tools)
     + [Starting with openLANE](#starting-with-openLANE)
 
-  * [References](#references)
-  * [Acknowledgement](#acknowledgement)
+* [Day 2](#day-2): Good floorplan vs bad floorplan and introduction to library cells
+    + [Beginning with floorplan](#beginning-with-floorplan)
+    + [Lets do the Placement now](#lets-do-the-placement-now)
+
+* [References](#references)
+* [Acknowledgement](#acknowledgement)
 
 
 ## Day 1:
-## Inception of open-source EDA, OpenLANE and Sky130 PDK]
+## Inception of open-source EDA, OpenLANE and Sky130 PDK
 
 ---
 ### Talking to Computers
@@ -246,7 +250,12 @@ All the results will be saved into the run folder and the following reports will
 
 
 
+## Day 2:
+## Good floorplan vs bad floorplan and introduction to library cells
 
+### Beginning with floorplan
+
+### Lets do the Placement now
 
 
 
