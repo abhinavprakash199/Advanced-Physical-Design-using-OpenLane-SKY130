@@ -7,18 +7,19 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 
 ## *Table of Contents*
 
-  * [Day 1](#day-1)
+  * [Day 1 - Inception of open-source EDA, OpenLANE and Sky130 PDK](#day-1)
     + [Talking to Computers](#talking-to-computers)
     + [SoC design and openLANE](#soc-design-and-openlane)
     + [ASIC Design Flow](#ASIC-Design-Flow)
     + [Getting familiar to EDA tools](#getting-familiar-to-eda-tools)
-    + [Synthesis for the first time !!](https://github.com/krunalbadlani/IS21MTECH14008-PD-workshop/blob/main/README.md#synthesis-for-the-first-time-)
+    + [Starting with openLANE](#starting-with-openLANE)
 
   * [References](#references)
   * [Acknowledgement](#acknowledgement)
 
 
-## Day 1
+## Day 1 : Sky130 Day 1 - Inception of open-source EDA, OpenLANE and Sky130 PDK
+
 ---
 ### Talking to Computers
 ---
@@ -163,7 +164,10 @@ More data on openLANE can be found on its original github page [openLANE](https:
 We would be working on the OpenLINK  tool, but it is not exactly a tool, it is the flow which comprises of the many open source tool like `Viosis`, `OpenSTA`, etc. The basic aim of having this OpenLINK is to have complete RTL to GDSII flow and cut of the humain intervention.
 
 **NOTE** - *Linux command to open help for that particular command `{command name} --help`*
-**NOTE** - *Linux command to open .tcl file `less config.tcl`*
+
+**NOTE** - *Linux command to file contents on one screen at a time `less {file_name.extension}`*
+
+**NOTE** - *Linux command to open file contents on vim `vim {file_name.extension}`*
 
 
 #### OpenLANE Directory structure in detail
@@ -219,6 +223,7 @@ package require openlane 0.9
 
 **So now we are ready to execute the commands**
 
+### Starting with openLANE
 - Now we would be running our first step which is synthesis in openlane but before that we need to set the file system in the *design setup stage* which will be setting up the data for our data structure for our design. 
 - For that enter the given command in openlane :
 > prep -design picorv32a
@@ -227,7 +232,16 @@ package require openlane 0.9
 - The `run_synthesis` command will run bios synthesis as well as the abc.
 
 #### Calculation of number of flop ratio 
-Flop ratio is defined as the ratio of number of D flip flop to total number of cell
+Flop ratio is defined as the ratio of number of D flip flop to total number of cell.
+
+All the results will be saved into the run folder and the following reports will be generated:
+![image](https://user-images.githubusercontent.com/120498080/214659318-48f9e2b4-465d-4b35-8f2e-0b92ae1ace8f.png)
+- Like **synthesis stastistics report** (will give information about number of cells used) will be saved in 
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/reports/synthesis$ vim 1-yosys_4.stat.rpt
+- So here we got flop ratio of 0.10843 
+![Screenshot (2223)](https://user-images.githubusercontent.com/120498080/214655100-76ddbf8e-d648-4e91-8547-b681faa4ff9e.png)
+- The chip area report is given as 
+![image](https://user-images.githubusercontent.com/120498080/214660310-79b2323c-266e-4585-83af-9add2e5a002c.png)
 
 
 
