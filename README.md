@@ -164,9 +164,9 @@ This `sky130A` pdk file contain 2 files:
 
 #### Design Preparation Step
 
-All the designs that are being run by openlane is extraced from designs folder 
+- All the designs that are being run by openlane is extraced from designs folder 
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs$
-We will be moving with `pocorv32a` design which contain:
+- We will be moving with `pocorv32a` design which contain:
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs$
 1. `src` file contain rtl(verilog forl) and sdc information.
 2. `.tcl` file which is pdk specific configuration file.
