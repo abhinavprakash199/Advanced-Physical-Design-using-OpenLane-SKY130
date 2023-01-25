@@ -246,6 +246,7 @@ All the results will be saved into the run folder and the following reports will
 - So here we got flop ratio of 0.10843 
 ![Screenshot (2223)](https://user-images.githubusercontent.com/120498080/214655100-76ddbf8e-d648-4e91-8547-b681faa4ff9e.png)
 - The chip area report is given as 
+
 ![image](https://user-images.githubusercontent.com/120498080/214660310-79b2323c-266e-4585-83af-9add2e5a002c.png)
 
 
