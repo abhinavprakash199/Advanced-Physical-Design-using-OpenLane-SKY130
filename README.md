@@ -7,7 +7,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 
 ## *Table of Contents*
 
-  * [Day 1 - Inception of open-source EDA, OpenLANE and Sky130 PDK](#day-1)
+  * [Day 1: Inception of open-source EDA, OpenLANE and Sky130 PDK](#Day-1:-Inception-of-open-source-EDA,-OpenLANE-and-Sky130-PDK)
     + [Talking to Computers](#talking-to-computers)
     + [SoC design and openLANE](#soc-design-and-openlane)
     + [ASIC Design Flow](#ASIC-Design-Flow)
@@ -18,7 +18,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
   * [Acknowledgement](#acknowledgement)
 
 
-## Day 1 : Sky130 Day 1 - Inception of open-source EDA, OpenLANE and Sky130 PDK
+## Day 1 : Sky130 Day 1: Inception of open-source EDA, OpenLANE and Sky130 PDK
 
 ---
 ### Talking to Computers
