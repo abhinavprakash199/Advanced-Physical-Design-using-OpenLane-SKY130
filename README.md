@@ -122,6 +122,21 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
     +  **Interactive** (here we run comands and steps one be one so that we can do experimentation and look at the results of differnet flow steps)
  - OpenLINK has very nice feature called as **Design Space Exploration** which can be used to find the best set of flow configurations.
  - OpenLINK has large number of design examples(43 different design with their best configuration)
+#### Steps to install openlane in our machine 
+
+- [Guide to install tools](https://github.com/kunalg123/vsdflow)
+Steps to install and run on UBUNTU:
+```
+1) sudo apt-get install git
+2) git clone https://github.com/kunalg123/vsdflow.git
+3) cd vsdflow
+4) chmod 777 opensource_eda_tool_install.sh
+5) ./opensource_eda_tool_install.sh 
+**NOTE for freshers : This has been tested on a fresh UBUNTU installtion
+**NOTE for experienced UNIX users : It has lot of sudo apt-get and sudo remove commands, so you might want to review before running
+6) ./vsdflow spi_slave_design_details.csv
+7) ./vsdflow picorv32_design_details.csv
+```
 
 #### OpenLANE ASIC Flow
 ![Screenshot (2217)](https://user-images.githubusercontent.com/120498080/214488649-b4a76e24-a8f0-401d-a2aa-455f14c111ae.png)
@@ -189,7 +204,7 @@ This `sky130A` pdk file contain 2 files:
 - We would be working on openlane directory 
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane$ 
 
-#### Design Preparation Step
+#### Design Preparation Steps
 
 - All the designs that are being run by openlane is extraced from designs folder 
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs$
@@ -255,6 +270,25 @@ All the results will be saved into the run folder and the following reports will
 ## Day 2:
 ## Good floorplan vs bad floorplan and introduction to library cells
 
+#### Stages of floorplans:
+The placement of logical blocks, library cells, and pins on a silicon chip is known as chip floorplanning. It ensures that every module has been given the proper area and aspect ratio, that every pin of the module is connected to another module or the chip's edge, and that modules are placed so that they take up the least amount of space on a chip.
+
+1. **The height and width of core and die**
+- The core, which is located in the middle of the die, is where the logic blocks are put. The dimensions of each standard cell on the netlist determine the width and height. 
+- **Utilization Factor** is defined as the ratio of area of occupancy by the netlist to total area of the core. Utilization factor in a realistic situation is between 0.5 and 0.6. Only this space is used for the netlist; the rest space is used for routing and more extra cells. 
+- **Aspect Ratio** is defined as the ratio between height and the width of core.
+
+2. **Define location of Preplaced Cell**
+- These are complex logic blocks that are previously implemented but can be reused, such as memory, clock-gating cells, muxes, comparator, etc. Prior to placement and routing, the user-defined placement on the core must be completed (thus preplaced cells). This needs to be very well described because the automated place and route tools won't be able to touch or move these preplaced cells.
+
+3. **Surround preplaced cells with decoupling capacitors**
+4. **Power Planning**
+5. **Pin Placement**
+6. **Logical Cell Placement Blockage**
+
+
+### Placement Stage:
+
 ### Beginning with floorplan
 
 ### Lets do the Placement now
@@ -271,6 +305,7 @@ All the results will be saved into the run folder and the following reports will
 - [OpenLANE Documentation](https://openlane.readthedocs.io/en/latest/)
 - [OpenLANE github page](https://github.com/efabless/openlane).
 - [ABC Script](http://people.eecs.berkeley.edu/~alanmi/abc/)
+- [Installation Guide](https://github.com/DantuNandiniDevi/iiitb_freqdiv#openlane-installation)
 
 
 
