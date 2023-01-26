@@ -376,7 +376,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 ```
 
 ![image](https://user-images.githubusercontent.com/120498080/214837492-61506cf5-9b3e-4350-ad28-6c9e3f459bf8.png)
-#### Some shortcut keys in magic
+#### Some shortcuts keys in magic
 - Point the cursor to a cell then press "s" to select the any block. 
 - Then press "v" to center the view. 
 - To zoom into it use mouse left and right click and then press 'z".
@@ -396,6 +396,8 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 - **Taps Cells** are ment to avoid the lachup condition which occur in the cmos devices, they connect the nwell to thr vdd and the substrate to the ground. Here they are diagonaly equdistant which alraedy has ben set in readme file
 - Floarplan do not take into considerations the placement of **standard cells**, but standard cells are present at the corner.
+
+### Placement and Routing
 
 
 
