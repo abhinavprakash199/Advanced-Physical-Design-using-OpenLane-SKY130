@@ -278,11 +278,15 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 - The core, which is located in the middle of the die, is where the logic blocks are put. The dimensions of each standard cell on the netlist determine the width and height. 
 - **Utilization Factor** is defined as the ratio of area of occupancy by the netlist to total area of the core. Utilization factor in a realistic situation is between 0.5 and 0.6. Only this space is used for the netlist; the rest space is used for routing and more extra cells. 
 - **Aspect Ratio** is defined as the ratio between height and the width of core.
+#### Height and Width of Chip
+![Screenshot (2232)](https://user-images.githubusercontent.com/120498080/214807245-9df9caee-65dd-4776-848d-145e3526c8bb.png)
 
 2. **The location of Preplaced Cell**
 - These are complex logic blocks that are previously implemented but can be reused, such as memory, clock-gating cells, muxes, comparator, etc. Prior to placement and routing, the user-defined placement on the core must be completed (thus preplaced cells). 
 - This needs to be very well described because the automated place and route tools won't be able to touch or move these preplaced cells.
 - These preplacement cell need to be surrounded by decoupling capacitors.
+#### Location of Preplaced Cell
+![Screenshot (2233)](https://user-images.githubusercontent.com/120498080/214807607-3c02d0e4-f56b-4450-819d-5ce8c4a6cc84.png)
 
 3. **Surround preplaced cells with decoupling capacitors**
 - The complex preplaced logic block needs a lot of current from the power supply to switch the current. However, due to the resistance and inductance of the wire, there will be a voltage drop because of the distance between the main power supply and the logic block. As a result, the voltage at the logic block might no longer fall within the noise margin range (logic is unstable).
@@ -297,18 +301,20 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 #### Four blocks with multiple power suppies
 ![Screenshot (2227)](https://user-images.githubusercontent.com/120498080/214799889-7811d3a3-632e-4f8d-842f-da972484a04e.png)
 #### Power Planning showing multiple power source taps
-![Screenshot (2228)](https://user-images.githubusercontent.com/120498080/214800730-112f8e53-2ec6-47db-afb8-46ea5a8416f4.png)
+![Screenshot (2228)](https://user-images.githubusercontent.com/120498080/214806272-99e2f671-2fec-496f-95a2-e8fbac07291a.png)
 
 5. **Pin Placement**
 - The area between the core and the die is where the input and output ports are located.
 - The positions of the ports depend on the placements of the cells that are connected with them on the core. 
 - Since this clock must be able to drive the entire chip so the clock pin is thicker (lowest resistance route) than data ports.
 #### Pin Placement in a Chip
-
+![Screenshot (2231)](https://user-images.githubusercontent.com/120498080/214806578-d1e27eab-7ecf-4def-988d-f97ef7e19d06.png)
 
 6. **Logical Cell Placement Blockage**
 - This ensures that no cells are placed by the automated placement and routing tool on the die's pin locations.
 #### Chip with Logical Cell Placement Blockage
+![Screenshot (2230)](https://user-images.githubusercontent.com/120498080/214806309-9a14a6d8-ead1-481c-990d-207ae586873c.png)
+
 
 
 ### Placement Stage:
