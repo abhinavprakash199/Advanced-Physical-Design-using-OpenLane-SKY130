@@ -9,12 +9,13 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 
 * [Day 1: Inception of open-source EDA, OpenLANE and Sky130 PDK](#day-1)
     + [Talking to Computers](#talking-to-computers)
-    + [SoC design and openLANE](#soc-design-and-openlane)
+    + [SoC Design and OpenLANE](#soc-design-and-openlane)
     + [ASIC Design Flow](#ASIC-Design-Flow)
-    + [Getting familiar to EDA tools](#getting-familiar-to-eda-tools)
-    + [Starting with openLANE](#starting-with-openLANE)
+    + [Getting Familiar to EDA tools](#getting-familiar-to-eda-tools)
+    + [Starting with OpenLANE](#starting-with-openLANE)
 
-* [Day 2: Good floorplan vs bad floorplan and introduction to library cells](#day-2)
+* [Day 2: Good Floorplan vs bad Floorplan and Introduction to Library Cells](#day-2)
+    + [Stages of Floorplanning](#Stages-of-floorplanning)
     + [Beginning with floorplan](#beginning-with-floorplan)
     + [Lets do the Placement now](#lets-do-the-placement-now)
 
@@ -268,9 +269,9 @@ All the results will be saved into the run folder and the following reports will
 
 
 ## Day 2:
-## Good floorplan vs bad floorplan and introduction to library cells
+## Good Floorplan vs Bad Floorplan and Introduction to library cells
 ---
-### Stages of floorplans:
+### Stages of Floorplanning:
 ---
 The placement of logical blocks, library cells, and pins on a silicon chip is known as chip floorplanning. It ensures that every module has been given the proper area and aspect ratio, that every pin of the module is connected to another module or the chip's edge, and that modules are placed so that they take up the least amount of space on a chip.
 
