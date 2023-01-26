@@ -16,9 +16,8 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 
 * [Day 2: Good Floorplan vs bad Floorplan and Introduction to Library Cells](#day-2)
     + [Stages of Floorplanning](#Stages-of-floorplanning)
-    + [Beginning with floorplan](#beginning-with-floorplan)
-    + [Lets do the Placement now](#lets-do-the-placement-now)
-
+    + [Steps to run and view floorplan using OpenLANE](#steps-to-run-and-view-floorplan-using-openlane)
+    
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
 * [Inquiries](#inquiries)
@@ -316,7 +315,7 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 #### Chip with Logical Cell Placement Blockage
 ![Screenshot (2230)](https://user-images.githubusercontent.com/120498080/214806309-9a14a6d8-ead1-481c-990d-207ae586873c.png)
 
-### Steps to run floorplan using OpenLANE
+### Steps to run and view floorplan using OpenLANE
 
 1. **Set configuration variables** 
 - The configuration variables or switches must be set up before to starting the floorplan stage.. 
@@ -357,7 +356,9 @@ The details of this stags like core utilization ratio are saved in this location
 
 The def(design exchange format) file, containing the die area and positions which is at location 
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/results/floorplan$ vim picorv32a.floorplan.def
+
 ![image](https://user-images.githubusercontent.com/120498080/214835082-c9d38fa8-45fb-456b-a74c-906caf7a62c9.png)
+
 - One micrometre is equal to 1000 database units in this case when the die area is expressed in database units. The die's surface area is therefore 443587 microns squared, or (660685/1000)microns*(671405/1000)microns.
 
 4. **View the layout in magic**
@@ -372,25 +373,26 @@ To open layout in magic use this command in this location
 ```
 magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
 ```
+
 ![image](https://user-images.githubusercontent.com/120498080/214837492-61506cf5-9b3e-4350-ad28-6c9e3f459bf8.png)
 #### Some shortcut keys in magic
 - Point the cursor to a cell then press "s" to select the any block. 
 - Then press "v" to center the view. 
 - To zoom into it use mouse left and right click and then press 'z".
-- Type "what" in tkcon to display information of selected object. These objects might be IO pin, decap cell, or well taps as shown below.
 
+[Magic Commands](https://github.com/AngeloJacobo/OpenLANE-Sky130-Physical-Design-Workshop#magic-commands)
 
 #### Floorplan looks like 
-![Screenshot (2244)1](https://user-images.githubusercontent.com/120498080/214845341-7212adea-f972-4f90-8749-a88c689bfce7.png)
+![Screenshot (2241)](https://user-images.githubusercontent.com/120498080/214845584-dea9d8e4-fb48-465b-9a5c-ed9baf1e823b.png)
+#### Zoom view of Floorplan and details of selected pin in tkcon
+- Type "what" in tkcon to display information of selected object. These objects might be IO pin, decap cell, or well taps. Here the objects is IO pin
+![Screenshot (2244)](https://user-images.githubusercontent.com/120498080/214846077-4d858625-a767-4cd3-9d66-fbe0e9a90d60.png)
 
 
-### Placement Stage:
 
 
 
-### Beginning with floorplan
 
-### Lets do the Placement now
 
 
 
