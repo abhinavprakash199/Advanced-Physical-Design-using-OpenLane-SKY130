@@ -410,7 +410,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 - If it needs to operate at a high frequency(2GHz), we occasionally also do **abutment**, in which logic cells are put very close to one another (virtually with zero delay). 
 - Route crisscrossing is a common occurrence in PnR because the crisscrossed path can be implemented utilising a different metal layer (vias).
 #### Optimised placement of cells in our floorplan after using buffers
-![Screenshot (2250)](https://user-images.githubusercontent.com/120498080/214920587-1c9b6d9c-4040-4526-9ad7-3dd3a19811c6.png)
+![Screenshot (2250)](https://user-images.githubusercontent.com/120498080/214920991-fa503365-32ed-45bc-8cb8-a37d2955f372.png)
 
 - After placement optimization, timing analysis will be set up using an idle clock, which has no wire delays and no clock buffer-related delays because CTS has not yet been completed.
 
