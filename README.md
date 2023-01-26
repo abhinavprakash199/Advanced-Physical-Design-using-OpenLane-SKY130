@@ -296,10 +296,19 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 -  The reason for problem of voltage droop and ground bounce is because the supply has been provided only from one point so we use multiple power source taps (power mesh) are the solution, allowing components to source current from the closest VDD tap and sink current to the closest VSS tap. The majority of processors include several powersource pins because of this.
 #### Four blocks with multiple power suppies
 ![Screenshot (2227)](https://user-images.githubusercontent.com/120498080/214799889-7811d3a3-632e-4f8d-842f-da972484a04e.png)
-
+#### Power Planning showing multiple power source taps
+![Screenshot (2228)](https://user-images.githubusercontent.com/120498080/214800730-112f8e53-2ec6-47db-afb8-46ea5a8416f4.png)
 
 5. **Pin Placement**
+- The area between the core and the die is where the input and output ports are located.
+- The positions of the ports depend on the placements of the cells that are connected with them on the core. 
+- Since this clock must be able to drive the entire chip so the clock pin is thicker (lowest resistance route) than data ports.
+#### Pin Placement in a Chip
+
+
 6. **Logical Cell Placement Blockage**
+- This ensures that no cells are placed by the automated placement and routing tool on the die's pin locations.
+#### Chip with Logical Cell Placement Blockage
 
 
 ### Placement Stage:
