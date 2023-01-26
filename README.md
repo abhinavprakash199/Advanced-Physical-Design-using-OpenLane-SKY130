@@ -14,7 +14,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Getting familiar to EDA tools](#getting-familiar-to-eda-tools)
     + [Starting with openLANE](#starting-with-openLANE)
 
-* [Day 2](#day-2): Good floorplan vs bad floorplan and introduction to library cells
+* [Day 2: Good floorplan vs bad floorplan and introduction to library cells](#day-2)
     + [Beginning with floorplan](#beginning-with-floorplan)
     + [Lets do the Placement now](#lets-do-the-placement-now)
 
