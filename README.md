@@ -363,8 +363,8 @@ The def(design exchange format) file, containing the die area and positions whic
 4. **View the layout in magic**
 For visualising the layout following a floorplan, utilise the Magic Layout Tool. The following three files are necessary in order to examine a floor layout in Magic
 - Technology File `sky130A.tech`
--  Merged LEF file `merged.lef` 
--  `vim picorv32a.floorplan.def` files
+- Merged LEF file `merged.lef` 
+- `vim picorv32a.floorplan.def` files
 
 To open layout in magic use this command in this location
 >abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/results/floorplan$
@@ -373,8 +373,15 @@ To open layout in magic use this command in this location
 magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
 ```
 ![image](https://user-images.githubusercontent.com/120498080/214837492-61506cf5-9b3e-4350-ad28-6c9e3f459bf8.png)
+#### Some shortcut keys in magic
+- Point the cursor to a cell then press "s" to select the any block. 
+- Then press "v" to center the view. 
+- To zoom into it use mouse left and right click and then press 'z".
+- Type "what" in tkcon to display information of selected object. These objects might be IO pin, decap cell, or well taps as shown below.
+
 
 #### Floorplan looks like 
+![Screenshot (2244)1](https://user-images.githubusercontent.com/120498080/214845341-7212adea-f972-4f90-8749-a88c689bfce7.png)
 
 
 ### Placement Stage:
