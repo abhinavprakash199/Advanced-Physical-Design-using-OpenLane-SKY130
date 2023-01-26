@@ -292,7 +292,7 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 - The complex preplaced logic block needs a lot of current from the power supply to switch the current. However, due to the resistance and inductance of the wire, there will be a voltage drop because of the distance between the main power supply and the logic block. As a result, the voltage at the logic block might no longer fall within the noise margin range (logic is unstable).
 -  Utilizing decoupling capacitors which are hudge bunch of capacitor completely filled with charge, close to the logic block will provide the necessary current for the logic block to switch inside the desired noise margin range.
 #### Decoupling capacitors surrounding the preplaced blocks
-![Screenshot (2225)](https://user-images.githubusercontent.com/120498080/214799660-b0e21674-9f8b-416b-a795-3e7a47496817.png)
+![Screenshot (2225)](https://user-images.githubusercontent.com/120498080/214807860-91585c95-2b6d-4e1e-ae78-d15accebbd3c.png)
 
 4. **Power Planning**
 - It is not possible to apply a decoupling capacitor for sourcing logic blocks with enough current throughout the entire chip, only on the important components (preplaced complex logicblocks). 
