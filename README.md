@@ -269,8 +269,9 @@ All the results will be saved into the run folder and the following reports will
 
 ## Day 2:
 ## Good floorplan vs bad floorplan and introduction to library cells
-
-#### Stages of floorplans:
+---
+### Stages of floorplans:
+---
 The placement of logical blocks, library cells, and pins on a silicon chip is known as chip floorplanning. It ensures that every module has been given the proper area and aspect ratio, that every pin of the module is connected to another module or the chip's edge, and that modules are placed so that they take up the least amount of space on a chip.
 
 1. **The height and width of core and die**
@@ -279,10 +280,24 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 - **Aspect Ratio** is defined as the ratio between height and the width of core.
 
 2. **The location of Preplaced Cell**
-- These are complex logic blocks that are previously implemented but can be reused, such as memory, clock-gating cells, muxes, comparator, etc. Prior to placement and routing, the user-defined placement on the core must be completed (thus preplaced cells). This needs to be very well described because the automated place and route tools won't be able to touch or move these preplaced cells.
+- These are complex logic blocks that are previously implemented but can be reused, such as memory, clock-gating cells, muxes, comparator, etc. Prior to placement and routing, the user-defined placement on the core must be completed (thus preplaced cells). 
+- This needs to be very well described because the automated place and route tools won't be able to touch or move these preplaced cells.
+- These preplacement cell need to be surrounded by decoupling capacitors.
 
 3. **Surround preplaced cells with decoupling capacitors**
+- The complex preplaced logic block needs a lot of current from the power supply to switch the current. However, due to the resistance and inductance of the wire, there will be a voltage drop because of the distance between the main power supply and the logic block. As a result, the voltage at the logic block might no longer fall within the noise margin range (logic is unstable).
+-  Utilizing decoupling capacitors which are hudge bunch of capacitor completely filled with charge, close to the logic block will provide the necessary current for the logic block to switch inside the desired noise margin range.
+#### Decoupling capacitors surrounding the preplaced blocks
+![Screenshot (2225)](https://user-images.githubusercontent.com/120498080/214799660-b0e21674-9f8b-416b-a795-3e7a47496817.png)
+
 4. **Power Planning**
+- It is not possible to apply a decoupling capacitor for sourcing logic blocks with enough current throughout the entire chip, only on the important components (preplaced complex logicblocks). 
+- Due to the large amount of current that must be sinked simultaneously when a large number of elements switch from logic 1 to logic 0, this could result in **ground bounce**, and switching from logic 0 to logic 1 could result in **voltage droop** because there is not enough current from the power source to source the needed current for all elements. The increase or decrease in voltage may not be within the noise margin range due to voltage droop and ground bounce.
+-  The reason for problem of voltage droop and ground bounce is because the supply has been provided only from one point so we use multiple power source taps (power mesh) are the solution, allowing components to source current from the closest VDD tap and sink current to the closest VSS tap. The majority of processors include several powersource pins because of this.
+#### Four blocks with multiple power suppies
+![Screenshot (2227)](https://user-images.githubusercontent.com/120498080/214799889-7811d3a3-632e-4f8d-842f-da972484a04e.png)
+
+
 5. **Pin Placement**
 6. **Logical Cell Placement Blockage**
 
