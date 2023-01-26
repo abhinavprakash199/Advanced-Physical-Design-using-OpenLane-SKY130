@@ -352,6 +352,7 @@ Use command `% run_floorplan` openlane
 The details of this stags like core utilization ratio are saved in this location
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57$ vim config.tcl 
 - In `25-01_14-57/config.tcl` file we got a core utilization ratio as 35 because it was set in PDK specific configuration `sky130A_sky130_fd_sc_hd_config.tcl` inside the `openlane/design/picorv32a` folder which has the highest precedance.
+
 ![image](https://user-images.githubusercontent.com/120498080/214833348-819f797e-9a3b-4aa7-a97a-461f89612358.png)
 
 The def(design exchange format) file, containing the die area and positions which is at location 
@@ -386,6 +387,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 ![Screenshot (2241)](https://user-images.githubusercontent.com/120498080/214845584-dea9d8e4-fb48-465b-9a5c-ed9baf1e823b.png)
 #### Zoom view of Floorplan and details of selected pin in tkcon
 - Type "what" in tkcon to display information of selected object. These objects might be IO pin, decap cell, or well taps. Here the objects is IO pin
+
 ![Screenshot (2244)](https://user-images.githubusercontent.com/120498080/214846077-4d858625-a767-4cd3-9d66-fbe0e9a90d60.png)
 
 
