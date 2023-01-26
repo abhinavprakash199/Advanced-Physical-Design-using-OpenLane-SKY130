@@ -12,7 +12,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [SoC Design and OpenLANE](#soc-design-and-openlane)
     + [ASIC Design Flow](#ASIC-Design-Flow)
     + [Getting Familiar to EDA tools](#getting-familiar-to-eda-tools)
-    + [Starting with OpenLANE](#starting-with-openLANE)
+    + [Starting with OpenLANE and Synthesis](#starting-with-openLANE-and-synthesis)
 
 * [Day 2: Good Floorplan vs bad Floorplan and Introduction to Library Cells](#day-2)
     + [Stages of Floorplanning](#Stages-of-floorplanning)
@@ -221,13 +221,13 @@ Go to openlane  working directory
 ```
 docker
 ./flow.tcl -interactive
-package require openlane 0.9
+% package require openlane 0.9
 ```
 - We use `docker` command to open the open lane in working directory.
 - Then use `./flow.tcl -interactive` which identifies using the script the flow has to move and intractive means we do a step by step process.
 - Then we need to import all the package that are required to run this program by `package require openlane 0.9`
 
-- Command to run fully automated run `./flow.tcl -design picorv32a`
+- **NOTE** Command to run fully automated run `./flow.tcl -design picorv32a`
 
 ![image](https://user-images.githubusercontent.com/120498080/214596626-8ca8164d-041a-47a6-934b-09403c9222cf.png)
 
@@ -239,18 +239,20 @@ package require openlane 0.9
 
 - To learn more how openlink works and how its is designed [prefer this videos](https://www.youtube.com/playlist?list=PLUg3wIOWD8yoZCg9XpFSgEgljx6MSdm9L).
 
-
 **So now we are ready to execute the commands**
 
-### Starting with openLANE
+### Starting with openLANE and Synthesis
 - Now we would be running our first step which is synthesis in openlane but before that we need to set the file system in the *design setup stage* which will be setting up the data for our data structure for our design. 
-- For that enter the given command in openlane :
-> prep -design picorv32a
+- For that enter `% prep -design picorv32a` command in openlane :
 - So after this the `runs` directory has been created into picorv32a directory under which folder structures required by the openlink will be created in which all the folders will be empty except `tmp`
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a$ 
-- The `run_synthesis` command will run bios synthesis as well as the abc.
 
-#### Calculation of number of flop ratio 
+#### Run Logic Synthesis in OpenLANE
+In **Logic Synthesis** wo convert the RTL code into a leagel hardware. So the output of Logic Synthesis is the arrangements of flip flops and the gates that will represent our origianl functionality that we have described using an RTL.
+
+- The `% run_synthesis` command will run bios synthesis as well as the abc.
+
+#### Calculation of number of flop ratio using synthesis report
 Flop ratio is defined as the ratio of number of D flip flop to total number of cell.
 
 All the results will be saved into the run folder and the following reports will be generated:
@@ -399,7 +401,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 ### Placement and Routing
 - **Library** consists of shape and size of all the cells, various flaveros of the same cells, timing and delay information of all the cells.
-#### Placement
+#### Introduction to Placement 
 - After floorplanning, next comes placement, it determines location of each of the components on the die. The standard cells that are present in the generated netlist are not the only cells that are placed. Placement enhances the design, removing any timing violations brought created  by the relative placement on the die.
 - In placement we bind the netlist to a real-size physical cell. The physical cell will be taken from a library that offers various alternatives for the identical cells, shapes, dimensions, and delay.
 - They are place it in the floorplaning(which have properly positioned input and output ports that are well designed) according to our netlist. To minimise timing delay, the flip flops must be positioned as close to the input and output pins as practicable.
@@ -414,7 +416,48 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 - After placement optimization, timing analysis will be set up using an idle clock, which has no wire delays and no clock buffer-related delays because CTS has not yet been completed.
 
-Placement is now focused on congestion rather than timing. Standard cells are also not placed on the floorplan stage; rather, they are placed on the placement stage. The cells that are placed on the floorplan stage are macros or preplaced cells. 
+Placement is now focused on **congestion rather than timing**. Standard cells are also not placed on the floorplan stage; rather, they are placed on the placement stage. The cells that are placed on the floorplan stage are macros or preplaced cells. 
+
+#### Placement is done on two stages:
+- **Global Placement** is placement without legalisations with the intention of cutting down on wirelength.The main function of Global Placement is to reduce wirelengthand in OpenLANE use the concept of of the HPWL (Half Perimeter Wirelength) reduction concept.
+- **Detailed Placement** is placement with legalisation(legalisation is more required for timing point of view), where the standard cells must be adjacent, in standard rows, and without overlaps.
+#### Run Placement in OpenLANE
+- To run Global Placement in OpenLANE run `% run_placement` command in openlane
+- This command is a wrapper which does global placement (performed by RePlace tool),, optimization by Resier's  tool, and ReSer's detailed placement functions (by OpenDP tool). 
+- It shows hundreds of iterations with HPWL and OVFL displayed. If the overflow is getting smaller, the algorithm is considered to be converging. It additionally verifies legality.
+
+
+magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def
+
+
+
+
+
+
+
+
+**COMPLETE SKY130_D2_SK2**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
