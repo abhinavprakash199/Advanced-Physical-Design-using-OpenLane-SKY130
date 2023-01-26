@@ -400,8 +400,21 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 ### Placement and Routing
 - **Library** consists of shape and size of all the cells, various flaveros of the same cells, timing and delay information of all the cells.
 #### Placement
-- After floorplanning, placement comes next.Placement determines location of each of the components on the die.  The standard cells that are present in the generated netlist are not the only cells that are placed. Additionally, it enhances the design, removing any timing violations brought created  by the relative placement on the die.
-- In placement basically we take the cells from the library and place it in the floorplaning(which have properly positioned input and output ports that are well designed) according to our netlist 
+- After floorplanning, next comes placement, it determines location of each of the components on the die. The standard cells that are present in the generated netlist are not the only cells that are placed. Placement enhances the design, removing any timing violations brought created  by the relative placement on the die.
+- In placement we bind the netlist to a real-size physical cell. The physical cell will be taken from a library that offers various alternatives for the identical cells, shapes, dimensions, and delay.
+- They are place it in the floorplaning(which have properly positioned input and output ports that are well designed) according to our netlist. To minimise timing delay, the flip flops must be positioned as close to the input and output pins as practicable.
+#### Initial placement of cells in our floorplan
+![Screenshot (2247)](https://user-images.githubusercontent.com/120498080/214911889-1f9cdaef-141d-4f2c-b296-40d5c72587d3.png)
+
+- To keep the **signal integrity**(Signal integrity or SI is a set of measures of the quality of an electrical signal. In digital electronics, a stream of binary values is represented by a voltage or current waveform.) we optimise placement, for that we calculate the wirelength and capacitance (C=εA/d) and then add **repeaters** and **buffers** based on those values. The wirelength will cause a capacitance and a resistance that will result in unwanted voltage drops and slew rates(slew is inversly proportional to capacitance) that might not be allowed for logic gates that switch current quickly. Inserting buffers for lengthy lines that serve as intermediaries and divide a single long wire into multiple ones would reduce resistance and capacitance. 
+- If it needs to operate at a high frequency(2GHz), we occasionally also do **abutment**, in which logic cells are put very close to one another (virtually with zero delay). 
+- Route crisscrossing is a common occurrence in PnR because the crisscrossed path can be implemented utilising a different metal layer (vias).
+#### Optimised placement of cells in our floorplan after using buffers
+![Screenshot (2250)](https://user-images.githubusercontent.com/120498080/214920587-1c9b6d9c-4040-4526-9ad7-3dd3a19811c6.png)
+
+- After placement optimization, timing analysis will be set up using an idle clock, which has no wire delays and no clock buffer-related delays because CTS has not yet been completed.
+
+Placement is now focused on congestion rather than timing. Standard cells are also not placed on the floorplan stage; rather, they are placed on the placement stage. The cells that are placed on the floorplan stage are macros or preplaced cells. 
 
 
 
