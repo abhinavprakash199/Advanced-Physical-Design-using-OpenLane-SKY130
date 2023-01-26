@@ -278,7 +278,7 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 - **Utilization Factor** is defined as the ratio of area of occupancy by the netlist to total area of the core. Utilization factor in a realistic situation is between 0.5 and 0.6. Only this space is used for the netlist; the rest space is used for routing and more extra cells. 
 - **Aspect Ratio** is defined as the ratio between height and the width of core.
 
-2. **Define location of Preplaced Cell**
+2. **The location of Preplaced Cell**
 - These are complex logic blocks that are previously implemented but can be reused, such as memory, clock-gating cells, muxes, comparator, etc. Prior to placement and routing, the user-defined placement on the core must be completed (thus preplaced cells). This needs to be very well described because the automated place and route tools won't be able to touch or move these preplaced cells.
 
 3. **Surround preplaced cells with decoupling capacitors**
