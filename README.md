@@ -398,6 +398,10 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 - Floarplan do not take into considerations the placement of **standard cells**, but standard cells are present at the corner.
 
 ### Placement and Routing
+- **Library** consists of shape and size of all the cells, various flaveros of the same cells, timing and delay information of all the cells.
+#### Placement
+- After floorplanning, placement comes next.Placement determines location of each of the components on the die.  The standard cells that are present in the generated netlist are not the only cells that are placed. Additionally, it enhances the design, removing any timing violations brought created  by the relative placement on the die.
+- In placement basically we take the cells from the library and place it in the floorplaning(which have properly positioned input and output ports that are well designed) according to our netlist 
 
 
 
