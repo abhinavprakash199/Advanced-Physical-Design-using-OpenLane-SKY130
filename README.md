@@ -316,9 +316,70 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 #### Chip with Logical Cell Placement Blockage
 ![Screenshot (2230)](https://user-images.githubusercontent.com/120498080/214806309-9a14a6d8-ead1-481c-990d-207ae586873c.png)
 
+### Steps to run floorplan using OpenLANE
+
+1. **Set configuration variables** 
+- The configuration variables or switches must be set up before to starting the floorplan stage.. 
+- The configuration variables location is 
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/configuration$
+```
+.
+├── README.md      
+├── floorplan.tcl 
+├── cts.tcl
+├── checkers.tcl
+├── general.tcl
+├── lvs.tcl
+├── synthesis.tcl 
+├── routing.tcl
+└── placement.tcl
+```
+
+The default OpenLANE settings are contained in the tcl files, and the `README.md` defines every configuration variable for every stage. Under 
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a$ vim config.tcl 
+we find every configuration that the current run has approved. This could originate from (in order of priority):
+
+- PDK specific configuration `sky130A_sky130_fd_sc_hd_config.tcl` inside the `openlane/design/picorv32a` folder
+- `config.tcl` inside the `openlane/designs/picorv32a` folder
+- System default settings inside `openlane/configurations`
+#### `config.tcl` file should contain following information
+![Screenshot (2235)](https://user-images.githubusercontent.com/120498080/214825614-4e3a2d5b-1892-4d50-bf66-6da743c349aa.png)
+
+
+2. **Run floorplan on OpenLane:** 
+Use command `% run_floorplan` openlane 
+
+3.**Review floorplan files:**
+The details of this stags like core utilization ratio are saved in this location
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57$ vim config.tcl 
+- In `25-01_14-57/config.tcl` file we got a core utilization ratio as 35 because it was set in PDK specific configuration `sky130A_sky130_fd_sc_hd_config.tcl` inside the `openlane/design/picorv32a` folder which has the highest precedance.
+![image](https://user-images.githubusercontent.com/120498080/214833348-819f797e-9a3b-4aa7-a97a-461f89612358.png)
+
+The def(design exchange format) file, containing the die area and positions which is at location 
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/results/floorplan$ vim picorv32a.floorplan.def
+![image](https://user-images.githubusercontent.com/120498080/214835082-c9d38fa8-45fb-456b-a74c-906caf7a62c9.png)
+- One micrometre is equal to 1000 database units in this case when the die area is expressed in database units. The die's surface area is therefore 443587 microns squared, or (660685/1000)microns*(671405/1000)microns.
+
+4. **View the layout in magic**
+For visualising the layout following a floorplan, utilise the Magic Layout Tool. The following three files are necessary in order to examine a floor layout in Magic
+- Technology File `sky130A.tech`
+-  Merged LEF file `merged.lef` 
+-  `vim picorv32a.floorplan.def` files
+
+To open layout in magic use this command in this location
+>abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/results/floorplan$
+
+```
+magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
+```
+![image](https://user-images.githubusercontent.com/120498080/214837492-61506cf5-9b3e-4350-ad28-6c9e3f459bf8.png)
+
+#### Floorplan looks like 
 
 
 ### Placement Stage:
+
+
 
 ### Beginning with floorplan
 
