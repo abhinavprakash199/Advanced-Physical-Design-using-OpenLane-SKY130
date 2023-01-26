@@ -17,6 +17,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 * [Day 2: Good Floorplan vs bad Floorplan and Introduction to Library Cells](#day-2)
     + [Stages of Floorplanning](#Stages-of-floorplanning)
     + [Steps to run and view floorplan using OpenLANE](#steps-to-run-and-view-floorplan-using-openlane)
+    + [Placement in OpenLANE](#Placement-in-OpenLANE)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -318,7 +319,7 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 ![Screenshot (2230)](https://user-images.githubusercontent.com/120498080/214806309-9a14a6d8-ead1-481c-990d-207ae586873c.png)
 
 ### Steps to run and view floorplan using OpenLANE
-
+---
 1. **Set configuration variables** 
 - The configuration variables or switches must be set up before to starting the floorplan stage.. 
 - The configuration variables location is 
@@ -357,21 +358,24 @@ The details of this stags like core utilization ratio are saved in this location
 
 ![image](https://user-images.githubusercontent.com/120498080/214833348-819f797e-9a3b-4aa7-a97a-461f89612358.png)
 
+#### Calculations of Die Area
+
 The def(design exchange format) file, containing the die area and positions which is at location 
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/results/floorplan$ vim picorv32a.floorplan.def
 
 ![image](https://user-images.githubusercontent.com/120498080/214835082-c9d38fa8-45fb-456b-a74c-906caf7a62c9.png)
 
-- One micrometre is equal to 1000 database units in this case when the die area is expressed in database units. The die's surface area is therefore 443587 microns squared, or (660685/1000)microns*(671405/1000)microns.
+- One micrometre is equal to 1000 database units in this case when the die area is expressed in database units. 
+- The **die's surface area is therefore 443587 microns squared**, or (660685/1000)microns*(671405/1000)microns.
 
-4. **View the layout in magic**
+4. **View the floorplan in magic**
 For visualising the layout following a floorplan, utilise the Magic Layout Tool. The following three files are necessary in order to examine a floor layout in Magic
 - Technology File `sky130A.tech`
 - Merged LEF file `merged.lef` 
 - `vim picorv32a.floorplan.def` files
 
 To open layout in magic use this command in this location
->abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/results/floorplan$
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/results/floorplan$
 
 ```
 magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
@@ -399,22 +403,26 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 - **Taps Cells** are ment to avoid the lachup condition which occur in the cmos devices, they connect the nwell to thr vdd and the substrate to the ground. Here they are diagonaly equdistant which alraedy has ben set in readme file
 - Floarplan do not take into considerations the placement of **standard cells**, but standard cells are present at the corner.
 
-### Placement and Routing
+### Placement in OpenLANE
+---
 - **Library** consists of shape and size of all the cells, various flaveros of the same cells, timing and delay information of all the cells.
 #### Introduction to Placement 
 - After floorplanning, next comes placement, it determines location of each of the components on the die. The standard cells that are present in the generated netlist are not the only cells that are placed. Placement enhances the design, removing any timing violations brought created  by the relative placement on the die.
 - In placement we bind the netlist to a real-size physical cell. The physical cell will be taken from a library that offers various alternatives for the identical cells, shapes, dimensions, and delay.
 - They are place it in the floorplaning(which have properly positioned input and output ports that are well designed) according to our netlist. To minimise timing delay, the flip flops must be positioned as close to the input and output pins as practicable.
+- **The main goal of placement is to make sure Standard Cells are correctly placed in Standard Cells roots**
+
 #### Initial placement of cells in our floorplan
 ![Screenshot (2247)](https://user-images.githubusercontent.com/120498080/214911889-1f9cdaef-141d-4f2c-b296-40d5c72587d3.png)
 
 - To keep the **signal integrity**(Signal integrity or SI is a set of measures of the quality of an electrical signal. In digital electronics, a stream of binary values is represented by a voltage or current waveform.) we optimise placement, for that we calculate the wirelength and capacitance (C=εA/d) and then add **repeaters** and **buffers** based on those values. The wirelength will cause a capacitance and a resistance that will result in unwanted voltage drops and slew rates(slew is inversly proportional to capacitance) that might not be allowed for logic gates that switch current quickly. Inserting buffers for lengthy lines that serve as intermediaries and divide a single long wire into multiple ones would reduce resistance and capacitance. 
 - If it needs to operate at a high frequency(2GHz), we occasionally also do **abutment**, in which logic cells are put very close to one another (virtually with zero delay). 
 - Route crisscrossing is a common occurrence in PnR because the crisscrossed path can be implemented utilising a different metal layer (vias).
+
 #### Optimised placement of cells in our floorplan after using buffers
 ![Screenshot (2250)](https://user-images.githubusercontent.com/120498080/214920991-fa503365-32ed-45bc-8cb8-a37d2955f372.png)
 
-- After placement optimization, timing analysis will be set up using an idle clock, which has no wire delays and no clock buffer-related delays because CTS has not yet been completed.
+- After placement optimization, timing analysis will be set up using an ideal clock, which has no wire delays and no clock buffer-related delays because CTS has not yet been completed.
 
 Placement is now focused on **congestion rather than timing**. Standard cells are also not placed on the floorplan stage; rather, they are placed on the placement stage. The cells that are placed on the floorplan stage are macros or preplaced cells. 
 
@@ -427,18 +435,45 @@ Placement is now focused on **congestion rather than timing**. Standard cells ar
 - It shows hundreds of iterations with HPWL and OVFL displayed. If the overflow is getting smaller, the algorithm is considered to be converging. It additionally verifies legality.
 
 
+
+#### View the placement in magic
+For visualising the layout following a placement, utilise the Magic Layout Tool. The following three files are necessary in order to examine a floor layout in Magic
+- Technology File `sky130A.tech`
+- Merged LEF file `merged.lef` 
+- `vim picorv32a.floorplan.def` files
+
+To open layout in magic use this command in this location
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/26-01_19-56/results/placement$
+
+```
 magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def
+```
+![image](https://user-images.githubusercontent.com/120498080/214942710-949bec91-df15-40a9-ad87-02f92be1cea9.png)
 
+#### Placement looks like 
+![Screenshot (2252)](https://user-images.githubusercontent.com/120498080/214943609-cf6ab423-0e71-47d2-8d3d-b967d0ccf2ed.png)
+- So these many standard cells where in the bottom left corner in the initial layout of the floorplan which are now placed in our floorplan.
 
+#### Zoom view of Placement of the Standard Cells
+![Screenshot (2253)](https://user-images.githubusercontent.com/120498080/214943707-b38c7a7d-f154-452f-aee6-b2777cd2b341.png)
 
-
-
+**NOTE** - This power distribution network gets created during floorplan but in OpenFLOW right now the order is little different, the floorplan does not create this power distribution network, it is done in Post CTS(Clock Tree Synthesis) just before we route it.
 
 
 
 **COMPLETE SKY130_D2_SK2**
 
 
+
+
+
+
+
+
+
+
+
+### 
 
 
 
