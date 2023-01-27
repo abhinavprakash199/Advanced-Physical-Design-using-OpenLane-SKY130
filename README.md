@@ -21,6 +21,8 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Cell Design Flow](#Cell-Design-Flow)
     + [Characterization](#Characterization) 
         - [Timing Characterization](#Timing-Characterization)
+* [Day 3 - Design library cell using Magic Layout and ngspice characterization](#day-3)
+    + [Labs for CMOS inverter ngspice simulations](#Labs-for-CMOS-inverter-ngspice-simulations)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -478,6 +480,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 
 ### Cell Design Flow
+---
 - In Cell design we will look at how a standard cell is designed in the library
 #### Inputs to Cell Design Flow
 ![Screenshot (2254)](https://user-images.githubusercontent.com/120498080/215009991-36810191-01e5-413e-b25e-4ab90d4c974e.png)
@@ -507,6 +510,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 
 ### Characterization 
+---
 - Next step after we get the extraced step netlist and layout is characterization(*that's what this course is all about*)
 - **Characterization** helps us to get timing, noise and power information.
 - The outpit of characterization is **timing, noise, power.lib files** and the **functionality** of this circuit
@@ -531,15 +535,24 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 1. Timing Characterization
 2. Power Characterization
 3. Noise Characterization
- 
- 
+  
 ### Timing Characterization:
+---
+The slew timing parameters are listed below. Two inverters are connected in series, called as buffers(circuit is shown above)
+#### Propogation Delay and Transition Time
+![Screenshot (2282)](https://user-images.githubusercontent.com/120498080/215050048-c39ea804-b144-44da-8d7d-bdce9c96187f.png)
+The timing parameters for propagation delay are listed below.
+![Screenshot (2283)](https://user-images.githubusercontent.com/120498080/215050117-ddf12289-f379-482d-a7f1-c8dd51858358.png)
+- **Propogation Delay** is defined as time {(out_thr)-time(in_thr)}
+- **Transition Time** is defined as {time(slew_high_rise_thr)-time(slew_low_rise_thr)} or {time(slew_high_fall_thr)-time(slew_low_fall_thr)}
+- It's unexpected to see negative propagation delay because the output occurs before the input. So in that case the designer must select the proper threshold value to create a positive delay. The typical delay threshold is 50% and slew low thresholds is 20% of Vdd and slew high threshold 80% of Vdd.
 
 
-
-
-
-- 
+## Day 3
+## Design library cell using Magic Layout and ngspice characterization
+---
+### Labs for CMOS inverter ngspice simulations
+--- 
 
 
 
