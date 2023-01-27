@@ -621,8 +621,31 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 #### Layout of the inveter in magic
 ![Screenshot (2288)](https://user-images.githubusercontent.com/120498080/215201506-270b58aa-88cc-4464-aa7e-ca452b694867.png)
 
+- Refer this [to build and inverter from scratch(workshop reference)](https://github.com/nickson-jose/vsdstdcelldesign)
 
+#### Magic Commands:
+[Video](https://www.youtube.com/watch?v=RPppaGdjbj0), [reference](http://opencircuitdesign.com/magic/) on layout using Magic.
 
+- Left click = lower-left corner of box
+- Right click = upper-right corner of box
+- "z" = zoom in, "Z" = zoom out, "ctrl + z" = zoom into the box
+- Middle click on empty area will turn the box into empty (similar to erasing it)
+- "s" three times will select all geometries electrically connected to each other
+- `:box` = display parameters of selected box
+- `:grid` 0.5um 0.5um = turn on/off and set grid
+- `:snap user` = snap based on current grid
+- `:help snap` = display help for command
+- `:drc style drc(full)` = use all DRC when doing DRC checking
+- `:paint poly` = paint "poly" to current box
+- `:drc why` = show drc violation inside selected area (white dots are DRC violations )
+- `:erase poly` = delete poly inside the box
+- `:select area` = select all geometries inside the box
+- `:copy n 30` = copy selected geometries to North by 30 grid steps
+- `:move n 1` = move selected geometries to North by 1 step ("." to move more, "u" to undo)
+- `: select cell _08555_` = select a particular cell instance (e.g. cell _08555_ which can be searched in the DEF file)
+- `:cellname allcells` = list all cells in the layout
+- `:cellname exists sky130_fd_sc_hd__xor3_4` = check if a cell exists
+- `:drc why` = show DRC violation and also the DRC name which can be referenced from [Sky130 PDK Periphery Rules](https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html#rules-periphery--page-root).
 
 
 
@@ -653,7 +676,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 ---
 - [Advanced Physical Design](https://www.vlsisystemdesign.com/advanced-physical-design-using-openlane-sky130/?awt_a=5L_6&awt_l=H2Nw0&awt_m=3dG.7I1RDUA8._6)
 - [OpenLANE Documentation](https://openlane.readthedocs.io/en/latest/)
-- [Github to this project](https://github.com/nickson-jose/vsdstdcelldesign)
+- [To build and inverter from scratch(workshop reference)](https://github.com/nickson-jose/vsdstdcelldesign)
 - [OpenLANE github page by efabless](https://github.com/efabless/openlane).
 - [OpenLANE The-OpenROAD-Project](https://github.com/The-OpenROAD-Project/OpenLane)
 - [Guide to install tools](https://github.com/kunalg123/vsdflow)
