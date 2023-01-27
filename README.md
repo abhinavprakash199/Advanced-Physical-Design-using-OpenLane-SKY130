@@ -405,10 +405,11 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 ### Placement in OpenLANE
 ---
-- **Library** consists of shape and size of all the cells, various flaveros of the same cells, timing and delay information of all the cells.
+- **Library** consists of shape and size of all the standard cells(the different sizes of same standard cells is known as **drive strength**, lower size standard cell has lower driving strength), various functionality  of the same cells, timing and delay information of all the cells.
+- We also keep decap cells, macros and IPs in Library.
 #### Introduction to Placement 
 - After floorplanning, next comes placement, it determines location of each of the components on the die. The standard cells that are present in the generated netlist are not the only cells that are placed. Placement enhances the design, removing any timing violations brought created  by the relative placement on the die.
-- In placement we bind the netlist to a real-size physical cell. The physical cell will be taken from a library that offers various alternatives for the identical cells, shapes, dimensions, and delay.
+- In placement we bind the netlist to a real-size physical cell. The physical standard cell will be taken from a library that offers various alternatives for the identical cells, shapes, dimensions, and delay.
 - They are place it in the floorplaning(which have properly positioned input and output ports that are well designed) according to our netlist. To minimise timing delay, the flip flops must be positioned as close to the input and output pins as practicable.
 - **The main goal of placement is to make sure Standard Cells are correctly placed in Standard Cells roots**
 
@@ -473,7 +474,11 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 
 
-### 
+### Cell Design Flow
+- In Cell design we will look at how a standard cell is designed in the library
+![Screenshot (2254)](https://user-images.githubusercontent.com/120498080/215009991-36810191-01e5-413e-b25e-4ab90d4c974e.png)
+
+![Screenshot (2258)1](https://user-images.githubusercontent.com/120498080/215010171-00985091-1a73-49db-b6f0-a41816080446.png)
 
 
 
