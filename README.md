@@ -1,5 +1,5 @@
 # Advanced-Physical-Design-using-OpenLane-SKY130
-This repository contains the whole summary of hands on done by Abhinav Prakash (IS22MTECH14002) during the workshop [Advanced-Physical-Design-using-OpenLane-SKY130](https://www.vlsisystemdesign.com/advanced-physical-design-using-openlane-sky130/) organised by VSD. The full RTL to GDSII flow was implemented for PICORV32A- a RISC-V based CPU core using [OpenLANE](https://github.com/The-OpenROAD-Project/OpenLane) with [SKY130nm PDK](https://skywater-pdk.readthedocs.io/en/main/rules/assumptions.html).
+This repository contains the whole summary of hands on done by Abhinav Prakash (IS22MTECH14002) during the workshop [Advanced-Physical-Design-using-OpenLane-SKY130](https://www.vlsisystemdesign.com/advanced-physical-design-using-openlane-sky130/) organised by VSD. The full RTL to GDSII flow was implemented for picorv32a- a RISC-V based CPU core using [OpenLANE](https://github.com/The-OpenROAD-Project/OpenLane) with [SKY130nm PDK](https://skywater-pdk.readthedocs.io/en/main/rules/assumptions.html).
 
 
 
@@ -129,20 +129,6 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
  - OpenLINK has very nice feature called as **Design Space Exploration** which can be used to find the best set of flow configurations.
  - OpenLINK has large number of design examples(43 different design with their best configuration)
 #### Steps to install openlane in our machine 
-
-- [Guide to install tools](https://github.com/kunalg123/vsdflow)
-Steps to install and run on UBUNTU:
-```
-1) sudo apt-get install git
-2) git clone https://github.com/kunalg123/vsdflow.git
-3) cd vsdflow
-4) chmod 777 opensource_eda_tool_install.sh
-5) ./opensource_eda_tool_install.sh 
-**NOTE for freshers : This has been tested on a fresh UBUNTU installtion
-**NOTE for experienced UNIX users : It has lot of sudo apt-get and sudo remove commands, so you might want to review before running
-6) ./vsdflow spi_slave_design_details.csv
-7) ./vsdflow picorv32_design_details.csv
-```
 
 #### OpenLANE ASIC Flow
 ![Screenshot (2217)](https://user-images.githubusercontent.com/120498080/214488649-b4a76e24-a8f0-401d-a2aa-455f14c111ae.png)
@@ -611,7 +597,9 @@ plot out vs in
 - [Advanced Physical Design](https://www.vlsisystemdesign.com/advanced-physical-design-using-openlane-sky130/?awt_a=5L_6&awt_l=H2Nw0&awt_m=3dG.7I1RDUA8._6)
 - [OpenLANE Documentation](https://openlane.readthedocs.io/en/latest/)
 - [Github to this project](https://github.com/nickson-jose/vsdstdcelldesign)
-- [OpenLANE github page](https://github.com/efabless/openlane).
+- [OpenLANE github page by efabless](https://github.com/efabless/openlane).
+- [OpenLANE The-OpenROAD-Project](https://github.com/The-OpenROAD-Project/OpenLane)
+- [Guide to install tools](https://github.com/kunalg123/vsdflow)
 - [ABC Script](http://people.eecs.berkeley.edu/~alanmi/abc/)
 - [Installation Guide](https://github.com/DantuNandiniDevi/iiitb_freqdiv#openlane-installation)
 
