@@ -371,8 +371,14 @@ To open layout in magic use this command in this location
 ```
 magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
 ```
-
+`-T <address_of_sky130A.tech_file>` where T is for technology file 
+`lef read <address_of_merged.lef_file>` to read the lef files 
+`def read <address_of_picorv32a.floorplan.def_file>` to read the def files 
+- **NOTE** If address of the required file is at the same working loaction then we just need to provide the required file name.
+- 
 ![image](https://user-images.githubusercontent.com/120498080/214837492-61506cf5-9b3e-4350-ad28-6c9e3f459bf8.png)
+**NOTE**
+This `sky130A.tech`(technology), `merged.lef`(layout exchange format) and `picorv32a.placement.def`(design exchange format) files comes allong with the pdk of sky130.
 #### Some shortcuts keys in magic
 - Point the cursor to a cell then press "s" to select the any block. 
 - Then press "v" to center the view. 
@@ -440,8 +446,14 @@ To open layout in magic use this command in this location
 ```
 magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def
 ```
+`-T <address_of_sky130A.tech_file>` where T is for technology file 
+`lef read <address_of_merged.lef_file>` to read the lef files 
+`def read <address_of_picorv32a.placement.def_file>` to read the def files 
+- **NOTE** If address of the required file is at the same working loaction then we just need to provide the required file name.
 ![image](https://user-images.githubusercontent.com/120498080/214942710-949bec91-df15-40a9-ad87-02f92be1cea9.png)
 
+**NOTE**
+This `sky130A.tech`(technology), `merged.lef`(layout exchange format) and `picorv32a.placement.def`(design exchange format) files comes allong with the pdk of sky130.
 #### Placement looks like 
 ![Screenshot (2252)](https://user-images.githubusercontent.com/120498080/214943609-cf6ab423-0e71-47d2-8d3d-b967d0ccf2ed.png)
 - So these many standard cells where in the bottom left corner in the initial layout of the floorplan which are now placed in our floorplan.
@@ -539,9 +551,9 @@ The timing parameters for propagation delay are listed below.
 ---
 ### Labs for CMOS inverter ngspice simulations
 --- 
-In this we would be going into depth of one of the cells(inverter cell), we won't build it from scratch rather we would use the github to get the .magic files and from there we will be doing Post Layout simulation in ngspice and post characterizing our sample cell, we would be plugging this cell into a OpenLANE flow, into picorv32a core.
+In this we would be going into depth of one of the cells(inverter cell), we won't build it from scratch rather we would use the github to get the `.mag`(magic) files and from there we will be doing Post Layout simulation in ngspice and post characterizing our sample cell, we would be plugging this cell into a OpenLANE flow, into picorv32a core.
 #### NOTE - In IO placement in floorplan
-On OpenLANE, configurations can be modified while in flight. On OpenLANE, for instance, `use  % set ::env(FP IO MODE) 2` to make IO mode not equidistant. On mode 2, the IO pins won't be evenly spaced out (default of 1). View the def layout for magic by launching floorplan once more with `% run floorplan`.  The configuration will only be available for the current session if it is changed on the fly; it will not be changed in `runs/config.tcl`, `echo $::env(FP_IO_MODE)` to output the variable's most recent value.
+On OpenLANE, configurations can be modified while in flight. On OpenLANE, for instance, use  `% set ::env(FP_IO_MODE) 2` to make IO mode not equidistant. On mode 2, the IO pins won't be evenly spaced out (default of 1). View the def layout for magic by launching floorplan once more with `% run floorplan`.  The configuration will only be available for the current session if it is changed on the fly; it will not be changed in `runs/config.tcl`, `echo $::env(FP_IO_MODE)` to output the variable's most recent value.
 
 #### SPICE deck creation for CMOS inverter
 First we need to design the library cells:
@@ -569,6 +581,50 @@ setplot
 dc1 
 plot out vs in 
 ```
+
+
+
+
+
+
+
+
+
+
+### CMOS Inverter Design using Magic
+Magic Tool offers a very user-friendly interface for designing the different layers of the layout. Additionally, it features a built-in DRC check fetaure. A layout for a CMOS inverter with and without design rule breaches is shown in the excerpt below. Magic Layout Tool is used to design the inverter. 
+- First `git clone https://github.com/nickson-jose/vsdstdcelldesign` (this will create "vsdstdcelldesign" directory)which contain the `sky130_inv.mag` and from there we will do post layout simulation.
+- The technology file is used as an input is `sky130A.tech`. 
+- Location of `sky130A.tech` file
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic$
+- Then copy this file to
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign$ 
+![image](https://user-images.githubusercontent.com/120498080/215192449-2306ab36-1490-4f7c-9197-8bb9c68aac97.png)
+- Then run the following command to invoke magic in `.tech` and `.mac` file
+```
+magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
+```
+`-T <address_of_sky130A.tech_file>` where T is for technology file 
+`lef read <address_of_merged.lef_file>` to read the lef files 
+`def read <address_of_picorv32a.placement.def_file>` to read the def files 
+`&` is use to free the next command prompt.
+- **NOTE** If address of the required file is at the same working loaction then we just need to provide the required file name.
+![image](https://user-images.githubusercontent.com/120498080/215200075-60cdb6dd-0acc-476e-8520-d8b65a7ffd0b.png)
+
+***NOTE** linux command to copy a file `cp <address_of_file_need_to_be_copied> <address_of_folder_it_need_to_be_pasted>`*
+![image](https://user-images.githubusercontent.com/120498080/215191310-9e4d6bf7-50ee-4799-a933-d201e326f22d.png)
+**NOTE**
+- This `sky130_inv.mag`(magic) file is 
+- This `sky130A.tech`(technology) file is from the pdk of sky130.
+
+#### Layout of the inveter in magic
+![Screenshot (2288)](https://user-images.githubusercontent.com/120498080/215201506-270b58aa-88cc-4464-aa7e-ca452b694867.png)
+
+
+
+
+
+
 
 
 
