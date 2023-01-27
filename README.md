@@ -538,6 +538,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 
 
+
 - 
 
 
