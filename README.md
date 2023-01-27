@@ -505,7 +505,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 
 
-- Next step after we get the extraced step netlist and layout is characteriztion(*thats what this course is all about *)
+- Next step after we get the extraced step netlist and layout is characteriztion(*thats what this course is all about*)
 - **Characterization** helps us to get timing, noise and power information.
 - The outpit of characterization is **timing, noise, power.lib files** and the **functionality** of this circuit
 
