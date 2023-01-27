@@ -476,13 +476,21 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 ### Cell Design Flow
 - In Cell design we will look at how a standard cell is designed in the library
+#### Inputs to Cell Design Flow
 ![Screenshot (2254)](https://user-images.githubusercontent.com/120498080/215009991-36810191-01e5-413e-b25e-4ab90d4c974e.png)
-
+![Screenshot (2257)](https://user-images.githubusercontent.com/120498080/215010259-f0653e2f-a4a1-4205-bd4f-4ff7efda4b98.png)
 ![Screenshot (2258)1](https://user-images.githubusercontent.com/120498080/215010171-00985091-1a73-49db-b6f0-a41816080446.png)
+![Screenshot (2262)](https://user-images.githubusercontent.com/120498080/215012180-f3731816-d842-46e2-bac5-09cc4850f043.png)
 
+**Library and Vser Defined Specs **
+- **Cell height** has been defined as the seperation between power and the ground rail and it is the responsibilty of the cell develepor that cell height is mantained. Cell height depends on the timing information(if the cell height is high then it would be able to drive more longer wire, that is called higher drive strength cells)
+- The standard cells has to operate at a certain **Supply Voltage** which is beign provided by the top level designer and accordingly the library devloper has to take that supply voltage and design the lobrary cell such that it specifies supply voltage.
+- **Metal Layer**, **Pin Locations**, **Drawn Gate Length** requirments has to be decided by the library devloper.
 
+#### Design steps of Cell Design Flow
 
-
+![Screenshot (2265)](https://user-images.githubusercontent.com/120498080/215012572-65ed0b3c-ec01-4f26-bf4e-0f806042625b.png)
+- Circuit Design step is mostly based on spice simulations
 
 
 
