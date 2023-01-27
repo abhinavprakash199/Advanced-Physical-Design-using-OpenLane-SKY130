@@ -23,6 +23,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
         - [Timing Characterization](#Timing-Characterization)
 * [Day 3 - Design library cell using Magic Layout and ngspice characterization](#day-3)
     + [Labs for CMOS inverter ngspice simulations](#Labs-for-CMOS-inverter-ngspice-simulations)
+    + [CMOS Inverter Design using Magic](#CMOS-Inverter-Design-using-Magic)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
