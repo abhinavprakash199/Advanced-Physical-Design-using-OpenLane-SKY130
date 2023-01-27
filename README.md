@@ -19,6 +19,8 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Steps to run and view floorplan using OpenLANE](#steps-to-run-and-view-floorplan-using-openlane)
     + [Placement in OpenLANE](#Placement-in-OpenLANE)
     + [Cell Design Flow](#Cell-Design-Flow)
+    + [Characterization](#Characterization) 
+        - [Timing Characterization](#Timing-Characterization)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -504,12 +506,36 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 - The output of the layout will be **GDSII(Graphic Design System II) file**, **LEF(Library Exchange Format ) file**(define width and heigt of the cell) and the **extraced spice netlist**(define resistance and capacitance of all the nodes)
 
 
-
-- Next step after we get the extraced step netlist and layout is characteriztion(*thats what this course is all about*)
+### Characterization 
+- Next step after we get the extraced step netlist and layout is characterization(*that's what this course is all about*)
 - **Characterization** helps us to get timing, noise and power information.
 - The outpit of characterization is **timing, noise, power.lib files** and the **functionality** of this circuit
 
 #### Characterization Flow
+1. Read in the models files
+2. Read the extreaced spice netlist
+3. Recognize the behaviour of the buffer
+4. Read the sub circuits of the inverter
+5. Attach the necessary power sources 
+6. Apply the stimulus
+7. Provide the necessary output capacitances 
+8. Prove the necessary simulation commands
+#### Characterization Setup
+![Screenshot (2276)](https://user-images.githubusercontent.com/120498080/215031007-3ff42a3f-644f-4099-ac4f-e5e8bc1f9df5.png)
+![Screenshot (2274)](https://user-images.githubusercontent.com/120498080/215031041-78346fad-4f69-4e82-9485-505c833e0ce8.png)
+
+- Next step is to feed in all these inputs from 1 to 8 as in form of a configuration file to the characterization software called as **GUNA** and this software will generate timing, noise and power modles
+
+![Screenshot (2277)](https://user-images.githubusercontent.com/120498080/215031065-79ccc805-1d5a-4fd8-907a-952628ef3357.png)
+- The output of GUNA(.lib files) are characterized into :
+1. Timing Characterization
+2. Power Characterization
+3. Noise Characterization
+ 
+ 
+### Timing Characterization:
+
+
 
 
 - 
