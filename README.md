@@ -18,6 +18,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Stages of Floorplanning](#Stages-of-floorplanning)
     + [Steps to run and view floorplan using OpenLANE](#steps-to-run-and-view-floorplan-using-openlane)
     + [Placement in OpenLANE](#Placement-in-OpenLANE)
+    + [Cell Design Flow](#Cell-Design-Flow)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -487,10 +488,32 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 - The standard cells has to operate at a certain **Supply Voltage** which is beign provided by the top level designer and accordingly the library devloper has to take that supply voltage and design the lobrary cell such that it specifies supply voltage.
 - **Metal Layer**, **Pin Locations**, **Drawn Gate Length** requirments has to be decided by the library devloper.
 
-#### Design steps of Cell Design Flow
-
+#### Design steps Outputs of Cell Design Flow
 ![Screenshot (2265)](https://user-images.githubusercontent.com/120498080/215012572-65ed0b3c-ec01-4f26-bf4e-0f806042625b.png)
-- Circuit Design step is mostly based on spice simulations
+- **Circuit Design** step is mostly based on spice simulations.
+- - From the circuit design step we get output called as **CDL(circuit discription language) file**
+- So from circuit design step onse we known about the W/L rstios of nmos and pmos, then we need to implement it in layout design.
+- **Art of Layout is Eular's path and stick diagram**
+
+![Screenshot (2267)](https://user-images.githubusercontent.com/120498080/215018399-b678c4bb-a54e-4518-a82a-36590aced59e.png)
+- In **Layout Design** first step is to get the logic implemented with the help of nmos and pmos transistors and get get a nmos and pmos nework graph out of our design and obtain the Eular's path(path wich has been traced only once) and then go for stick diagram out of it. 
+
+![Screenshot (2268)](https://user-images.githubusercontent.com/120498080/215018430-bc2fe61b-6873-4169-8d7b-1be0c9692c5b.png)
+- Later we convert this stick diagram into a proper layout according to the rules which we have got from the input.
+- Final step is to extrace the paracitcs out of the final layout and characterize it in terms of timing.
+- The output of the layout will be **GDSII(Graphic Design System II) file**, **LEF(Library Exchange Format ) file**(define width and heigt of the cell) and the **extraced spice netlist**(define resistance and capacitance of all the nodes)
+
+
+
+- Next step after we get the extraced step netlist and layout is characteriztion(*thats what this course is all about *)
+- **Characterization** helps us to get timing, noise and power information.
+- The outpit of characterization is **timing, noise, power.lib files** and the **functionality** of this circuit
+
+#### Characterization Flow
+
+
+- 
+
 
 
 
