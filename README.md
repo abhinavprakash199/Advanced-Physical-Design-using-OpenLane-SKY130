@@ -622,6 +622,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 ![Screenshot (2288)](https://user-images.githubusercontent.com/120498080/215201506-270b58aa-88cc-4464-aa7e-ca452b694867.png)
 #### To know about the particular block in layout 
 - Selectet the particulat block and typw what is the "tkcon main" window
+
 ![Screenshot (2290)](https://user-images.githubusercontent.com/120498080/215248790-206b89a9-7947-4cd2-acf2-e72d89f707ce.png)
 
 - Refer this [to build and inverter from scratch(workshop reference)](https://github.com/nickson-jose/vsdstdcelldesign)
@@ -654,6 +655,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 #### Steps to extrace the spice file from magic
 Now to know the logical functioning of the inverte we extrace the spice and do simulation in ngspice open source tool.
+
 ![image](https://user-images.githubusercontent.com/120498080/215249994-d33e906b-1560-4ab7-a7be-5c45f5e9e50d.png)
 
 - Use this command `extract all`to create an `.ext`(extraction) file.
@@ -662,10 +664,50 @@ Now to know the logical functioning of the inverte we extrace the spice and do s
 #### `sky130_inv.spice` file extraced from magic
 ![image](https://user-images.githubusercontent.com/120498080/215250083-2d7d91c7-1797-4d62-ba6b-e9c59a351bc4.png)
 
+- We then modify the `sky130_inv.spice` file as shown below to be able to plot a transient response:
+![image](https://user-images.githubusercontent.com/120498080/215252810-98f2337f-17a7-41ba-b5e6-67e28a8d2ec0.png)
 
-We then modify the `sky130_inv.spice` file to be able to plot a transient response:
 ```verilog
 * SPICE3 file created from sky130_inv.ext - technology: sky130A
+
+.option scale=0.01u
+.include ./libs/pshort.lib
+.include ./libs/nshort.lib
+
+//.subckt sky130_inv A Y VPWR VGND
+X0 Y A VGND VGND nshort_model.0 ad=0 pd=0 as=0 ps=0 w=35 l=23
+X1 Y A VPWR VPWR pshort_model.0 ad=0 pd=0 as=0 ps=0 w=37 l=23
+C0 Y A 0.05fF
+C1 Y VPWR 0.11fF
+C2 A VPWR 0.07fF
+C3 Y VGND 0.24fF
+C4 VPWR VGND 0.59fF
+//.ends
+
+* Power supply 
+VDD VPWR 0 3.3V 
+VSS VGND 0 0V 
+
+* Input Signal
+Va A VGND PULSE(0V 3.3V 0 0.1ns 0.1ns 2ns 4ns)
+
+* Simulation Control
+.tran 1n 20n
+.control
+run
+.endc
+.end
+```
+***NOTE** To edit vim file in linux press `i` and make the changes then press `Esc` and the `:wq!` to save the changes*
+
+- Then when we run in ngsice then we got this errors 
+![image](https://user-images.githubusercontent.com/120498080/215252912-1c7e8ad3-69ad-43ee-a93b-1acf01bf1b44.png)
+
+- So then we use below files (which was shown in the video) and we got the plots
+- To 0pen the spice file by typing `ngspice sky130A_inv_new.spice` and to generate a graph using `plot y vs time a` :
+
+```verilog
+* SPICE3 file created from sky130_inv_new.ext - technology: sky130A
 
 .option scale=0.01u
 .include ./libs/pshort.lib
@@ -677,7 +719,7 @@ M1 Y A VPWR VPWR pshort_model.0 ad=1443 pd=152 as=1517 ps=156 w=37 l=23
 C0 A VPWR 0.08fF
 C1 Y VPWR 0.08fF
 C2 A Y 0.02fF
-C3 Y VGND 0.18fF
+C3 Y VGND 2fF
 C4 VPWR VGND 0.74fF
 * .ends
 
@@ -696,8 +738,24 @@ run
 .end
 ```
 - `\vsdstdcelldesign-master\libs\nshort.lib` and `\vsdstdcelldesign-master\libs\nphort.lib` are the spice model files for nmos and pmos
+- We change C3(Cload) to 2fF(increase it) to get the higher delay
+#### Plots we got after ngspice simulation
+![Screenshot (2293)](https://user-images.githubusercontent.com/120498080/215253787-87328018-577a-4b19-91b2-b8439818fdcb.png)
 
-***NOTE** To edit vim file in linux press `i` and make the changes then press `Esc` and the `:wq!` to save the changes*
+- In ngspice to zoom in to particulat region in graph: right click and drag in that region.
+- In ngspice to get the graph coordinate click on that point.
+
+#### Characterize the cell's slew rate and propagation delay:
+Using this transient response, we will now characterize the cell's slew rate and propagation delay:
+- Rise Time [output transition time from 20%(0.66V) to 80%(2.64V)]:
+> Rise Time = 2.24417 - 2.1828 = 0.0618 ns
+- Fall Time [ouput transition time from 80%(2.64V) to 20%(0.66V)]:
+> Fall Time = 8.09512 - 8.0679 = 0.02722 ns
+- Rise Delay [delay between 50%(1.65V) of input to 50%(1.65V) of output]:
+> Rise Delay = 6.15069 6.15 = 0.00069 ns
+- Fall Delay [delay between 50%(1.65V) of input to 50%(1.65V) of output]:
+> Fall Delay = 8.07770- 8.05075 = 0.02695 ns
+
 
 
 
