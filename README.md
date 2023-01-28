@@ -451,8 +451,8 @@ To open layout in magic use this command in this location
 magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def
 ```
 `-T <address_of_sky130A.tech_file>` where T is for technology file 
-`lef read <address_of_merged.lef_file>` to read the lef files 
-`def read <address_of_picorv32a.placement.def_file>` to read the def files 
+`lef read <address_of_merged.lef_file>` to read the lef files (we use `lef read` because its a standard industry file)
+`def read <address_of_picorv32a.placement.def_file>` to read the def files (we use `def read` because its a standard industry file)
 - **NOTE** If address of the required file is at the same working loaction then we just need to provide the required file name.
 ![image](https://user-images.githubusercontent.com/120498080/214942710-949bec91-df15-40a9-ad87-02f92be1cea9.png)
 
@@ -607,19 +607,22 @@ Magic Tool offers a very user-friendly interface for designing the different lay
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic$
 - Then copy this file to
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign$ 
+
 ![image](https://user-images.githubusercontent.com/120498080/215192449-2306ab36-1490-4f7c-9197-8bb9c68aac97.png)
 - Then run the following command to invoke magic in `.tech` and `.mac` file
 ```
-magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
+magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def
 ```
 `-T <address_of_sky130A.tech_file>` where T is for technology file 
-`lef read <address_of_merged.lef_file>` to read the lef files 
-`def read <address_of_picorv32a.placement.def_file>` to read the def files 
+`lef read <address_of_merged.lef_file>` to read the lef files (we use `lef read` because its a standard industry file)
+`def read <address_of_picorv32a.placement.def_file>` to read the def files (we use `def read` because its a standard industry file)
 `&` is use to free the next command prompt.
 - **NOTE** If address of the required file is at the same working loaction then we just need to provide the required file name.
+
 ![image](https://user-images.githubusercontent.com/120498080/215200075-60cdb6dd-0acc-476e-8520-d8b65a7ffd0b.png)
 
-***NOTE** linux command to copy a file `cp <address_of_file_need_to_be_copied> <address_of_folder_it_need_to_be_pasted>`*
+***NOTE** linux command to copy a file 
+`cp <address_of_file_need_to_be_copied> <address_of_folder_it_need_to_be_pasted>`*
 ![image](https://user-images.githubusercontent.com/120498080/215191310-9e4d6bf7-50ee-4799-a933-d201e326f22d.png)
 **NOTE**
 - This `sky130_inv.mag`(magic) file is 
@@ -802,7 +805,21 @@ The next goal is to make a `.lef` file using this inverter architecture. We will
 ---
 ## Pre-layout timing analysis and importance of good clock tree
 ---
-So till now we are done with the design setup,the floorplan, placement and lastly we have learned, given a `.mac` file how to extrace the `.spice` out of it and do the characterization. We where looking into ngspice and magic and now lets see how it is connected to OpenLANE(which is a place and route tool, and for placement of any cell we don't require the `.mac` file simulation(`.mac` file contain all the information in magic) but we only require is the PnR boundary(which contain the power and the rail, input and the output informantion) and that is the `.lef` files ) 
+So till now we are done with the design setup,the floorplan, placement and lastly we have learned, given a `.mac` file how to extrace the `.spice` out of it and do the characterization. We where looking into ngspice and magic and now lets see how it is connected to OpenLANE(which is a place and route tool, and for placement of any cell we don't require the `.mac` file simulation(`.mac` file contain all the information in magic) but we only require is the PnR boundary(which contain the power and the rail, input and the output informantion) and that is the `.lef` files). So `.lef` file proctects our ir and macro information.
+- **`.lef` files {Library Exchange Format (LEF)}** is a specification for representing the physical layout of an integrated circuit in an ASCII format. It includes design rules and abstract information about the standard cells.LEF only has the basic information required at that level to serve the purpose of the concerned CAD tool. It helps in saving valuable resources by providing only an abstract view and thus consuming less memory overhead. LEF is used in conjunction with Design Exchange Format (DEF) to represent the complete physical layout of an integrated circuit while it is being designed.
+![Screenshot (2300)](https://user-images.githubusercontent.com/120498080/215275249-a122a31b-d205-40a4-9a0c-d038bb99550c.png)
+
+
+So next we will extrace a `.lef` file out of this `.mag` file(designed by us) and then we will plug this lef file into the picorv43a flow(till now we was workid with pre build cells) 
+
+
+But first, we must follow to the PnR tool's instructions for standard cells:
+- The intersection of the horizontal and vertical tracks is where the input and output ports are located (ensure the routes can reach that ports).
+- The standard cell must have a height that is an odd multiple of the tracks vertical pitch and a width that is an odd multiple of the tracks horizontal pitch.
+
+To check these guidelines, we need to change the grid of Magic to match the actual metal tracks. The `pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tracks.info` contains those metal informations.
+
+In the tkon terminal, use the grid command to match the track information.
 
 
 
