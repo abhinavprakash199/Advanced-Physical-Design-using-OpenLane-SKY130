@@ -620,6 +620,9 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 #### Layout of the inveter in magic
 ![Screenshot (2288)](https://user-images.githubusercontent.com/120498080/215201506-270b58aa-88cc-4464-aa7e-ca452b694867.png)
+#### To know about the particular block in layout 
+- Selectet the particulat block and typw what is the "tkcon main" window
+![Screenshot (2290)](https://user-images.githubusercontent.com/120498080/215248790-206b89a9-7947-4cd2-acf2-e72d89f707ce.png)
 
 - Refer this [to build and inverter from scratch(workshop reference)](https://github.com/nickson-jose/vsdstdcelldesign)
 
@@ -649,7 +652,49 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 
 
+#### Steps to extrace the spice file from magic
+Now to know the logical functioning of the inverte we extrace the spice and do simulation in ngspice open source tool.
+![image](https://user-images.githubusercontent.com/120498080/215249994-d33e906b-1560-4ab7-a7be-5c45f5e9e50d.png)
 
+- Use this command `extract all`to create an `.ext`(extraction) file.
+- Use this command `ext2spice cthresh 0 rthresh 0` then `ext2spice` to create the `.spice` file from `.ext` file, to be used with our ngspice tool and also extrace all the paracitic capacitances.
+
+#### `sky130_inv.spice` file extraced from magic
+![image](https://user-images.githubusercontent.com/120498080/215250083-2d7d91c7-1797-4d62-ba6b-e9c59a351bc4.png)
+
+
+We then modify the `sky130_inv.spice` file to be able to plot a transient response:
+```verilog
+* SPICE3 file created from sky130_inv.ext - technology: sky130A
+
+.option scale=0.01u
+.include ./libs/pshort.lib
+.include ./libs/nshort.lib
+
+* .subckt sky130_inv A Y VPWR VGND
+M0 Y A VGND VGND nshort_model.0 ad=1435 pd=152 as=1365 ps=148 w=35 l=23
+M1 Y A VPWR VPWR pshort_model.0 ad=1443 pd=152 as=1517 ps=156 w=37 l=23
+C0 A VPWR 0.08fF
+C1 Y VPWR 0.08fF
+C2 A Y 0.02fF
+C3 Y VGND 0.18fF
+C4 VPWR VGND 0.74fF
+* .ends
+
+* Power supply 
+VDD VPWR 0 3.3V 
+VSS VGND 0 0V 
+
+* Input Signal
+Va A VGND PULSE(0V 3.3V 0 0.1ns 0.1ns 2ns 4ns)
+
+* Simulation Control
+.tran 1n 20n
+.control
+run
+.endc
+.end
+```
 
 
 
