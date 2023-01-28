@@ -802,7 +802,7 @@ The next goal is to make a `.lef` file using this inverter architecture. We will
 ---
 ## Pre-layout timing analysis and importance of good clock tree
 ---
-So till now we are done with the design setup,the floorplan, placement and lastly we have learned, given a `.mac` file how to extrace the `.spice` out of it and do the characterization. We where looking into ngspice and magic and now lets see how it is connected to OpenLANE(which is a place and route tool, and for placement of any cell we don't require )
+So till now we are done with the design setup,the floorplan, placement and lastly we have learned, given a `.mac` file how to extrace the `.spice` out of it and do the characterization. We where looking into ngspice and magic and now lets see how it is connected to OpenLANE(which is a place and route tool, and for placement of any cell we don't require the `.mac` file simulation(`.mac` file contain all the information in magic) but we only require is the PnR boundary(which contain the power and the rail, input and the output informantion) and that is the `.lef` files ) 
 
 
 
