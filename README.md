@@ -756,7 +756,10 @@ Using this transient response, we will now characterize the cell's slew rate and
 - Fall Delay [delay between 50%(1.65V) of input to 50%(1.65V) of output]:
 > Fall Delay = 8.07770- 8.05075 = 0.02695 ns
 
+- The characterization done above was done at 27 C.
 
+**So now we have characterized our inverter.**
+The next goal is to make a `.lef` file using this inverter architecture. We will create a unique cell by plugging this `.lef` into openlane and plugin in this cell into our picorv32a core.
 
 
 
