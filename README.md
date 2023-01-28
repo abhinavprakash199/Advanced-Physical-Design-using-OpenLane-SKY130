@@ -25,6 +25,8 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Labs for CMOS inverter ngspice simulations](#Labs-for-CMOS-inverter-ngspice-simulations)
     + [CMOS Inverter Design using Magic](#CMOS-Inverter-Design-using-Magic)
     + [Characterizing the cell's(CMOS Inverter) slew rate and propagation delay](#Characterizing-the-cell's(CMOS-Inverter)-slew-rate-and-propagation-delay)
+* [Day 4 - Pre-layout timing analysis and importance of good clock tree](#day-4)
+    + []()
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -584,6 +586,10 @@ dc1
 plot out vs in 
 ```
 
+## D3 SK1 L2 AND L3 AND L4
+
+
+
 
 
 
@@ -765,11 +771,37 @@ The next goal is to make a `.lef` file using this inverter architecture. We will
 
 
 
+
+
+
+
+
+
+
+
+
 ***NOTE** Linux command to download  a file `wget <url_of_the_file_to_be_downloaded>`*
 `wget https://skywater-pdk.readthedocs.io/en/main/`
 
 
 
+
+
+
+##  SKY130_D3_SK3 L3 to L9
+
+
+
+
+
+
+
+
+
+## DAY 4
+---
+## Pre-layout timing analysis and importance of good clock tree
+---
 
 
 
