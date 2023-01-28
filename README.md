@@ -856,17 +856,59 @@ To check these guidelines, we need to change the grid of Magic to match the actu
 - Add the folowing to `config.tcl` inside the picorv32a:
 > /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/
 ```verilog
-set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/scr/sly130_fd_sc_hd__typical.lib"
-set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/scr/sly130_fd_sc_hd__fast.lib"
-set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/scr/sly130_fd_sc_hd__slow.lib"
-set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/scr/sly130_fd_sc_hd__typical.lib"
+# Design
+set ::env(DESIGN_NAME) "picorv32a"
+
+set ::env(VERILOG_FILES) "./designs/picorv32a/src/picorv32a.v"
+set ::env(SDC_FILE) "./designs/picorv32a/src/picorv32a.sdc"
+
+set ::env(CLOCK_PERIOD) "5.000"
+set ::env(CLOCK_PORT) "clk"
+set ::env(CLOCK_NET) $::env(CLOCK_PORT)
+
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
 
 set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+
+set ::env(FP_CORE_UTIL) 65
+set ::env(FP_IO_VMETAL) 4
+set ::env(FP_IO_HMETAL) 3
+
+
+set filename $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/$::env(PDK)_$::env(STD_CELL_LIBRARY)_config.tcl
+if { [file exists $filename] == 1} {
+source $filename
+}
 ```
 - This sets the liberty file that will be used for ABC mapping of synthesis (`LIB_SYNTH`) and for STA (`_FASTEST`,`_SLOWEST`,`_TYPICAL`) and also the extra LEF files (`EXTRA_LEFS`) for the customized inverter cell. 
 
 #### `config.tcl` file should contain following information
-![image](https://user-images.githubusercontent.com/120498080/215285545-6f25516d-a1e5-4d82-9063-7cba3bf7951c.png)
+![image](https://user-images.githubusercontent.com/120498080/215290835-5d1ede56-c7ea-457b-9623-15a2d9b70de2.png)
+
+- Run docker and prepare the design picorv32a. Plug the new lef file to the OpenLANE flow via:
+```verilog
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+```
+
+- Next do `run_synthesis`. 
+- After the run, and as we can see `sky130_myinverter` cell is successfully included in the design
+
+![image](https://user-images.githubusercontent.com/120498080/215291031-ddea6258-4a59-4a3c-99f0-700d709787b5.png)
+- Synthesis statistics report will be generated at
+
+> /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/28-01_20-55/reports/synthesis/
+
+- So we got Total Negative Slack and Worst Negative Slack is given below
+
+![image](https://user-images.githubusercontent.com/120498080/215291266-c3cfb2ce-4552-4e5d-86e6-fe55230603ae.png)
+
+- So here we are not meeting the timing constrains. Hence our next goal is to solve this negative slack
+
+## Delay
 
 
 
