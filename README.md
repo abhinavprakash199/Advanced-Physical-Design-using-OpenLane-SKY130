@@ -24,7 +24,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 * [Day 3 - Design library cell using Magic Layout and ngspice characterization](#day-3)
     + [Labs for CMOS inverter ngspice simulations](#Labs-for-CMOS-inverter-ngspice-simulations)
     + [CMOS Inverter Design using Magic](#CMOS-Inverter-Design-using-Magic)
-    + [Characterizing the cell's(CMOS Inverter) slew rate and propagation delay](#Characterizing-the-cell's(CMOS-Inverter)-slew-rate-and-propagation-delay:)
+    + [Characterizing the cell's(CMOS Inverter) slew rate and propagation delay](#Characterizing-the-cell's(CMOS-Inverter)-slew-rate-and-propagation-delay)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -653,7 +653,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 - `:drc why` = show DRC violation and also the DRC name which can be referenced from [Sky130 PDK Periphery Rules](https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html#rules-periphery--page-root).
 
 
-### Characterizing the cell's(CMOS Inverter) slew rate and propagation delay:
+### Characterizing the cell's(CMOS Inverter) slew rate and propagation delay
 To get the slew rate and propagation delay of the CMOS Inverter we need to plot the graphs and for that first we extrace the `.spice` file from the layout from designed magic layout.
 #### Steps to extrace the spice file from magic
 Now to know the logical functioning of the inverte we extrace the spice and do simulation in ngspice open source tool.
