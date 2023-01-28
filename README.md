@@ -712,7 +712,7 @@ run
 ![image](https://user-images.githubusercontent.com/120498080/215252912-1c7e8ad3-69ad-43ee-a93b-1acf01bf1b44.png)
 
 - So then we use below files (which was shown in the video) and we got the plots
-- To 0pen the spice file by typing `ngspice sky130A_inv_new.spice` and to generate a graph using `plot y vs time a` :
+- To 0pen the spice file by typing `ngspice sky130_inv_new.spice` and to generate a graph using `plot y vs time a` :
 
 ```verilog
 * SPICE3 file created from sky130_inv_new.ext - technology: sky130A
