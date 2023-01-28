@@ -695,6 +695,7 @@ run
 .endc
 .end
 ```
+- `\vsdstdcelldesign-master\libs\nshort.lib` and `\vsdstdcelldesign-master\libs\nphort.lib` are the spice model files for nmos and pmos
 
 ***NOTE** To edit vim file in linux press `i` and make the changes then press `Esc` and the `:wq!` to save the changes*
 
