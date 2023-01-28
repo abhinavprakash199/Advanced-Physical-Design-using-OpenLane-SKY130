@@ -765,7 +765,8 @@ The next goal is to make a `.lef` file using this inverter architecture. We will
 
 
 
-
+***NOTE** Linux command to download  a file `wget <url_of_the_file_to_be_downloaded>`*
+`wget https://skywater-pdk.readthedocs.io/en/main/`
 
 
 
@@ -785,13 +786,15 @@ The next goal is to make a `.lef` file using this inverter architecture. We will
 ## References
 ---
 - [Advanced Physical Design](https://www.vlsisystemdesign.com/advanced-physical-design-using-openlane-sky130/?awt_a=5L_6&awt_l=H2Nw0&awt_m=3dG.7I1RDUA8._6)
+- [ABC Script](http://people.eecs.berkeley.edu/~alanmi/abc/)
 - [OpenLANE Documentation](https://openlane.readthedocs.io/en/latest/)
-- [To build and inverter from scratch(workshop reference)](https://github.com/nickson-jose/vsdstdcelldesign)
 - [OpenLANE github page by efabless](https://github.com/efabless/openlane).
 - [OpenLANE The-OpenROAD-Project](https://github.com/The-OpenROAD-Project/OpenLane)
-- [Guide to install tools](https://github.com/kunalg123/vsdflow)
-- [ABC Script](http://people.eecs.berkeley.edu/~alanmi/abc/)
-- [Installation Guide](https://github.com/DantuNandiniDevi/iiitb_freqdiv#openlane-installation)
+- [To build and inverter from scratch(workshop reference)](https://github.com/nickson-jose/vsdstdcelldesign)
+- [Installation Guide by kunal for tools](https://github.com/kunalg123/vsdflow)
+- [Installation Guide Dantu Nandini Devi for tools](https://github.com/DantuNandiniDevi/iiitb_freqdiv#openlane-installation)
+- [Magic Documantation](http://opencircuitdesign.com/magic)
+- [Skywater Documentation](https://skywater-pdk.readthedocs.io/en/main/)
 
 
 
