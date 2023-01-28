@@ -934,9 +934,28 @@ Solution:
 tns (total negative slack) = -711.59
 wns (worst negative slack) = -23.89
 ```
+- Let us change some variables to minimize the negative slack. We will now change the variables "on the flight". Use `echo $::env(SYNTH_STRATEGY)` to view the current value of the variables before changing it:
+echo $::env ([Varible]) // our case = SYNTH_STRATEGY
+// change the STRATEGY
 
+ | SYNTH_STATERGY | Area | wns | tns |
+ | ------ | ------ | ------ | ------ |
+ | 0 | 147712.9184 | -23.89 | -711.59 |
+ 
+ ![image](https://user-images.githubusercontent.com/120498080/215293404-dd5af0f7-7e65-4a50-a8c0-b55b7471e1e5.png)
 
-
+```
+% echo $::env(SYNTH_STRATEGY)
+AREA 0
+% set ::env(SYNTH_STRATEGY) "DELAY 0"
+% echo $::env(SYNTH_BUFFERING)
+1
+% echo $::env(SYNTH_SIZING)
+0
+% set ::env(SYNTH_SIZING) 1
+% echo $::env(SYNTH_DRIVING_CELL)
+sky130_fd_sc_hd__inv_2
+```
 
 
 
