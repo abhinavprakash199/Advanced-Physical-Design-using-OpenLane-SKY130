@@ -24,6 +24,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 * [Day 3 - Design library cell using Magic Layout and ngspice characterization](#day-3)
     + [Labs for CMOS inverter ngspice simulations](#Labs-for-CMOS-inverter-ngspice-simulations)
     + [CMOS Inverter Design using Magic](#CMOS-Inverter-Design-using-Magic)
+    + [Characterizing the cell's(CMOS Inverter) slew rate and propagation delay](#Characterizing-the-cell's(CMOS-Inverter)-slew-rate-and-propagation-delay)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -618,7 +619,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 - This `sky130_inv.mag`(magic) file is 
 - This `sky130A.tech`(technology) file is from the pdk of sky130.
 
-#### Layout of the inveter in magic
+#### Layout of the CMOS Inveter in magic
 ![Screenshot (2288)](https://user-images.githubusercontent.com/120498080/215201506-270b58aa-88cc-4464-aa7e-ca452b694867.png)
 #### To know about the particular block in layout 
 - Selectet the particulat block and typw what is the "tkcon main" window
@@ -652,7 +653,8 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 - `:drc why` = show DRC violation and also the DRC name which can be referenced from [Sky130 PDK Periphery Rules](https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html#rules-periphery--page-root).
 
 
-
+### Characterizing the cell's(CMOS Inverter) slew rate and propagation delay:
+To get the slew rate and propagation delay of the CMOS Inverter we need to plot the graphs and for that first we extrace the `.spice` file from the layout from designed magic layout.
 #### Steps to extrace the spice file from magic
 Now to know the logical functioning of the inverte we extrace the spice and do simulation in ngspice open source tool.
 
@@ -745,7 +747,7 @@ run
 - In ngspice to zoom in to particulat region in graph: right click and drag in that region.
 - In ngspice to get the graph coordinate click on that point.
 
-#### Characterize the cell's slew rate and propagation delay:
+
 Using this transient response, we will now characterize the cell's slew rate and propagation delay:
 - Rise Time [output transition time from 20%(0.66V) to 80%(2.64V)]:
 > Rise Time = 2.24417 - 2.1828 = 0.0618 ns
