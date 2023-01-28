@@ -376,8 +376,8 @@ To open layout in magic use this command in this location
 magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
 ```
 `-T <address_of_sky130A.tech_file>` where T is for technology file 
-`lef read <address_of_merged.lef_file>` to read the lef files 
-`def read <address_of_picorv32a.floorplan.def_file>` to read the def files 
+`lef read <address_of_merged.lef_file>` to read the lef files (we use `lef read` because its a standard industry file)
+`def read <address_of_picorv32a.floorplan.def_file>` to read the def files (we use `def read` because its a standard industry file) 
 - **NOTE** If address of the required file is at the same working loaction then we just need to provide the required file name.
 - 
 ![image](https://user-images.githubusercontent.com/120498080/214837492-61506cf5-9b3e-4350-ad28-6c9e3f459bf8.png)
@@ -611,11 +611,10 @@ Magic Tool offers a very user-friendly interface for designing the different lay
 ![image](https://user-images.githubusercontent.com/120498080/215192449-2306ab36-1490-4f7c-9197-8bb9c68aac97.png)
 - Then run the following command to invoke magic in `.tech` and `.mac` file
 ```
-magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def
+magic -T sky130A.tech sky130_inv.mag &
 ```
-`-T <address_of_sky130A.tech_file>` where T is for technology file 
-`lef read <address_of_merged.lef_file>` to read the lef files (we use `lef read` because its a standard industry file)
-`def read <address_of_picorv32a.placement.def_file>` to read the def files (we use `def read` because its a standard industry file)
+`-T <address_of_sky130A.tech_file>` where T is for technology file. 
+Here we use not `lef read` or `def read` as in for `.def` or `.lef` file because `.mag` is not a  standard industry file).
 `&` is use to free the next command prompt.
 - **NOTE** If address of the required file is at the same working loaction then we just need to provide the required file name.
 
