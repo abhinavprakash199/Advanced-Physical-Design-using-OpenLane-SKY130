@@ -908,7 +908,35 @@ add_lefs -src $lefs
 
 - So here we are not meeting the timing constrains. Hence our next goal is to solve this negative slack
 
-## Delay
+### Delay
+
+Problem:
+- The capacitance or the load at the output node of each and every buffer in the complete clock tree is varying.
+- Also if the load is varying the input transition is varying.
+
+To avoid large skew between endpoints of a clock tree (happening due to signal arrives at different point in time):
+- After splitting the buffers.
+- Buffers on the same level must have same capacitive load to ensure same timing delay or latency on the same level. It means that each buffer at the same level is having same load.
+- Buffers on the same level must also be the same size (different buffer sizes -> different W/L ratio -> different resistance -> different RC constant -> different delay). It means that the buffer at same level should be of same size.
+
+![Screenshot (2304)](https://user-images.githubusercontent.com/120498080/215292143-0514595b-a74d-47aa-a969-693620d905be.png)
+
+Solution:
+- **Delay tables** are the solution. Delay tables are 2D table. Delay of a component is characterised and summaries in a table.
+- The timing model of each cell is recorded and is summarised in delay tables, which are part of the liberty file. The output slew is the main cause of delay. Capacitive load and input slew are also factors that affect output slew. The input slew has its own transition delay table and is a function of the previous buffer's output cap load and input slew.
+
+![Screenshot (2305)](https://user-images.githubusercontent.com/120498080/215292161-f2c410f1-1a33-4eeb-bb6c-a63bcc2a9479.png)
+
+### Fix Negative Slack:
+
+- Let's try to fix the slack. Currently the value of slack is
+```
+tns (total negative slack) = -711.59
+wns (worst negative slack) = -23.89
+```
+
+
+
 
 
 
