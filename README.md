@@ -112,7 +112,7 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
     + **Design Rule Checking(DRC)** where we make sure that the final layout hones all design rules 
     + **Layout vs Schematic(LVS)** which make sure that the final layout matchs the gate level netlist thet we started with 
 **Timing Verification** 
-    + **Static Time Analysis(STA)** to make sure that all timing constrains are met and circiut will run at designated clock frequency.
+    + **Static Time Analysis( A)** to make sure that all timing constrains are met and circiut will run at designated clock frequency.
 
 #### Introduction to OpenLANE
 For Open Source ASIC Flow we need to ba aware about the following in Open Source EDA
@@ -130,7 +130,8 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
 - OpenLINK has two modes of operation
     +  **Autonomous** (it is the push buttton flow where we figure the flow and we directly get the final GDSII) 
     +  **Interactive** (here we run comands and steps one be one so that we can do experimentation and look at the results of differnet flow steps)
- - OpenLINK has very nice feature called as **Design Space Exploration** which can be used to find the best set of flow configurations.
+ - OpenLINK has very nice feature called as **Design Space Exploration** which can be used to find the best set of flow 
+ urations.
  - OpenLINK has large number of design examples(43 different design with their best configuration)
 #### Steps to install openlane in our machine 
 
@@ -340,7 +341,8 @@ we find every configuration that the current run has approved. This could origin
 - `config.tcl` inside the `openlane/designs/picorv32a` folder
 - System default settings inside `openlane/configurations`
 #### `config.tcl` file should contain following information
-![Screenshot (2235)](https://user-images.githubusercontent.com/120498080/214825614-4e3a2d5b-1892-4d50-bf66-6da743c349aa.png)
+![image](https://user-images.githubusercontent.com/120498080/215285276-fed271bd-16a4-4d0a-995a-c27ede363eaf.png)
+
 
 
 2. **Run floorplan on OpenLane:** 
@@ -816,15 +818,55 @@ But first, we must follow to the PnR tool's instructions for standard cells:
 - The intersection of the horizontal and vertical tracks is where the input and output ports are located (ensure the routes can reach that ports).
 - The standard cell must have a height that is an odd multiple of the tracks vertical pitch and a width that is an odd multiple of the tracks horizontal pitch.
 
+
 To check these guidelines, we need to change the grid of Magic to match the actual metal tracks. The `pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tracks.info` contains those metal informations.
 
-In the tkon terminal, use the grid command to match the track information.
+- In the tkon terminal, use the `grid` command to match the track information.
 
+![Screenshot (2301)](https://user-images.githubusercontent.com/120498080/215279771-1d996a58-8a86-4b0f-8f79-24e0baf9979e.png)
 
+- The grids indicate the only locations for the local-internet layer routing, and the wire pitch needed is indicated by the distance between grid lines. The following demonstrates that the requirements are met.
 
+![Screenshot (2302)](https://user-images.githubusercontent.com/120498080/215279845-f51bab17-45eb-4399-b6b2-5e37dc6bea61.png)
 
+- The LEF file will then be extracted. Cell size, port definitions, and other properties that help the placer and router tool are contained in the LEF file. Thus, it is necessary to first set the port's definition, port class, and use. 
+- The [vsdstdcelldesign repository](https://github.com/nickson-jose/vsdstdcelldesign#create-port-definition) contains the instructions to **covert lables to ports**(declares pin as macro) using Magic.(this is alredy been done here)
+- So after defining the ports we go for [**Port class and Port use**](https://github.com/nickson-jose/vsdstdcelldesign#Set-port-class-and-port-use-attributes-for-a-layout) which tells the tool about the perpous of the ports.(e.g. it is input post, output port, etc)(this is alredy been done here)
 
+- Now, to save the mag file as `sky130 myinverter.mag` type `save sky130_myinverter.mag` in tkcon terminal.
+- Then, on the tkcon terminal, type `lef write` and a lef file with the same name as the mag file `sky130_myinverter.lef` will be produced. 
 
+![image](https://user-images.githubusercontent.com/120498080/215283803-642ff908-9929-416f-b0f4-b77c31e28b6b.png)
+
+- Here is the LEF file
+
+![image](https://user-images.githubusercontent.com/120498080/215284142-68551b1f-b024-45a3-b4d9-a94c10a3a204.png)
+
+### Plug-in the Customized Inverter Cell(lif file) to OpenLane:
+- Next is to plug this lef file into our picorv32a flow (before that we will more our file to src folder)
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src$
+
+- Provided inside the cloned `vsdstdcelldesign` are the liberty files containing the customized inverter cell.
+- Copy the extracted lef file `sky130_myinverter.lef` from `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign/` and the liberty files `sky130*.lib` from `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign/libs/` to the src directory of picorv32a in
+> /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign/libs/
+
+**NOTE** `sky130_fd_sc_hd__typical.lib`,`sky130_fd_sc_hd__slow.lib` and `sky130_fd_sc_hd__fast.lib` are the typical, slow and fas corner timing library file provided by sky130 which are at loaction and would we requied for STA analysis
+> /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign/libs/
+
+- Add the folowing to `config.tcl` inside the picorv32a:
+> /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/
+```verilog
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/scr/sly130_fd_sc_hd__typical.lib"
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/scr/sly130_fd_sc_hd__fast.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/scr/sly130_fd_sc_hd__slow.lib"
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/scr/sly130_fd_sc_hd__typical.lib"
+
+set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+```
+- This sets the liberty file that will be used for ABC mapping of synthesis (`LIB_SYNTH`) and for STA (`_FASTEST`,`_SLOWEST`,`_TYPICAL`) and also the extra LEF files (`EXTRA_LEFS`) for the customized inverter cell. 
+
+#### `config.tcl` file should contain following information
+![image](https://user-images.githubusercontent.com/120498080/215285545-6f25516d-a1e5-4d82-9063-7cba3bf7951c.png)
 
 
 
