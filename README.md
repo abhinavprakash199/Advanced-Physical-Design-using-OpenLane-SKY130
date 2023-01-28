@@ -696,6 +696,7 @@ run
 .end
 ```
 
+***NOTE** To edit vim file in linux press `i` and make the changes then press `Esc` and the `:wq!` to save the changes*
 
 
 
