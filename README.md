@@ -26,7 +26,10 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [CMOS Inverter Design using Magic](#CMOS-Inverter-Design-using-Magic)
     + [Characterizing the cell's(CMOS Inverter) slew rate and propagation delay](#Characterizing-the-cell's(CMOS-Inverter)-slew-rate-and-propagation-delay)
 * [Day 4 - Pre-layout timing analysis and importance of good clock tree](#day-4)
-    + []()
+    + [Plug-in the Customized Inverter Cell(lif file) to OpenLane](#Plug-in-the-Customized-Inverter-Cell(lif-file)-to-OpenLane)
+    + [Delay](#Delay)
+    + [Fix Negative Slack](Fix-Negative-Slack)
+    + [Setup Timing Analysis](#Setup-Timing-Analysis)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -842,7 +845,7 @@ To check these guidelines, we need to change the grid of Magic to match the actu
 
 ![image](https://user-images.githubusercontent.com/120498080/215284142-68551b1f-b024-45a3-b4d9-a94c10a3a204.png)
 
-### Plug-in the Customized Inverter Cell(lif file) to OpenLane:
+### Plug-in the Customized Inverter Cell(lif file) to OpenLane
 - Next is to plug this lef file into our picorv32a flow (before that we will more our file to src folder)
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src$
 
@@ -927,7 +930,7 @@ Solution:
 
 ![Screenshot (2305)](https://user-images.githubusercontent.com/120498080/215292161-f2c410f1-1a33-4eeb-bb6c-a63bcc2a9479.png)
 
-### Fix Negative Slack:
+### Fix Negative Slack
 
 - Let's try to fix the slack. Currently the value of slack is
 ```
@@ -1074,7 +1077,14 @@ set_load  $cap_load [all_outputs]
 
 ```
 - This is replicating the same results as we had after run synthesis stage `pre_sta.conf` will be the fill on which we will be doing our STA analysis.
-- To perform pre STA run the command below by opening the terminal in openlane folder which is inside the openlane_working_dir.
+- To perform pre STA run the command `sta pre_sta.conf` by opening the terminal in openlane folder which is inside the openlane_working_dir.
+
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane$ sta pre_sta.conf
+
+#### Setup Timing Analysis timing contrains met
+
+![image](https://user-images.githubusercontent.com/120498080/215351729-106666bb-6f4a-4c59-9415-a72ca4f9411c.png)
+- If timing constrains are not met then we need to optimize it.
 
 
 
