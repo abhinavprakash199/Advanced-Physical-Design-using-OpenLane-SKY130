@@ -30,6 +30,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Delay](#Delay)
     + [Fix Negative Slack](Fix-Negative-Slack)
     + [Setup Timing Analysis](#Setup-Timing-Analysis)
+    + [Run CTS(Clock Tree Synthesis) using TritonCTS](#Run-CTS(Clock-Tree-Synthesis)-using-TritonCTS)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -975,17 +976,10 @@ wns (worst negative slack) = 00
 - **NOTE** If the salck values are not changing then delete the genetered `.v` file under synthesis and run again.
 
 #### Error we got in running synthesis after doing the changes 
-- Solution is to delete `.v` file under synthesis and run again.
-![image](https://user-images.githubusercontent.com/120498080/215315495-c2118ccd-1307-44ee-87e2-bc673df827dc.png)
 
-#### All commands to run in openlane
-```
-docker
-./flow.tcl -interactive
-package require openlane 0.9
-prep -design picorv32a
-run_synthesis
-```
+![image](https://user-images.githubusercontent.com/120498080/215315495-c2118ccd-1307-44ee-87e2-bc673df827dc.png)
+- Solution is to delete `.v` file under synthesis and run again.
+
 - Now to run floorplaning we use `run_floorplan` but we got this error 
 ![image](https://user-images.githubusercontent.com/120498080/215316219-86bf602b-b34b-400c-b9fa-23a4c4d14026.png)
 
@@ -1017,6 +1011,22 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 - Zoom view of 'sky130_vsdinv` inverter in our design
 ![image](https://user-images.githubusercontent.com/120498080/215341238-6438b9c2-8581-4252-a142-830df3abc578.png)
  
+
+
+
+
+
+# THEOTY
+```
+Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
+SKY130_D4_SK2 - Timing analysis with ideal clocks using openSTA
+SKY_L1 - Setup timing analysis and introduction to flip-flop setup time
+
+
+Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
+SKY130_D4_SK2 - Timing analysis with ideal clocks using openSTA
+SKY_L2 - Introduction to clock jitter and uncertainty
+```
 
 
 
@@ -1087,6 +1097,19 @@ set_load  $cap_load [all_outputs]
 - If timing constrains are not met then we need to optimize it.
 
 
+### Run CTS(Clock Tree Synthesis) using TritonCTS
+# CTS THEORY
+```
+Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
+SKY130_D4_SK3 - Clock tree synthesis TritonCTS and signal integrity
+SKY_L1 - Clock tree routing and buffering using H-Tree algorithm
+
+Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
+SKY130_D4_SK3 - Clock tree synthesis TritonCTS and signal integrity
+SKY_L2 - Crosstalk and clock net shielding
+```
+- So with Setup Timing Analysis using `my_base.sdc` we confirm that setup time has been met so we go for Clock Tree Synthesis
+- Then use `run_cts` command in openlane to run clock tree synthesis
 
 
 
@@ -1098,6 +1121,23 @@ set_load  $cap_load [all_outputs]
 
 
 
+
+## All commands to run in openlane
+```verilog
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+run_synthesis
+init_floorplan
+place_io
+global_placement_or
+detailed_placement
+tap_decap_or
+detailed_placement
+gen_pdn
+
+```
 
 
 
