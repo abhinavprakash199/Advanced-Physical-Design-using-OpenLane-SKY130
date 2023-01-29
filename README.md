@@ -945,8 +945,8 @@ echo $::env ([Varible]) // our case = SYNTH_STRATEGY
 ```verilog
 % echo $::env(SYNTH_STRATEGY)
 AREA 0
-% set ::env(SYNTH_STRATEGY) 1        
-1
+% set ::env(SYNTH_STRATEGY) "DELAY 0"      
+DELAY 0
 % echo $::env(SYNTH_STRATEGY)
 1
 % echo $::env(SYNTH_BUFFERING)
@@ -969,10 +969,10 @@ wns (worst negative slack) = 00
 ```
 ![image](https://user-images.githubusercontent.com/120498080/215343915-f694c0b9-a321-42b8-8b32-58d10b1d9d18.png)
 
-- **NOTE** If the salck values are not changing then delete the genetered `.def` file under synthesis and run again.
+- **NOTE** If the salck values are not changing then delete the genetered `.v` file under synthesis and run again.
 
 #### Error we got in running synthesis after doing the changes 
-- Solution is to delete `.def` file under synthesis and run again.
+- Solution is to delete `.v` file under synthesis and run again.
 ![image](https://user-images.githubusercontent.com/120498080/215315495-c2118ccd-1307-44ee-87e2-bc673df827dc.png)
 
 #### All commands to run in openlane
@@ -1017,17 +1017,33 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 
 
-
-### Setup timing analysis and introduction to flip-flop setup time
-
-
-
-
-
-
-
 ### Setup Timing Analysis 
 We will do Timing Analysis with ideal clock(the clock tree is not build) first to understand what are the basic structure and then we will be using the real clocks and doing the timing analysis
+
+
+### Setup timing analysis in OpenLANE 
+- In cts we try to change the netlist by making clock tree.
+Making the pre_sta.conf and save it in the openlane folder.
+```
+set_cmd_units -time ns -capacitance pF -current mA -voltage V -resistance kOhm -distance um
+read_liberty -min /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib
+read_liberty -max /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/sky130_fd_sc_hd__fast.;ib
+read_verilog /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_16-21/results/synthesis/picorv32a.synthesis_cts.v
+link_design picorv32a
+read_sdc /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/my_base.sdc
+report_checks -path_delay min_max -fields {slew trans net cap input_pin}
+report_tns
+report_wns
+```
+![image](https://user-images.githubusercontent.com/120498080/215347570-0bf8b25b-4a08-4149-bc61-8d0e978afa8c.png)
+
+After cts new .v files start getting created.
+Creating my_base.sdc and save this file in the src folder of picorv32a folder.
+
+```
+
+```
+
 
 
 
