@@ -1036,6 +1036,7 @@ We will do Timing Analysis with ideal clock(the clock tree is not build) first t
 
 
 ### Setup timing analysis in OpenLANE 
+- This is done only when after run placement the timing constrain are not met (in our case timing constrains where met then also we do it for confirmation) if we dont get the desiret timing constrains then we need to optimize it 
 - In cts we try to change the netlist by making clock tree.
 Making the `pre_sta.conf` and save it in the openlane folder.
 ```
@@ -1128,7 +1129,9 @@ Inside the `/OpenLane/scripts/openroad/cts.tcl` contains the configuration varia
 - `CTS_CLK_BUFFER_LIST` = list of clock branch buffers (`sky130_fd_sc_hd__clkbuf_8` `sky130_fd_sc_hd__clkbuf_4` `sky130_fd_sc_hd__clkbuf_2`)
 - `CTS_ROOT_BUFFER` = clock buffer used for the root of the clock tree and is the biggest clock buffer to drive the clock tree of the whole chip (`sky130_fd_sc_hd__clkbuf_16`)
 - `CTS_MAX_CAP` = maximum capacitance of the output port of the root clock buffer.
-<!--- D4_SK3_L4 --->
+
+
+<!--- for detail - D4_SK3_L4 and ****--->
 ![image](https://user-images.githubusercontent.com/120498080/215358032-6b787abc-1f55-462b-bf55-ea938d876c59.png)
 
 
@@ -1147,6 +1150,60 @@ Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
 SKY130_D4_SK4 - Timing analysis with real clocks using openSTA
 SKY_L2 - Hold timing analysis using real clocks
 ```
+
+
+### Multi-corner STA for Post-CTS:
+- We will now do STA for post clock tree synthesis to include effect of clock buffers. 
+- Similar to pre-layout STA(analysis of clock tree of our circit), this will done on OpenROAD (which will then call OpenSTA), so we enter into openroad and through this we can use the env variables 
+
+- **NOTE** - openroad is the part of openlane and opensta integrated on openroad.
+
+
+
+- In the terminal in which we run the run_cts command there only go to openroad. Type the following command in the terminal.
+```
+openroad
+```
+- This will open the open road. Our objective to do the analysis of the entire circut where clock tree has been build now. Now we will open OpenSTA here. For timing alnalysis.
+1. We first create a db `
+2. db is create using lef and def file. In our analysis we use these db. (It is a one time process. Whenever lef changes we have to change the db)
+- To create a db
+All the loaction should be after /openlane/.....
+```
+// first read lef (it is inside the tmp folder (merged.lef)
+read_lef [location] {read_lef /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged.lef}
+// secondly read def (it is present inside cts folder present under the results folder/cts)
+read_def [location]
+// creating db {read_def /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/cts/picorv32a.cts.def}
+write_db [name] // my case = pico_cts.db (created under the openlane folder) {write_db pico_cts.db }
+// reading db {read_db pico_cts.db }
+read_db [name] // my case = pico_cts.db
+//  reading verilog (it is present inside cts folder present under the results/synthesis/picorv32a.synthesis_cts.v)
+read_verilog [location] // {read_verilog /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/synthesis/picorv32a.synthesis_cts.v}
+// reading library (max)
+read_liberty -max $::env(LIB_FASTEST)
+// reading library (min)
+read_liberty -min $::env(LIB_SLOWEST)
+// reading sdc
+read_sdc [location] {read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc}
+// now the clock has been generated 
+set_propagated_clock [all_clocks]
+// report
+report_checks -path_delay min_max -format full_clock_expanded -digits 4
+```
+
+- `write_db` and `read_db` is done before running STA tool, this creates a database file using LEF file and resulting DEF file of the last stage.
+- Multi-corner STA must read both min library (for hold analysis) and max library (for setup analysis) unlike in single corner STA where only the typical library is read.
+- SDC file used is the same for single and multi-corner.
+- Since this is post-CTS STA, `set_propagated_clock` is used. `set_propagated_clock` propagates clock latency throughout a clock network, resulting in more accurate skew and timing results throughout the clock network. This is done postlayout, after final clock tree generation, unlike in prelayout where ideal clock is used thus no clock latency.\
+
+![image](https://user-images.githubusercontent.com/120498080/215362781-e4fd7af0-7e32-4d49-8c74-2da4025aa7c0.png)
+![image](https://user-images.githubusercontent.com/120498080/215362695-17179941-5dd1-43a9-bc88-1a35936ea1a3.png)
+
+#### Setup Slack constrains are met
+![image](https://user-images.githubusercontent.com/120498080/215362537-a95ec0b0-0089-4a99-8a2d-fee31e5bfc25.png)
+#### Hold Slack constrains are met
+![image](https://user-images.githubusercontent.com/120498080/215363145-82979f79-5f0b-45d0-908e-064f4aee2a6c.png)
 
 
 
