@@ -989,7 +989,7 @@ run_synthesis
 - So we go with the following commands to do floorplanning and placement: 
 ```
 init_floorplan
-placer_io
+place_io
 global_placement_or
 detailed_placement
 tap_decap_or
