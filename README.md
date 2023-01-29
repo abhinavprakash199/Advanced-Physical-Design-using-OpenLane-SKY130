@@ -975,16 +975,21 @@ docker
 ./flow.tcl -interactive
 package require openlane 0.9
 prep -design picorv32a
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+run_synthesis
+set ::env(SYNTH_STRATEGY) 1 
+set ::env(SYNTH_SIZING) 1
 run_synthesis
 
 ```
 - Now to run floorplaning we use `run_floorplan` but we got this error 
 ![image](https://user-images.githubusercontent.com/120498080/215316219-86bf602b-b34b-400c-b9fa-23a4c4d14026.png)
 
-- So we go with the following commands: 
+- So we go with the following commands to do floorplanning and placement: 
 ```
 init_floorplan
-place_io
+placer_io
 global_placement_or
 detailed_placement
 tap_decap_or
@@ -992,8 +997,17 @@ detailed_placement
 gen_pdn
 run_cts
 ```
+- Then check the `merged.lef` wheather it has integrated that `sky130_myinverter.lef` file which was created when we create our inverter `.mag` file
+> `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_06-33/tmp/merged.lef`
 
-## SKY130_D4_SK1_L7
+![image](https://user-images.githubusercontent.com/120498080/215319017-acb4c543-a62e-4da2-8144-d8a4628030a0.png)
+- Then check the file which is created. Go to the placements folder under results and then invoke the magic tool and load the def file. The command is:
+`magic -T /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def`
+- Placement of our design
+![image](https://user-images.githubusercontent.com/120498080/215320530-748a7211-fff9-4aaa-9b44-266105d4a93b.png)
+
+
+
 
 
 
