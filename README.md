@@ -893,7 +893,7 @@ source $filename
 set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
 add_lefs -src $lefs
 ```
-
+- These command are to ensure that when `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_06-33/tmp/merged.lef` created after floorplanning our `sky130_vsd.lef` file get added to it
 - Next do `run_synthesis`. 
 - After the run, and as we can see `sky130_myinverter` cell is successfully included in the design
 
@@ -945,22 +945,68 @@ echo $::env ([Varible]) // our case = SYNTH_STRATEGY
 ```verilog
 % echo $::env(SYNTH_STRATEGY)
 AREA 0
-% set ::env(SYNTH_STRATEGY) "DELAY 0"
+% set ::env(SYNTH_STRATEGY) 1        
+1
+% echo $::env(SYNTH_STRATEGY)
+1
 % echo $::env(SYNTH_BUFFERING)
 1
 % echo $::env(SYNTH_SIZING)
 0
 % set ::env(SYNTH_SIZING) 1
+1
 % echo $::env(SYNTH_DRIVING_CELL)
-sky130_fd_sc_hd__inv_2
+sky130_fd_sc_hd__inv_8
 ```
- 
- ![image](https://user-images.githubusercontent.com/120498080/215293404-dd5af0f7-7e65-4a50-a8c0-b55b7471e1e5.png)
-- With `SYNTH_STRATEGY` of `Delay 0`, the tool will focus more on optimizing/minimizing the delay, index can be 0 to 3 where 3 is the most optimized for timing (sacrificing more area). `SYNTH_BUFFERING` of 1 ensures cell buffer will be used on high fanout cells to reduce delay due to high capacitance load. `SYNTH_SIZING` of 1 will enable cell sizing where cell will be upsize or downsized as needed to meet timing. `SYNTH_DRIVING_CELL` is the cell used to drive the input ports and is vital for cells with a lot of fan-outs since it needs higher drive strength (larger driving cell needed). {Use readme files to know about these}
+ ![image](https://user-images.githubusercontent.com/120498080/215314984-6f398fbd-f95c-4048-a8f4-5e1e90d173f9.png)
 
-|TIME | SYNTH_STATERGY | Area | wns | tns |
-| ------ | ------ | ------ | ------ | ------ |
-|Before|AREA 0| 147712.9184 | -23.89 | -711.59 |
+- With `SYNTH_STRATEGY` of `Delay 0`, the tool will focus more on optimizing/minimizing the delay, index can be 0 to 3 where 3 is the most optimized for timing (sacrificing more area). `SYNTH_BUFFERING` of 1 ensures cell buffer will be used on high fanout cells to reduce delay due to high capacitance load. `SYNTH_SIZING` of 1 will enable cell sizing where cell will be upsize or downsized as needed to meet timing. `SYNTH_DRIVING_CELL` is the cell used to drive the input ports and is vital for cells with a lot of fan-outs since it needs higher drive strength (larger driving cell needed). 
+- Use readme files to know about these
+![image](https://user-images.githubusercontent.com/120498080/215314890-fdfab8f4-a344-4091-8b56-6885fbbe46fd.png)
+
+- Then we do `run_synthesis` and we got and error, but now are ignoring this (slag issue) and move forward
+
+#### Error we got in running synthesis after doing the changes
+![image](https://user-images.githubusercontent.com/120498080/215315495-c2118ccd-1307-44ee-87e2-bc673df827dc.png)
+
+#### All commands to run in openlane
+```
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+run_synthesis
+
+```
+- Now to run floorplaning we use `run_floorplan` but we got this error 
+![image](https://user-images.githubusercontent.com/120498080/215316219-86bf602b-b34b-400c-b9fa-23a4c4d14026.png)
+
+- So we go with the following commands: 
+```
+init_floorplan
+place_io
+global_placement_or
+detailed_placement
+tap_decap_or
+detailed_placement
+gen_pdn
+run_cts
+```
+
+## SKY130_D4_SK1_L7
+
+
+
+
+
+
+
+
+
+### Setup Timing Analysis 
+We will do Timing Analysis with ideal clock(the clock tree is not build) first to understand what are the basic structure and then we will be using the real clocks and doing the timing analysis
+
+
 
 
 ## References
