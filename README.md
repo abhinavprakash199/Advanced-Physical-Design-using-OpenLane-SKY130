@@ -31,6 +31,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Fix Negative Slack](Fix-Negative-Slack)
     + [Setup Timing Analysis](#Setup-Timing-Analysis)
     + [Run CTS(Clock Tree Synthesis) using TritonCTS](#Run-CTS(Clock-Tree-Synthesis)-using-TritonCTS)
+    + [Timing Analysis with Real Clocks](#Timing-Analysis-with-Real-Clocks)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -1109,13 +1110,43 @@ SKY130_D4_SK3 - Clock tree synthesis TritonCTS and signal integrity
 SKY_L2 - Crosstalk and clock net shielding
 ```
 - So with Setup Timing Analysis using `my_base.sdc` we confirm that setup time has been met so we go for Clock Tree Synthesis
-- Then use `run_cts` command in openlane to run clock tree synthesis
+- Then use `run_cts` command in openlane to run clock tree synthesis.
+![image](https://user-images.githubusercontent.com/120498080/215356354-1b3d382c-237a-4a73-97eb-414e4151ab91.png)
+
+- This will create `picorv32a.cts.def` and `picorv32a.cts.def.png`woll be created at
+> /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_16-21/results/cts/
+#### `picorv32a.cts.def.png` file
+![image](https://user-images.githubusercontent.com/120498080/215356520-0e5200b8-0c98-4651-8484-e25527562412.png)
+
+
+#### How exactly `run_cts` command in openlane
+- The `run_cts` and the other OpenLane commands are actually just calling the tcl proc (procedure) inside `/OpenLane/scripts/tcl_commands/`. This tcl procedure will then call OpenROAD to run the actual tool. For example, `run_cts` can be found inside `/OpenLane/scripts/tcl_commands/cts.tcl`, this tcl procedure will call OpenROAD and will call `/OpenLane/scripts/openroad/cts.tcl` which contains the OpenROAD commands to run TritonCTS.
+![image](https://user-images.githubusercontent.com/120498080/215357296-a3d16381-d607-4695-b670-fa679c195d2e.png)
+
+Inside the `/OpenLane/scripts/openroad/cts.tcl` contains the configuration variables for CTS. Notables ones are:
+
+- `CTS_CLK_BUFFER_LIST` = list of clock branch buffers (`sky130_fd_sc_hd__clkbuf_8` `sky130_fd_sc_hd__clkbuf_4` `sky130_fd_sc_hd__clkbuf_2`)
+- `CTS_ROOT_BUFFER` = clock buffer used for the root of the clock tree and is the biggest clock buffer to drive the clock tree of the whole chip (`sky130_fd_sc_hd__clkbuf_16`)
+- `CTS_MAX_CAP` = maximum capacitance of the output port of the root clock buffer.
+<!--- D4_SK3_L4 --->
+![image](https://user-images.githubusercontent.com/120498080/215358032-6b787abc-1f55-462b-bf55-ea938d876c59.png)
+
+
+### Timing Analysis with Real Clocks
+
+# Theory
 
 
 
+``` see also 
+Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
+SKY130_D4_SK4 - Timing analysis with real clocks using openSTA
+SKY_L1 - Setup timing analysis using real clocks
 
-
-
+Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
+SKY130_D4_SK4 - Timing analysis with real clocks using openSTA
+SKY_L2 - Hold timing analysis using real clocks
+```
 
 
 
@@ -1128,6 +1159,10 @@ docker
 ./flow.tcl -interactive
 package require openlane 0.9
 prep -design picorv32a
+
+echo $::env ([Varible]) // our case = SYNTH_STRATEGY
+// change the STRATEGY
+
 run_synthesis
 init_floorplan
 place_io
@@ -1136,7 +1171,7 @@ detailed_placement
 tap_decap_or
 detailed_placement
 gen_pdn
-
+run_cts
 ```
 
 
@@ -1158,6 +1193,7 @@ gen_pdn
 - [Installation Guide Dantu Nandini Devi for tools](https://github.com/DantuNandiniDevi/iiitb_freqdiv#openlane-installation)
 - [Magic Documantation](http://opencircuitdesign.com/magic)
 - [Skywater Documentation](https://skywater-pdk.readthedocs.io/en/main/)
+- [Reference Repo](https://github.com/AngeloJacobo/OpenLANE-Sky130-Physical-Design-Workshop#placement-stage)
 
 
 
