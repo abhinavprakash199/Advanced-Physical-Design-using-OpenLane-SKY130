@@ -893,7 +893,7 @@ source $filename
 set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
 add_lefs -src $lefs
 ```
-- These command are to ensure that when `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_06-33/tmp/merged.lef` created after floorplanning our `sky130_vsd.lef` file get added to it
+- These command are to ensure that when `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_06-33/tmp/merged.lef` created 
 - Next do `run_synthesis`. 
 - After the run, and as we can see `sky130_myinverter` cell is successfully included in the design
 
@@ -953,20 +953,26 @@ AREA 0
 1
 % echo $::env(SYNTH_SIZING)
 0
-% set ::env(SYNTH_SIZING) 1
-1
 % echo $::env(SYNTH_DRIVING_CELL)
 sky130_fd_sc_hd__inv_8
 ```
- ![image](https://user-images.githubusercontent.com/120498080/215314984-6f398fbd-f95c-4048-a8f4-5e1e90d173f9.png)
-
+  
 - With `SYNTH_STRATEGY` of `Delay 0`, the tool will focus more on optimizing/minimizing the delay, index can be 0 to 3 where 3 is the most optimized for timing (sacrificing more area). `SYNTH_BUFFERING` of 1 ensures cell buffer will be used on high fanout cells to reduce delay due to high capacitance load. `SYNTH_SIZING` of 1 will enable cell sizing where cell will be upsize or downsized as needed to meet timing. `SYNTH_DRIVING_CELL` is the cell used to drive the input ports and is vital for cells with a lot of fan-outs since it needs higher drive strength (larger driving cell needed). 
 - Use readme files to know about these
 ![image](https://user-images.githubusercontent.com/120498080/215314890-fdfab8f4-a344-4091-8b56-6885fbbe46fd.png)
 
 - Then we do `run_synthesis` and we got and error, but now are ignoring this (slag issue) and move forward
+- So the changed value of slack is
+```
+tns (total negative slack) = 00
+wns (worst negative slack) = 00
+```
+![image](https://user-images.githubusercontent.com/120498080/215343915-f694c0b9-a321-42b8-8b32-58d10b1d9d18.png)
 
-#### Error we got in running synthesis after doing the changes
+- **NOTE** If the salck values are not changing then delete the genetered `.def` file under synthesis and run again.
+
+#### Error we got in running synthesis after doing the changes 
+- Solution is to delete `.def` file under synthesis and run again.
 ![image](https://user-images.githubusercontent.com/120498080/215315495-c2118ccd-1307-44ee-87e2-bc673df827dc.png)
 
 #### All commands to run in openlane
@@ -975,13 +981,7 @@ docker
 ./flow.tcl -interactive
 package require openlane 0.9
 prep -design picorv32a
-set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
-add_lefs -src $lefs
 run_synthesis
-set ::env(SYNTH_STRATEGY) 1 
-set ::env(SYNTH_SIZING) 1
-run_synthesis
-
 ```
 - Now to run floorplaning we use `run_floorplan` but we got this error 
 ![image](https://user-images.githubusercontent.com/120498080/215316219-86bf602b-b34b-400c-b9fa-23a4c4d14026.png)
@@ -995,21 +995,30 @@ detailed_placement
 tap_decap_or
 detailed_placement
 gen_pdn
-run_cts
 ```
 - Then check the `merged.lef` wheather it has integrated that `sky130_myinverter.lef` file which was created when we create our inverter `.mag` file
 > `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_06-33/tmp/merged.lef`
 
 ![image](https://user-images.githubusercontent.com/120498080/215319017-acb4c543-a62e-4da2-8144-d8a4628030a0.png)
 - Then check the file which is created. Go to the placements folder under results and then invoke the magic tool and load the def file. The command is:
-`magic -T /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def`
+```
+magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+```
+
+![image](https://user-images.githubusercontent.com/120498080/215340978-48eece8c-d907-4331-a47b-8422f607e6fe.png)
+
 - Placement of our design
 ![image](https://user-images.githubusercontent.com/120498080/215320530-748a7211-fff9-4aaa-9b44-266105d4a93b.png)
+- **NOTE - We where not able to find our inverter because I save `.lsv` file as 'myinverter.lsv` insted of `sky30_vsdinv.lsv`**
+- So we agarin generate the file as `sky30_vsdinv.lsv` then we where able to find the inverter.
+- Zoom view of 'sky130_vsdinv` inverter in our design
+![image](https://user-images.githubusercontent.com/120498080/215341238-6438b9c2-8581-4252-a142-830df3abc578.png)
+ 
 
 
 
 
-
+### Setup timing analysis and introduction to flip-flop setup time
 
 
 
@@ -1019,6 +1028,22 @@ run_cts
 
 ### Setup Timing Analysis 
 We will do Timing Analysis with ideal clock(the clock tree is not build) first to understand what are the basic structure and then we will be using the real clocks and doing the timing analysis
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
