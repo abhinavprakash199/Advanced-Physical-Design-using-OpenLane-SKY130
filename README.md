@@ -1274,6 +1274,17 @@ We will now finally do the routing, simply run run_routing. This will do both gl
 
 - Finally do `run_magic` in the openlane to generate gds file.
  
+ ![image](https://user-images.githubusercontent.com/120498080/215446273-dbbc1469-683b-45ca-8efe-45d7808647d3.png)
+
+ ![image](https://user-images.githubusercontent.com/120498080/215445621-b6d87fe3-286c-4c7d-8938-1d5b3fd1b7bc.png)
+
+ 
+```
+magic -T /home/kunalg123/Desktop/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32.floorplan.def
+```
+```
+magic -T /home/kunalg123/Desktop/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.nom.lef def read picorv32.def
+```
 ## All commands to run in openlane
 ```verilog
 docker
@@ -1283,6 +1294,8 @@ prep -design picorv32a
 
 echo $::env ([Varible]) // our case = SYNTH_STRATEGY
 // change the STRATEGY
+
+set ::env(SYNTH_STRATEGY) "DELAY 0"
 
 run_synthesis
 init_floorplan
