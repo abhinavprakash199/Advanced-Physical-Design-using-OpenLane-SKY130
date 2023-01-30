@@ -13,7 +13,6 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [ASIC Design Flow](#ASIC-Design-Flow)
     + [Getting Familiar to EDA tools](#getting-familiar-to-eda-tools)
     + [Starting with OpenLANE and Synthesis](#starting-with-openLANE-and-synthesis)
-
 * [Day 2: Good Floorplan vs bad Floorplan and Introduction to Library Cells](#day-2)
     + [Stages of Floorplanning](#Stages-of-floorplanning)
     + [Steps to run and view floorplan using OpenLANE](#steps-to-run-and-view-floorplan-using-openlane)
@@ -28,7 +27,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Plug-in the Customized Inverter Cell(lif file) to OpenLane](#Plug-in-the-Customized-Inverter-Cell(lif-file)-to-OpenLane)
     + [Delay](#Delay)
     + [Fix Negative Slack](Fix-Negative-Slack)
-    + [Floorplanning and Placement}(#Floorplanning-and-Placement)
+    + [Floorplanning and Placement](#Floorplanning-and-Placement)
     + [Setup Timing Analysis](#Setup-Timing-Analysis)
     + [Run CTS(Clock Tree Synthesis) using TritonCTS](#Run-CTS(Clock-Tree-Synthesis)-using-TritonCTS)
     + [Timing Analysis with Real Clocks](#Timing-Analysis-with-Real-Clocks)
@@ -991,6 +990,7 @@ wns (worst negative slack) = 00
 - Solution is to delete `.v` file under synthesis and run again.
 
 ### Floorplanning and Placement
+
 - Now to run floorplaning we use `run_floorplan` but we got this error
 
 ![image](https://user-images.githubusercontent.com/120498080/215316219-86bf602b-b34b-400c-b9fa-23a4c4d14026.png)
