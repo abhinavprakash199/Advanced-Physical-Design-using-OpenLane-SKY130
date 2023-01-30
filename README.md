@@ -33,8 +33,14 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Run CTS(Clock Tree Synthesis) using TritonCTS](#Run-CTS(Clock-Tree-Synthesis)-using-TritonCTS)
     + [Timing Analysis with Real Clocks](#Timing-Analysis-with-Real-Clocks)
 * [DAY 5: Final Steps for RTL2GDS using TritonRoute and OpenSTA](#Day-5)
+    + [Maze Routing](#Maze-Routing)
+    + [DRC Cleaning](#DRC-Cleaning)
+    + [Power Distribution Network (review)](#Power-Distribution-Network-(review))
+    + [Routing Stage and TritonRoute](#Routing-Stage-and-TritonRoute)
+    + [Run PDN(Power Distribution Network)](#Run-PDN(Power-Distribution-Network))
     + [Routing Stage](#Routing-Stage)
-    + 
+    + [Extraction of GRSII file](#Extraction-of-GRSII-file)
+    + [All commands to run in openlane](#All-commands-to-run-in-openlane)
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -1233,59 +1239,108 @@ Also instead of manually running these commands, we can just simply do source `/
 
 ## DAY 5
 ---
-### Final Steps for RTL2GDS using TritonRoute and OpenSTA
+## Final Steps for RTL2GDS using TritonRoute and OpenSTA
 ---
+### Maze Routing:
+One simple routing algorithm is Maze Routing or Lee's routing:
 
-# THEORY
-```
-Sky130 Day 5 - Final steps for RTL2GDS using tritonRoute and openSTA
-SKY130_D5_SK1 - Routing and design rule check (DRC)
-```
+- The shortest path is one that follows a steady increment of one (1-to-9 on the example below). There might be multiple path like this but the best path that the tool will choose is one with less bends. The route should not be diagonal and must not overlap an obstruction such as macros.
+- This algorithm however has high run time and consume a lot of memory thus more optimized routing algorithm is preferred (but the principles stays the same where route with shortest path and less bends is preferred)
+
+![Screenshot (8)](https://user-images.githubusercontent.com/120498080/215485617-d0bf5ea1-4111-4927-9230-7e8d481684c2.png)
+
+### DRC Cleaning:
+DRC cleaning is the next step after routing. DRC cleaning is done to ensure the routes can be fabricated and printed in silicon faithfully. Most DRC is due to the constraints of the photolitographic machine for chip fabrication where the wavelength of light used is limited. There are thousands of DRC and some DRC are:
+
+1. Minimum wire width
+2. Minimum wire pitch (center to center spacing)
+3. Minimum wire spacing (edge to edge spacing)
+4. Signal short = this can be solved my moving the route to next layer using vias. This results in more DRC (Via width, Via Spacing, etc.). Higher metal layer must be wider than lower metal layer and this is another DRC.
+
+![Screenshot (9)](https://user-images.githubusercontent.com/120498080/215486206-4265d2d3-c244-432a-8c9b-6de667f5c144.png)
+
+### Power Distribution Network (review):
+This is just a review on PDN. The power and ground rails has a pitch of 2.72um thus the reason why the customized inverter cell has a height of 2.72 or else the power and ground rails will not be able to power up the cell. Looking at the LEF file `runs/[date]/tmp/merged.nom.lef`, you will notice that all cells are of height 2.72um and only width differs.
+
+As shown below, power and ground flows from power/ground pads -> power/ground ring-> power/ground straps -> power/ground rails.
+![Screenshot (10)](https://user-images.githubusercontent.com/120498080/215486669-b716ead1-8962-45bc-abaa-382889c8a05b.png)
+
+### Routing Stage and TritonRoute:
+OpenLane routing stage consists of two stages:
+
+- Global Routing - Form routing guides that can route all the nets. The tool used is FastRoute
+- Detailed Routing - Uses the global routing's guide to actually connect the pins with least amount of wire and bends. The tool used is TritonRoute.
+#### Triton Route
+
+- Performs detailed routing and honors the pre-processed route guides (made by global route) and uses MILP based (Mixed Integer Linear Programming algorithm) panel routing scheme(uses panel as the grid guide for routing) with intra-layer parallel routing (routing happens simultaneously in a single layer) and inter-layer sequential layer (routing starts from bottom metal layer to top metal layer sequentially and not simultaneously).
+- Honors preferred direction of a layer. Metal layer direction is alternating (metal layer direction is specified in the LEF file e.g. met1 Horizontal, met2 Vertical, etc.) to reduce overlapping wires between layer and reduce potential capacitance which can degrade the signal.
+
+![Screenshot (11)](https://user-images.githubusercontent.com/120498080/215487079-16ac1575-6a58-4a26-a3bc-e05007346013.png)
 
 
 ### Run PDN(Power Distribution Network)
+
+#### The command to load the previous files (basically whatever you have done).
+```verilog
+cd work/tools/openlane_working_dir/openlane
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a -tag 29-01_18-06
+// if we include new configuration i.e., edit the config file then we have to do overwrite
+prep -design picorv32a -tag 29-01_18-06 -overwrite 
+
+// to check the last def file created i.e., last def
+echo $::env(CURRENT_DEF)
+```
 
 - Next to run **PDN(Power Distribution Network)** use `gen_pdn` (this we do in floorplaning but in openlane its done after `run_cts` clock tree synthesis )
 
 ![image](https://user-images.githubusercontent.com/120498080/215370061-41ca31db-e575-47a7-ae43-bfc09e30535b.png)
 ![image](https://user-images.githubusercontent.com/120498080/215369640-a5749d0f-f506-4992-8c7f-b812cbd619cf.png)
+- Standard cell are to be placed between the rails. We should ensure that the height of standard cell should be in the multiples of 2.72, so that we can have both VDD and VSS for each of the standard cells.
 
+- The power distribution of the chipset is shown below. Power should be supplies from the verticle straps to the standard cell rails. Similarly power should go to the macro.
+- The tmp folder consists of all the def files of each stage.
+- `pdn.def` consists the cts,def plus it's own values
 - The `pdn.def` file is generated at 
 > /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_16-21/results/floorplan/
 
 
-- ***NOTE** To load the previous program in docker we use `prep -design picorv32a -tag 29-01_16-21` and we have overwrite the `config.tcl, in that folder then we use `prep -design picorv32a -tag 29-01_16-21 -overwrite`
+- ***NOTE** To load the previous program in docker we use `prep -design picorv32a -tag 29-01_16-21` and we have overwrite the `config.tcl`, in that folder then we use `prep -design picorv32a -tag 29-01_16-21 -overwrite`
 - ***NOTE** To know about the last run use `echo $::env(CURRENT_DEF)` 
 
 ![image](https://user-images.githubusercontent.com/120498080/215369024-15be493b-b685-4e56-8302-8b410a379628.png)
 
+
 ### Routing Stage
 
-We will now finally do the routing, simply run run_routing. This will do both global and detailed routing, this will take multiple optimization iterations until the DRC violation is reduced to zero. The zeroth iteration has 27426 violations and only at the 8th iteration was all violations solved. The whole routing took 1 hour and 10 mins in my Linux machine with 2 cores. A fun fact: the die area is just 584um by 595um but the total wirelength used for routing spans to 0.5m!!!
+We will now finally do the routing, simply run `run_routing`. This will do both global and detailed routing, this will take multiple optimization iterations until the DRC violation is reduced to zero. The zeroth iteration has 27426 violations and only at the 8th iteration was all violations solved. The whole routing took 1 hour and 10 mins in my Linux machine with 2 cores. A fun fact: the die area is just 584um by 595um but the total wirelength used for routing spans to 0.5m!!!
 
 ![image](https://user-images.githubusercontent.com/120498080/215376334-5cb667da-b3c8-43ba-b384-9354587ac1ec.png)
- - Then following files are genereted in results
- ![image](https://user-images.githubusercontent.com/120498080/215375412-8d787238-9e25-47d0-9041-296c87fdb963.png)
+ - Then following files are genereted in results 
+![image](https://user-images.githubusercontent.com/120498080/215375412-8d787238-9e25-47d0-9041-296c87fdb963.png)
 
+- After routing we get number of violations, which can be verified by checking the the .drc file under routing/16-tritoRoute.drc. (We se a blank drc file).
 
-![image](https://user-images.githubusercontent.com/120498080/215376334-5cb667da-b3c8-43ba-b384-9354587ac1ec.png)
+- Exctracting SPEC (SPEC extraction is done outside openlane as it does not have SPEC Extractor tool in openlane.
 
-![image](https://user-images.githubusercontent.com/120498080/215375208-f8f8b5fe-4f3b-4681-bbb0-e92a05743e8a.png)
+#### `picrrv32a.def.png` file generated after routing
+![Screenshot (12)](https://user-images.githubusercontent.com/120498080/215491503-0c34caff-652b-4ee3-8dea-9eef2501fdc8.png)
 
+#### Extraction of GRSII file
 - Finally do `run_magic` in the openlane to generate gds file.
  
- ![image](https://user-images.githubusercontent.com/120498080/215446273-dbbc1469-683b-45ca-8efe-45d7808647d3.png)
+![image](https://user-images.githubusercontent.com/120498080/215446273-dbbc1469-683b-45ca-8efe-45d7808647d3.png)
+Then following files are genereted in results 
+![image](https://user-images.githubusercontent.com/120498080/215445621-b6d87fe3-286c-4c7d-8938-1d5b3fd1b7bc.png)
 
- ![image](https://user-images.githubusercontent.com/120498080/215445621-b6d87fe3-286c-4c7d-8938-1d5b3fd1b7bc.png)
+#### Generated GDSII file `picrrv32a.gds.png` file 
+![Screenshot (2323)](https://user-images.githubusercontent.com/120498080/215493857-9d5d7d43-c654-437f-9919-3cff9878ee23.png)
 
  
-```
-magic -T /home/kunalg123/Desktop/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32.floorplan.def
-```
-```
-magic -T /home/kunalg123/Desktop/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.nom.lef def read picorv32.def
-```
-## All commands to run in openlane
+
+### All commands to run in openlane
 ```verilog
 docker
 ./flow.tcl -interactive
@@ -1311,12 +1366,6 @@ run_magic
 ```
 
 
-
-
-
-
-
-
 ## References
 ---
 - [Advanced Physical Design](https://www.vlsisystemdesign.com/advanced-physical-design-using-openlane-sky130/?awt_a=5L_6&awt_l=H2Nw0&awt_m=3dG.7I1RDUA8._6)
@@ -1335,7 +1384,7 @@ run_magic
 
 ## Acknowledgement
 ---
-Finally, I would like to express my sincere gratitude to [Kunal Ghosh](https://www.linkedin.com/in/kunal-ghosh-vlsisystemdesign-com-28084836/){Co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd.} and [Nickson Jose, VLSI Engineer](https://www.linkedin.com/in/nickson-jose/) {ASoC Physical Design Engineer} for tremendous assistance in planning and presenting this workshop on Advanced-Physical-Design-using-OpenLane-SKY130. The workshop was excellent and well designed, this workshop taught me a lot of new things about the design of RISC-V processor in OpenLANE.   
+Finally, I would like to express my sincere gratitude to [Kunal Ghosh](https://www.linkedin.com/in/kunal-ghosh-vlsisystemdesign-com-28084836/){Co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd.} and [Nickson Jose, VLSI Engineer](https://www.linkedin.com/in/nickson-jose/) {ASoC Physical Design Engineer} for tremendous assistance in planning and presenting this workshop on Advanced-Physical-Design-using-OpenLane-SKY130. The workshop was excellent and well designed, this workshop taught me a lot of new things about the design of GDSII file from RTL using OpenLANE, open source tool.   
 
 ## Inquiries
 - Connect with me at [LinkedIn](https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile)
