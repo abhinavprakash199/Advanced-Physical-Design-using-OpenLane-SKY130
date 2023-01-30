@@ -995,7 +995,7 @@ global_placement_or
 detailed_placement
 tap_decap_or
 detailed_placement
-gen_pdn
+
 ```
 - Then check the `merged.lef` wheather it has integrated that `sky130_myinverter.lef` file which was created when we create our inverter `.mag` file
 > `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_06-33/tmp/merged.lef`
@@ -1243,12 +1243,34 @@ SKY130_D5_SK1 - Routing and design rule check (DRC)
 ```
 
 
+### Run PDN(Power Distribution Network)
 
+- Next to run **PDN(Power Distribution Network)** use `gen_pdn` (this we do in floorplaning but in openlane its done after `run_cts` clock tree synthesis )
+
+![image](https://user-images.githubusercontent.com/120498080/215370061-41ca31db-e575-47a7-ae43-bfc09e30535b.png)
+![image](https://user-images.githubusercontent.com/120498080/215369640-a5749d0f-f506-4992-8c7f-b812cbd619cf.png)
+
+- The `pdn.def` file is generated at 
+> /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_16-21/results/floorplan/
+
+
+- ***NOTE** To load the previous program in docker we use `prep -design picorv32a -tag 29-01_16-21` and we have overwrite the `config.tcl, in that folder then we use `prep -design picorv32a -tag 29-01_16-21 -overwrite`
+- ***NOTE** To know about the last run use `echo $::env(CURRENT_DEF)` 
+
+![image](https://user-images.githubusercontent.com/120498080/215369024-15be493b-b685-4e56-8302-8b410a379628.png)
 
 ### Routing Stage
 
+We will now finally do the routing, simply run run_routing. This will do both global and detailed routing, this will take multiple optimization iterations until the DRC violation is reduced to zero. The zeroth iteration has 27426 violations and only at the 8th iteration was all violations solved. The whole routing took 1 hour and 10 mins in my Linux machine with 2 cores. A fun fact: the die area is just 584um by 595um but the total wirelength used for routing spans to 0.5m!!!
+
+![image](https://user-images.githubusercontent.com/120498080/215376334-5cb667da-b3c8-43ba-b384-9354587ac1ec.png)
+ - Then following files are genereted in results
+ ![image](https://user-images.githubusercontent.com/120498080/215375412-8d787238-9e25-47d0-9041-296c87fdb963.png)
 
 
+![image](https://user-images.githubusercontent.com/120498080/215376334-5cb667da-b3c8-43ba-b384-9354587ac1ec.png)
+
+![image](https://user-images.githubusercontent.com/120498080/215375208-f8f8b5fe-4f3b-4681-bbb0-e92a05743e8a.png)
 
 
 ## All commands to run in openlane
@@ -1268,8 +1290,9 @@ global_placement_or
 detailed_placement
 tap_decap_or
 detailed_placement
-gen_pdn
 run_cts
+gen_pdn
+run_routing
 ```
 
 
