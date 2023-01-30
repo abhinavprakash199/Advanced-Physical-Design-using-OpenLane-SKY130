@@ -1272,7 +1272,8 @@ We will now finally do the routing, simply run run_routing. This will do both gl
 
 ![image](https://user-images.githubusercontent.com/120498080/215375208-f8f8b5fe-4f3b-4681-bbb0-e92a05743e8a.png)
 
-
+- Finally do `run_magic` in the openlane to generate gds file.
+ 
 ## All commands to run in openlane
 ```verilog
 docker
@@ -1293,6 +1294,7 @@ detailed_placement
 run_cts
 gen_pdn
 run_routing
+run_magic
 ```
 
 
