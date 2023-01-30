@@ -592,7 +592,7 @@ First we need to design the library cells:
 - `.op` `.dc Vin 0 2.5 0.05` is the start of SPICE simulation operation where Vin will be sweep from 0 to 2.5 with 0.05 steps
 - `tsmc_025um_model.mod` is the model file which contain the technological parameters of the 0.25um NMOS and PMOS Devices.
 
-#### The steps to simulate in SPICE:
+<!---#### The steps to simulate in SPICE:
 
 ```
 source [filename].cir
@@ -602,7 +602,7 @@ dc1
 plot out vs in 
 ```
 
-## D3 SK1 L2 AND L3 AND L4
+## D3 SK1 L2 AND L3 AND L4 --->
 
 
 
@@ -1114,7 +1114,17 @@ set_load  $cap_load [all_outputs]
 
 
 ### Run CTS(Clock Tree Synthesis) using TritonCTS
-# CTS THEORY
+
+There are three parameters that we need to consider when building a clock tree:
+
+- Clock Skew = In order to have minimum skew between clock endpoints, clock tree is used. This results in equal wirelength (thus equal latency/delay) for every path of the clock.
+- Clock Slew = Due to wire resistance and capacitance of the clock nets, there will be slew in signal at the clock endpoint where signal is not the same with the original input clock signal anymore. This can be solved by clock buffers. Clock buffer differs in regular cell buffers since clock buffers has equal rise and fall time.
+- Crosstalk = Clock shielding prevents crosstalk to nearby nets by breaking the coupling capacitance between the victim (clock net) and aggresor (nets near the clock net), the shield might be connected to VDD or ground since those will not switch. Shileding can also be done on critical data nets.
+
+![Screenshot (15)](https://user-images.githubusercontent.com/120498080/215502778-8dc2beae-43b0-4b24-ba37-92cb467a903d.png)
+
+
+<!---
 ```
 Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
 SKY130_D4_SK3 - Clock tree synthesis TritonCTS and signal integrity
@@ -1123,14 +1133,19 @@ SKY_L1 - Clock tree routing and buffering using H-Tree algorithm
 Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
 SKY130_D4_SK3 - Clock tree synthesis TritonCTS and signal integrity
 SKY_L2 - Crosstalk and clock net shielding
-```
+``` --->
+
 - So with Setup Timing Analysis using `my_base.sdc` we confirm that setup time has been met so we go for Clock Tree Synthesis
 - Then use `run_cts` command in openlane to run clock tree synthesis.
+
 ![image](https://user-images.githubusercontent.com/120498080/215356354-1b3d382c-237a-4a73-97eb-414e4151ab91.png)
 
 - This will create `picorv32a.cts.def` and `picorv32a.cts.def.png`woll be created at
+
 > /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_16-21/results/cts/
+
 #### `picorv32a.cts.def.png` file
+
 ![image](https://user-images.githubusercontent.com/120498080/215356520-0e5200b8-0c98-4651-8484-e25527562412.png)
 
 
@@ -1151,7 +1166,15 @@ Inside the `/OpenLane/scripts/openroad/cts.tcl` contains the configuration varia
 
 ### Timing Analysis with Real Clocks
 
-# Theory
+Setup and hold analysis with real clock will now include clock buffer delays:
+
+- In setup analysis, the point is that the data must arrive first before the clock rising edge to properly latch that data. Setup violation happens when path is slow. This is affected by parameters such as combinational delay, clock buffer delay, time period, setup time, and setup uncertainty (jitter).
+
+- Hold analysis is the delay that the MUX2 model inside the flip flop needs to move the data to outside. This is the time that the launch flop must hold the data before it reaches the capture flop. Hold analysis is done on the same rising clock edge for launch and capture flop unlike in setup analysis where it spans between two rising clock edges. Hold violation happens when path is too fast. This is affected by parameters such as combinational delay, clock buffer delays, and hold time. (time period and setup uncertainty does not matter since launch and capture flops will receive the same rising clock edges fo hold analysis)
+
+The goal is to have a positive slack on both setup and hold analysis.
+
+![Screenshot (16)](https://user-images.githubusercontent.com/120498080/215503412-118716b9-d510-454d-bc8e-d590afb86294.png)
 
 
 
@@ -1173,7 +1196,6 @@ SKY_L2 - Hold timing analysis using real clocks
 - **NOTE** - openroad is the part of openlane and opensta integrated on openroad.
 
 
-
 - In the terminal in which we run the run_cts command there only go to openroad. Type the following command in the terminal.
 ```
 openroad
@@ -1182,24 +1204,24 @@ openroad
 1. We first create a db `
 2. db is create using lef and def file. In our analysis we use these db. (It is a one time process. Whenever lef changes we have to change the db)
 - To create a db
-All the loaction should be after /openlane/.....
-```
+All the loaction should be after `/openlane/.....`
+``` verilog
 // first read lef (it is inside the tmp folder (merged.lef)
-read_lef [location] {read_lef /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged.lef}
+read_lef /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged.lef
 // secondly read def (it is present inside cts folder present under the results folder/cts)
-read_def [location]
-// creating db {read_def /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/cts/picorv32a.cts.def}
-write_db [name] // my case = pico_cts.db (created under the openlane folder) {write_db pico_cts.db }
-// reading db {read_db pico_cts.db }
-read_db [name] // my case = pico_cts.db
+read_def /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/cts/picorv32a.cts.def
+// creating db [pico_cts.db (created under the openlane folder)]
+write_db pico_cts.db 
+// reading db 
+read_db pico_cts.db 
 //  reading verilog (it is present inside cts folder present under the results/synthesis/picorv32a.synthesis_cts.v)
-read_verilog [location] // {read_verilog /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/synthesis/picorv32a.synthesis_cts.v}
+read_verilog /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/synthesis/picorv32a.synthesis_cts.v
 // reading library (max)
 read_liberty -max $::env(LIB_FASTEST)
 // reading library (min)
 read_liberty -min $::env(LIB_SLOWEST)
 // reading sdc
-read_sdc [location] {read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc}
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
 // now the clock has been generated 
 set_propagated_clock [all_clocks]
 // report
@@ -1213,6 +1235,7 @@ report_checks -path_delay min_max -format full_clock_expanded -digits 4
 
 Also instead of manually running these commands, we can just simply do source `/openlane/scripts/openroad/sta_multi_corner.tcl` inside OpenROAD which runs the readily-made tcl script of OpenROAD commmands for running multi-corner STA. The result might be slightly different from the result above since the settings for `sta_multi_corner.tcl` is much more comprehensive.
 
+#### Run Commands
 ![image](https://user-images.githubusercontent.com/120498080/215362781-e4fd7af0-7e32-4d49-8c74-2da4025aa7c0.png)
 ![image](https://user-images.githubusercontent.com/120498080/215362695-17179941-5dd1-43a9-bc88-1a35936ea1a3.png)
 
@@ -1221,25 +1244,43 @@ Also instead of manually running these commands, we can just simply do source `/
 #### Hold Slack constrains are met
 ![image](https://user-images.githubusercontent.com/120498080/215363145-82979f79-5f0b-45d0-908e-064f4aee2a6c.png)
 
+- The above is done for typical cornor but we are seeing it for minimum and maximum cornor hence the analysis is **not correct**.
+#### So now we perform Multi-corner STAfor typical cornor
 
+- to exit the openroad:
+```
+exit
+```
 
+- So this time we will use the `typical` cornor. So do the same process from the read db.
+```verilog
+openroad
+read_db pico_cts.db
+read_verilog /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/synthesis/picorv32a.synthesis_cts.v
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+link_design picorv32a
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+set_propagated_clock [all_clocks]
+report_checks -path_delay min_max -format full_clock_expanded -digits 4
+```
+Slack for typical cornor
+
+#### Run Commands
 ![image](https://user-images.githubusercontent.com/120498080/215364791-1f9471e0-4dad-473d-b55c-efebbae85bfa.png)
 ![image](https://user-images.githubusercontent.com/120498080/215364828-22dff2c4-57bd-4ab2-b915-24fa1800189e.png)
 
 
-
-
-#### Setup Slack constrains are met
+#### Setup Slack constrains 
 ![image](https://user-images.githubusercontent.com/120498080/215364383-19d89968-3ebd-4a88-b519-27347a07c721.png)
 
-#### Hold Slack constrains are met
+#### Hold Slack constrains 
 ![image](https://user-images.githubusercontent.com/120498080/215364677-5389748c-377e-40aa-8806-a364e9747bbf.png)
 
-#### Hold Skew Report 
+#### Skew
+Skew is the time delta between the actual and expected arrival time of a clock signal. Skew can be either extrinsic or intrinsic. The latter is internal to the driver (generator circuitry) and defined as the difference in propagation delays between the device outputs.
+#### Hold and Setup Skew Report 
 - It should be less that the 10% time period of clock
-![image](https://user-images.githubusercontent.com/120498080/215366934-20180f0f-8cc1-4cd9-8708-0c345bc07935.png)
-#### Setup Skew Report
-![image](https://user-images.githubusercontent.com/120498080/215367007-120e1f3d-7842-434c-a27a-b01354fd5c3e.png)
+![Screenshot (17)](https://user-images.githubusercontent.com/120498080/215508032-2a19d5c9-d7c8-4007-aa29-93d1de79f8cc.png)
 
 
 ## DAY 5
