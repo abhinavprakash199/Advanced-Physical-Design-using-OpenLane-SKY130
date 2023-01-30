@@ -806,7 +806,7 @@ The next goal is to make a `.lef` file using this inverter architecture. We will
 
 
 
-##  SKY130_D3_SK3 L3 to L9
+<!---##  SKY130_D3_SK3 L3 to L9--->
 
 
 
@@ -822,8 +822,8 @@ The next goal is to make a `.lef` file using this inverter architecture. We will
 ---
 So till now we are done with the design setup,the floorplan, placement and lastly we have learned, given a `.mac` file how to extrace the `.spice` out of it and do the characterization. We where looking into ngspice and magic and now lets see how it is connected to OpenLANE(which is a place and route tool, and for placement of any cell we don't require the `.mac` file simulation(`.mac` file contain all the information in magic) but we only require is the PnR boundary(which contain the power and the rail, input and the output informantion) and that is the `.lef` files). So `.lef` file proctects our ir and macro information.
 - **`.lef` files {Library Exchange Format (LEF)}** is a specification for representing the physical layout of an integrated circuit in an ASCII format. It includes design rules and abstract information about the standard cells.LEF only has the basic information required at that level to serve the purpose of the concerned CAD tool. It helps in saving valuable resources by providing only an abstract view and thus consuming less memory overhead. LEF is used in conjunction with Design Exchange Format (DEF) to represent the complete physical layout of an integrated circuit while it is being designed.
-![Screenshot (2300)](https://user-images.githubusercontent.com/120498080/215275249-a122a31b-d205-40a4-9a0c-d038bb99550c.png)
 
+![Screenshot (2300)](https://user-images.githubusercontent.com/120498080/215275249-a122a31b-d205-40a4-9a0c-d038bb99550c.png)
 
 So next we will extrace a `.lef` file out of this `.mag` file(designed by us) and then we will plug this lef file into the picorv43a flow(till now we was workid with pre build cells) 
 
@@ -990,11 +990,13 @@ wns (worst negative slack) = 00
 ![image](https://user-images.githubusercontent.com/120498080/215315495-c2118ccd-1307-44ee-87e2-bc673df827dc.png)
 - Solution is to delete `.v` file under synthesis and run again.
 
-- Now to run floorplaning we use `run_floorplan` but we got this error 
+### Floorplanning and Placement
+- Now to run floorplaning we use `run_floorplan` but we got this error
+
 ![image](https://user-images.githubusercontent.com/120498080/215316219-86bf602b-b34b-400c-b9fa-23a4c4d14026.png)
 
 - So we go with the following commands to do floorplanning and placement: 
-```
+```vereilog
 init_floorplan
 place_io
 global_placement_or
@@ -1015,17 +1017,20 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 ![image](https://user-images.githubusercontent.com/120498080/215340978-48eece8c-d907-4331-a47b-8422f607e6fe.png)
 
 - Placement of our design
-![image](https://user-images.githubusercontent.com/120498080/215320530-748a7211-fff9-4aaa-9b44-266105d4a93b.png)
+
+![Screenshot (13)](https://user-images.githubusercontent.com/120498080/215499423-5ba3de1c-fb8c-4624-9110-cacbdd7acc05.png)
+
 - **NOTE - We where not able to find our inverter because I save `.lsv` file as 'myinverter.lsv` insted of `sky30_vsdinv.lsv`**
 - So we agarin generate the file as `sky30_vsdinv.lsv` then we where able to find the inverter.
 - Zoom view of 'sky130_vsdinv` inverter in our design
+
 ![image](https://user-images.githubusercontent.com/120498080/215341238-6438b9c2-8581-4252-a142-830df3abc578.png)
  
 
 
 
 
-
+<!---
 # THEOTY
 ```
 Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
@@ -1037,7 +1042,7 @@ Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
 SKY130_D4_SK2 - Timing analysis with ideal clocks using openSTA
 SKY_L2 - Introduction to clock jitter and uncertainty
 ```
-
+--->
 
 
 ### Setup Timing Analysis 
