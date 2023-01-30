@@ -32,6 +32,9 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Setup Timing Analysis](#Setup-Timing-Analysis)
     + [Run CTS(Clock Tree Synthesis) using TritonCTS](#Run-CTS(Clock-Tree-Synthesis)-using-TritonCTS)
     + [Timing Analysis with Real Clocks](#Timing-Analysis-with-Real-Clocks)
+* [DAY 5: Final Steps for RTL2GDS using TritonRoute and OpenSTA](#Day-5)
+    + [Routing Stage](#Routing-Stage)
+    + 
     
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
@@ -1195,7 +1198,9 @@ report_checks -path_delay min_max -format full_clock_expanded -digits 4
 - `write_db` and `read_db` is done before running STA tool, this creates a database file using LEF file and resulting DEF file of the last stage.
 - Multi-corner STA must read both min library (for hold analysis) and max library (for setup analysis) unlike in single corner STA where only the typical library is read.
 - SDC file used is the same for single and multi-corner.
-- Since this is post-CTS STA, `set_propagated_clock` is used. `set_propagated_clock` propagates clock latency throughout a clock network, resulting in more accurate skew and timing results throughout the clock network. This is done postlayout, after final clock tree generation, unlike in prelayout where ideal clock is used thus no clock latency.\
+- Since this is post-CTS STA, `set_propagated_clock` is used. `set_propagated_clock` propagates clock latency throughout a clock network, resulting in more accurate skew and timing results throughout the clock network. This is done postlayout, after final clock tree generation, unlike in prelayout where ideal clock is used thus no clock latency.
+
+Also instead of manually running these commands, we can just simply do source `/openlane/scripts/openroad/sta_multi_corner.tcl` inside OpenROAD which runs the readily-made tcl script of OpenROAD commmands for running multi-corner STA. The result might be slightly different from the result above since the settings for `sta_multi_corner.tcl` is much more comprehensive.
 
 ![image](https://user-images.githubusercontent.com/120498080/215362781-e4fd7af0-7e32-4d49-8c74-2da4025aa7c0.png)
 ![image](https://user-images.githubusercontent.com/120498080/215362695-17179941-5dd1-43a9-bc88-1a35936ea1a3.png)
@@ -1205,6 +1210,42 @@ report_checks -path_delay min_max -format full_clock_expanded -digits 4
 #### Hold Slack constrains are met
 ![image](https://user-images.githubusercontent.com/120498080/215363145-82979f79-5f0b-45d0-908e-064f4aee2a6c.png)
 
+
+
+![image](https://user-images.githubusercontent.com/120498080/215364791-1f9471e0-4dad-473d-b55c-efebbae85bfa.png)
+![image](https://user-images.githubusercontent.com/120498080/215364828-22dff2c4-57bd-4ab2-b915-24fa1800189e.png)
+
+
+
+
+#### Setup Slack constrains are met
+![image](https://user-images.githubusercontent.com/120498080/215364383-19d89968-3ebd-4a88-b519-27347a07c721.png)
+
+#### Hold Slack constrains are met
+![image](https://user-images.githubusercontent.com/120498080/215364677-5389748c-377e-40aa-8806-a364e9747bbf.png)
+
+#### Hold Skew Report 
+- It should be less that the 10% time period of clock
+![image](https://user-images.githubusercontent.com/120498080/215366934-20180f0f-8cc1-4cd9-8708-0c345bc07935.png)
+#### Setup Skew Report
+![image](https://user-images.githubusercontent.com/120498080/215367007-120e1f3d-7842-434c-a27a-b01354fd5c3e.png)
+
+
+## DAY 5
+---
+### Final Steps for RTL2GDS using TritonRoute and OpenSTA
+---
+
+# THEORY
+```
+Sky130 Day 5 - Final steps for RTL2GDS using tritonRoute and openSTA
+SKY130_D5_SK1 - Routing and design rule check (DRC)
+```
+
+
+
+
+### Routing Stage
 
 
 
