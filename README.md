@@ -1,5 +1,5 @@
 # Advanced-Physical-Design-using-OpenLane-SKY130
-This repository contains the whole summary of hands on done by Abhinav Prakash (IS22MTECH14002) during the workshop [Advanced-Physical-Design-using-OpenLane-SKY130](https://www.vlsisystemdesign.com/advanced-physical-design-using-openlane-sky130/) organised by VSD. The full RTL to GDSII flow was implemented for picorv32a- a RISC-V based CPU core using [OpenLANE](https://github.com/The-OpenROAD-Project/OpenLane) with [SKY130nm PDK](https://skywater-pdk.readthedocs.io/en/main/rules/assumptions.html).
+This repository contains the whole summary of hands on done by Abhinav Prakash (IS22MTECH14002) during the workshop Advanced-Physical-Design-using-OpenLane-SKY130 organised by VSD. The full RTL to GDSII flow was implemented for picorv32a- a RISC-V based CPU core using [OpenLANE](https://github.com/The-OpenROAD-Project/OpenLane) with [SKY130nm PDK](https://skywater-pdk.readthedocs.io/en/main/rules/assumptions.html).
 
 
 
