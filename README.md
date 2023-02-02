@@ -310,24 +310,19 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 - The core, which is located in the middle of the die, is where the logic blocks are put. The dimensions of each standard cell on the netlist determine the width and height. 
 - **Utilization Factor** is defined as the ratio of area of occupancy by the netlist(for hard macros and standard cells or soft macro cells) to total area of the core. Utilization factor in a realistic situation is between 0.5 and 0.6. Only this space is used for the netlist and the rest space is used for routing and more extra cells. 
 - **Aspect Ratio** is defined as the ratio between height and the width of core.
-#### Height and Width of Chip
-    
- <p align="center">
-    <img src="https://user-images.githubusercontent.com/120498080/214807245-9df9caee-65dd-4776-848d-145e3526c8bb.png">
-     
-     
+#### Height and Width of Chip    
 ![Screenshot (2232)](https://user-images.githubusercontent.com/120498080/214807245-9df9caee-65dd-4776-848d-145e3526c8bb.png)
 
 2. **The location of Preplaced Cell**
-- These are complex logic blocks that are previously implemented but can be reused, such as memory, clock-gating cells, muxes, comparator, etc. Prior to placement and routing, the user-defined placement on the core must be completed (thus preplaced cells). 
+- **Preplaced Cell** are complex logic blocks that are previously implemented but can be reused, such as memory, clock-gating cells, MUX's, comparator, etc. Prior to placement and routing, the user-defined placement on the core must be completed (thus preplaced cells). 
 - This needs to be very well described because the automated place and route tools won't be able to touch or move these preplaced cells.
-- These preplacement cell need to be surrounded by decoupling capacitors.
+- These pre-placement cell need to be surrounded by decoupling capacitors.
 #### Location of Preplaced Cell
 ![Screenshot (2233)](https://user-images.githubusercontent.com/120498080/214807607-3c02d0e4-f56b-4450-819d-5ce8c4a6cc84.png)
 
 3. **Surround preplaced cells with decoupling capacitors**
-- The complex preplaced logic block needs a lot of current from the power supply to switch the current. However, due to the resistance and inductance of the wire, there will be a voltage drop because of the distance between the main power supply and the logic block. As a result, the voltage at the logic block might no longer fall within the noise margin range (logic is unstable).
--  Utilizing decoupling capacitors which are hudge bunch of capacitor completely filled with charge, close to the logic block will provide the necessary current for the logic block to switch inside the desired noise margin range.
+- The complex preplaced logic block needs a lot of current from the power supply to switch the current. However, due to the resistance and inductance of the wire, there will be a voltage drop because of the distance between the main power supply and the logic block. As a result, the voltage at the logic block might no longer fall within the noise margin range (logic become unstable).
+-  Utilizing **decoupling capacitors** which are hudge bunch of capacitor completely filled with charges, close to the logic block will provide the necessary current for the logic block to switch inside the desired noise margin range.
 #### Decoupling capacitors surrounding the preplaced blocks
 ![Screenshot (2225)](https://user-images.githubusercontent.com/120498080/214807860-91585c95-2b6d-4e1e-ae78-d15accebbd3c.png)
 
@@ -371,9 +366,11 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 └── placement.tcl
 ```
 
-The default OpenLANE settings are contained in the tcl files, and the `README.md` defines every configuration variable for every stage. Under 
+The default OpenLANE settings are contained in the `.tcl` files, and the `README.md` defines every configuration variable for every stage. 
+    
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a$ vim config.tcl 
-we find every configuration that the current run has approved. This could originate from (in order of priority):
+   
+- Here we find every configuration that the current run has approved. This could originate from (in order of priority):
 
 - PDK specific configuration `sky130A_sky130_fd_sc_hd_config.tcl` inside the `openlane/design/picorv32a` folder
 - `config.tcl` inside the `openlane/designs/picorv32a` folder
@@ -381,21 +378,24 @@ we find every configuration that the current run has approved. This could origin
 #### `config.tcl` file should contain following information
 ![image](https://user-images.githubusercontent.com/120498080/215285276-fed271bd-16a4-4d0a-995a-c27ede363eaf.png)
 
-
-
+    
 2. **Run floorplan on OpenLane:** 
-Use command `% run_floorplan` openlane 
+- Use this command OpenLane
+```
+    run_floorplan
+```
 
 3.**Review floorplan files:**
-The details of this stags like core utilization ratio are saved in this location
-> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57$ vim config.tcl 
+- The details of this stags like core utilization ratio are saved in this location
+> abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57$ vim config.tcl
+    
 - In `25-01_14-57/config.tcl` file we got a core utilization ratio as 35 because it was set in PDK specific configuration `sky130A_sky130_fd_sc_hd_config.tcl` inside the `openlane/design/picorv32a` folder which has the highest precedance.
 
 ![image](https://user-images.githubusercontent.com/120498080/214833348-819f797e-9a3b-4aa7-a97a-461f89612358.png)
 
 #### Calculations of Die Area
 
-The def(design exchange format) file, containing the die area and positions which is at location 
+The **def(design exchange format)** file, containing the die area and positions which is at location 
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/results/floorplan$ vim picorv32a.floorplan.def
 
 ![image](https://user-images.githubusercontent.com/120498080/214835082-c9d38fa8-45fb-456b-a74c-906caf7a62c9.png)
@@ -404,10 +404,11 @@ The def(design exchange format) file, containing the die area and positions whic
 - The **die's surface area is therefore 443587 microns squared**, or (660685/1000)microns*(671405/1000)microns.
 
 4. **View the floorplan in magic**
+
 For visualising the layout following a floorplan, utilise the Magic Layout Tool. The following three files are necessary in order to examine a floor layout in Magic
-- Technology File `sky130A.tech`
-- Merged LEF file `merged.lef` 
-- `vim picorv32a.floorplan.def` files
+- Technology File `sky130A.tech` (provided by foundary here its provided by pdk of sky130)
+- Merged LEF file `merged.lef`(Library Exchange Format files are provided by foundary which contain design rules and abstract information about the standard cells)
+- `vim picorv32a.floorplan.def` files (Design Exchange Format files are generated after floorplanning and contains the placement information of macros , standard cells, I/O pins and other physical entities)
 
 To open layout in magic use this command in this location
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/results/floorplan$
@@ -415,18 +416,19 @@ To open layout in magic use this command in this location
 ```
 magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
 ```
-`-T <address_of_sky130A.tech_file>` where T is for technology file 
-`lef read <address_of_merged.lef_file>` to read the lef files (we use `lef read` because its a standard industry file)
-`def read <address_of_picorv32a.floorplan.def_file>` to read the def files (we use `def read` because its a standard industry file) 
+- `-T <address_of_sky130A.tech_file>` where T is for technology file 
+- `lef read <address_of_merged.lef_file>` to read the lef files (we use `lef read` because its a standard industry file)
+- `def read <address_of_picorv32a.floorplan.def_file>` to read the def files (we use `def read` because its a standard industry file) 
 - **NOTE** If address of the required file is at the same working loaction then we just need to provide the required file name.
-- 
+
 ![image](https://user-images.githubusercontent.com/120498080/214837492-61506cf5-9b3e-4350-ad28-6c9e3f459bf8.png)
+    
 **NOTE**
-This `sky130A.tech`(technology), `merged.lef`(layout exchange format) and `picorv32a.placement.def`(design exchange format) files comes allong with the pdk of sky130.
+    
 #### Some shortcuts keys in magic
-- Point the cursor to a cell then press "s" to select the any block. 
-- Then press "v" to center the view. 
-- To zoom into it use mouse left and right click and then press 'z".
+- *Point the cursor to a cell then press "s" to select the any block.* 
+- *Then press "v" to center the view.*
+- *To zoom into it use mouse left and right click and then press "z"*
 
 [Magic Commands](https://github.com/AngeloJacobo/OpenLANE-Sky130-Physical-Design-Workshop#magic-commands)
 
