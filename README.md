@@ -111,8 +111,8 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
 3.**Placements**
 - For macros we place the gate level netlist cells on wafer rows.
 - Cell placements are done 2 steps: 
-   + **Global Placement** (Global Placement tries to find the optimal positions for all the cells, such positions are not necessarly leagel, so cells may overlap of go off rows)
-   + **Detailed placements** (In Detailed Placement the positions obtained from global placements are minimally altered to be leagel.
+   + **Global Placement** (Global Placement tries to find the optimal positions for all the cells, such positions are not necessarly leagel, so cells may overlap of go off rows).
+   + **Detailed placements** (In Detailed Placement the positions obtained from global placements are minimally altered to be leagel).
 
 4.**Clock Tree Synthesis (CTS)**
 - It is the clock distribution network to deliver the clock to all sequential elements with minimum skew(the arrival of the clock at different component at differnet time) and minimum latency. The clock network looks like a tree where the clock source are the roots and the clock elements are the entities.
@@ -127,10 +127,10 @@ The main objective of **ASIC Design Flow** is to take the design from RTL to GDS
 5.**Sign-off**
 - Here we construct the final layout which undergo verification, which includes 
 **Physical Verification** 
-    + **Design Rule Checking(DRC)** where we make sure that the final layout hones all design rules 
-    + **Layout vs Schematic(LVS)** which make sure that the final layout matchs the gate level netlist thet we started with 
+    + **Design Rule Checking(DRC)** where we make sure that the final layout follows all design rules.
+    + **Layout vs Schematic(LVS)** which make sure that the final layout matches the gate level netlist then we started with 
 **Timing Verification** 
-    + **Static Time Analysis( A)** to make sure that all timing constrains are met and circiut will run at designated clock frequency.
+    + **Static Time Analysis(STA)** to make sure that all timing constrains are met and circiut will run at designated clock frequency.
 
 #### Introduction to OpenLANE
 For Open Source ASIC Flow we need to ba aware about the following in Open Source EDA
@@ -143,22 +143,21 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
 ![Screenshot (2216)](https://user-images.githubusercontent.com/120498080/214480079-1bb1d6ad-8820-4acb-a7ef-b176e3c13a42.png)
 
 - So the main goal of OpenLANE is to produce clean GDSII(clean means no DRC, LVS and Timing voilations) with no human intervention.
-- OpenLINK is tuned for SkyWater130nm Open PDK, it also supports XFAB180 and Global Foundry 130G 
+- OpenLINK is tuned for SkyWater130nm Open PDK, it also supports XFAB180 and Global Foundry 130.
 - OpenLINK can be used to harden Macros and Chips(harden means creating GDSII or the final layout)
-- OpenLINK has two modes of operation
+- OpenLINK has two modes of operation:
     +  **Autonomous** (it is the push buttton flow where we figure the flow and we directly get the final GDSII) 
     +  **Interactive** (here we run comands and steps one be one so that we can do experimentation and look at the results of differnet flow steps)
  - OpenLINK has very nice feature called as **Design Space Exploration** which can be used to find the best set of flow 
- urations.
- - OpenLINK has large number of design examples(43 different design with their best configuration)
-#### Steps to install openlane in our machine 
+ durations.
+ - OpenLINK has large number of design examples(43 different design with their best configuration, here we will be usibg picrorv32a)
 
 #### OpenLANE ASIC Flow
 ![Screenshot (2217)](https://user-images.githubusercontent.com/120498080/214488649-b4a76e24-a8f0-401d-a2aa-455f14c111ae.png)
 
-- In **RTL Syntheses** the RTL is fead to *Yosys* with the design constrains, Yosys converts the RTL into a logic circuits, this circuit can be optimized and then mapped into a cell using STL using *abc* (abc has to be guided during optimization which comes as "abc script" from OpenLANE called synthesis statergies, these scrips are guided for least area or best timing)
-- **Synthesis Explorations** can be used to geneate reports that can show how delay are area are affrected be synthesis statergies.
-- **Design Explorations** can be used to sweep the design configurations for parameters such as RunTime, CellCount, RoutingStatrergies, etc. It is very useful to find best configuration from OpenLANE for any specific design. Design Explorations can also be used for regression testing for continues integration{OpenLANE run the exploration in 70 designs and compare the results to the best knonwn one}
+- In **RTL Syntheses** the RTL is fead to *Yosys* with the design constrains, Yosys converts the RTL into a logic circuits, this circuit can be optimized and then mapped into a cell using STL(OpenSTA) using *abc* (abc has to be guided during optimization which comes as "abc script" from OpenLANE called synthesis statergies, these scrips are guided for least area or best timing)
+- **Synthesis Explorations** can be used to geneate reports that can show how delay are area are affected be synthesis statergies.
+- **Design Explorations** can be used to sweep the design configurations for parameters such as RunTime, CellCount, RoutingStatergies, etc. It is very useful to find best configuration from OpenLANE for any specific design. Design Explorations can also be used for regression testing for continues integration{OpenLANE run the exploration in 70 designs and compare the results to the best knonwn one}
 - If we want our design to get ready of testing after fabrication we enable **DFT(Design for Test)** step(which is optional) and this used open source project "Fault" to perform 
    + Scan Insertion
    + Automatic Test Pattern Generation(ATPG)
@@ -181,17 +180,17 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
 
 #### OpenLane Directory Hierarchy:
 ```
-├── OOpenLane             -> directory where the tool can be invoked (run docker first)
-│   ├── designs          -> All designs must be extracted from this folder
-│   │   │   ├── picorv32a -> Design used as case study for this workshop
-│   |   |   ├── ...
-|   |   ├── ...
+├── OpenLane             -> directory where the tool can be invoked (run docker first)
+    ├── designs          -> All designs must be extracted from this folder
+        │   ├── picorv32a -> Design used as case study for this workshop
+            ├── ...
+        ├── ...
 ├── pdks                 -> contains pdk related files 
-│   ├── skywater-pdk     -> all Skywater 130nm PDKs
-│   ├── open-pdks        -> contains scripts that makes the commerical PDK (which is normally just compatible to commercial tools) to also be compatible with the open-source EDA tool
-│   ├── sky130A          -> pdk variant made especially compatible for open-source tools
-│   │   │  ├── libs.ref  -> files specific to node process (timing lib, cell lef, tech lef) for example is `sky130_fd_sc_hd` (Sky130nm Foundry Standard Cell High Density)  
-│   │   │  ├── libs.tech -> files specific for the tool (klayout,netgen,magic...) 
+    ├── skywater-pdk     -> all Skywater 130nm PDKs
+    ├── open-pdks        -> contains scripts that makes the commerical PDK (which is normally just compatible to commercial tools) to also be compatible with the open-source EDA tool
+    ├── sky130A          -> pdk variant made especially compatible for open-source tools
+           ├── libs.ref  -> files specific to node process (timing lib, cell lef, tech lef) for example is `sky130_fd_sc_hd` (Sky130nm Foundry Standard Cell High Density)  
+           ├── libs.tech -> files specific for the tool (klayout,netgen,magic...) 
 ```
 
 ### Getting familiar to EDA tools
