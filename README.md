@@ -423,8 +423,6 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 ![image](https://user-images.githubusercontent.com/120498080/214837492-61506cf5-9b3e-4350-ad28-6c9e3f459bf8.png)
     
-**NOTE**
-    
 #### Some shortcuts keys in magic
 - *Point the cursor to a cell then press "s" to select the any block.* 
 - *Then press "v" to center the view.*
@@ -443,7 +441,7 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 #### Description of blocks of floorplan
 ![Screenshot (2245)1](https://user-images.githubusercontent.com/120498080/214863959-7be627aa-77ca-47fe-b1de-499cafec3822.png)
 
-- **Taps Cells** are ment to avoid the lachup condition which occur in the cmos devices, they connect the nwell to thr vdd and the substrate to the ground. Here they are diagonaly equdistant which alraedy has ben set in readme file
+- **Taps Cells** are ment to avoid the lachup condition which occur in the cmos devices, they connect the nwell to th vdd and the substrate to the ground. Here they are diagonaly equdistant which alraedy has ben set in readme file
 - Floarplan do not take into considerations the placement of **standard cells**, but standard cells are present at the corner.
 
 ### Placement in OpenLANE
@@ -511,7 +509,7 @@ This `sky130A.tech`(technology), `merged.lef`(layout exchange format) and `picor
 
 
 
-**COMPLETE SKY130_D2_SK2**
+<!---**COMPLETE SKY130_D2_SK2**--->
 
 
 
