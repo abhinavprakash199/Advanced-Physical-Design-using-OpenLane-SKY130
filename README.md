@@ -54,6 +54,10 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 ---
 Introduced to the internal structure of a computer using an example of a RISC-V processor. 
 
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/214492904-1273ccaa-8c55-4fb5-9367-4b97f6a42b78.png">
+p>
+
 ![Screenshot (2207)](https://user-images.githubusercontent.com/120498080/214492904-1273ccaa-8c55-4fb5-9367-4b97f6a42b78.png#center)
 
 
