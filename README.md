@@ -1,5 +1,5 @@
 # Advanced-Physical-Design-using-OpenLane-SKY130
-This repository contains the whole summary of hands on done by Abhinav Prakash (IS22MTECH14002) during the workshop Advanced-Physical-Design-using-OpenLane-SKY130 organised by VSD. The full RTL to GDSII flow was implemented for picorv32a- a RISC-V based CPU core using [OpenLANE](https://github.com/The-OpenROAD-Project/OpenLane) with [SKY130nm PDK](https://skywater-pdk.readthedocs.io/en/main/rules/assumptions.html).
+This repository contains the whole summary of hands on done by Abhinav Prakash (IS22MTECH14002) during the workshop Advanced-Physical-Design-using-OpenLane-SKY130 organised by VSD. The full RTL to GDSII flow was implemented for picorv32a design a RISC-V based CPU core using [OpenLANE](https://github.com/The-OpenROAD-Project/OpenLane) with [SKY130nm PDK](https://skywater-pdk.readthedocs.io/en/main/rules/assumptions.html).
 
 
 
@@ -53,10 +53,11 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 ### Talking to Computers
 ---
 Introduced to the internal structure of a computer using an example of a RISC-V processor. 
+<img src="https://user-images.githubusercontent.com/120498080/214492904-1273ccaa-8c55-4fb5-9367-4b97f6a42b78.png" alt="Paris" class="center">
 
 ![Screenshot (2207)](https://user-images.githubusercontent.com/120498080/214492904-1273ccaa-8c55-4fb5-9367-4b97f6a42b78.png)
 - The exposed area of metal on a circuit board known as a **Pad** is where the component lead is soldered. Pads are used to send the signal inside the chip.
-- A **Core** is a compact processor or CPU placed into a bigger processor or CPU socket. It is capable of handling all computing operations on its own.All the digital logic of the chip are placed in Core.
+- A **Core** is a compact processor or CPU placed into a bigger processor or CPU socket. It is capable of handling all computing operations on its own. All the digital logic of the chip are placed in Core.
 - The square of silicon that has been sliced off the wafer and contains an integrated circuit on the silicon wafer is called to as a **Die**.
 
 ![Screenshot (2210)](https://user-images.githubusercontent.com/120498080/214492926-4321ab2c-5583-4c7d-9189-f7f1d4f447af.png)
