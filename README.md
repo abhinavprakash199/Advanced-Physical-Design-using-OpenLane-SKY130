@@ -54,9 +54,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
 ---
 Introduced to the internal structure of a computer using an example of a RISC-V processor. 
 
-<img src="https://user-images.githubusercontent.com/120498080/214492904-1273ccaa-8c55-4fb5-9367-4b97f6a42b78.png" alt="Paris" class="center">
-
-![Screenshot (2207)](https://user-images.githubusercontent.com/120498080/214492904-1273ccaa-8c55-4fb5-9367-4b97f6a42b78.png)
+![Screenshot (2207)](https://user-images.githubusercontent.com/120498080/214492904-1273ccaa-8c55-4fb5-9367-4b97f6a42b78.png#center)
 
 
 - The exposed area of metal on a circuit board known as a **Pad** is where the component lead is soldered. Pads are used to send the signal inside the chip.
