@@ -65,19 +65,21 @@ Introduced to the internal structure of a computer using an example of a RISC-V 
     <img src="https://user-images.githubusercontent.com/120498080/214492926-4321ab2c-5583-4c7d-9189-f7f1d4f447af.png">
 
 - **Foundry IP's** refers to all intellectual property (IP), whether Background IP or Foreground IP, developed for genetic components, pathways, and strains as well as methods and tools for design, genetic engineering, testing, and/or small-scale fermentation of microbial strains, regardless of when or for what purpose.
-- **Macro-cells** are substantial building pieces that might be thought of as "black boxes." These macro-cells' logic and electronic activity are described, but the internal structure may or may not be known.
+- **Macro-cells** are substantial building pieces that might be thought of as "black boxes." These macro-cells logic and electronic activity are described, but the internal structure may or may not be known.
 - We can understand that **Macros** are like pure digital logic whereas **IP's** dose the intelegent work.
-- Wo communicate to foundries through some interface files(PDKs) provided be the foundries. 
+- Wo communicate to foundries through some interface files(PDKs) provided be the foundries.
+    
 #### RISC-V Instruction Set Architecture(ISA)
-Along with the introduction of RISC-V, other well-known architectures like ARM and x86 are discussed. This is necessary since the architecture on which we will be working is a picorv32a CPU core based on RISC-V.
+Along with the introduction of RISC-V, other well-known architectures like ARM and x86 are discussed. This is necessary since the architecture on which we will be working is a picorv32a CPU core based on RISC-V processor.
 - For example if a C program is to be run on the hardware of given layout then the given C program is first compiled in its assembly language program (here it is the RISC-V assembly level program). Then this assemble level program is converted to machine level program which is the binary level program which is understood by the hardware of the computer and finally the bits get executed in the particular layout.
-- There is another interface which need to present between RISC-V Architecture and layout is the **HDL**. This HDL basically describe the harware and understabd the machine code(binary input). We need to implement this RISC-V specification using some RTL. So this RTL implement the RISC-V Architecture specification using the standard RTL to GDS flow.
+- There is another interface which need to present between RISC-V Architecture and layout is the **HARDWARE DESCRIPTION LANGUAGE (HDL)**. This HDL basically describe the harware and understabd the machine code(binary input). We need to implement this RISC-V specification using some RTL. So this RTL implement the RISC-V Architecture specification using the standard RTL to GDS flow.
 - So the entire flow starts from the RISC-V Architecture, it has been implemented using an RTL and then finally implemented in layout.
 
-![Screenshot (2214)](https://user-images.githubusercontent.com/120498080/214389623-05de9e7c-75a3-45c4-aef8-0c50a7c2bc95.png)
+    <p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/214389623-05de9e7c-75a3-45c4-aef8-0c50a7c2bc95.png">
 
 - The `.exe` file generated be the compiler contain the instruction whose syntax depend on the type of hardware we are using. This instruction set basically acts as an interface between the C level program and harware and this instruction set is called as **Instruction Set Architecture(ISA)** of the Architecture of the Computer(here a RISC-V Architecture). It is the language though which user speaks to the computer
-- The assempler take this instructions and convert it into its respective machine language programe(binary language).
+- The assembler take this instructions and convert it into its respective machine language programe(binary language).
 - We get the specifications of the instruction set and write a HDL of this instructions and synthesis it to gate level and then this is converted into its respective layout using the general RTL to GDSII flow.
 
 ### SoC design and openLANE
