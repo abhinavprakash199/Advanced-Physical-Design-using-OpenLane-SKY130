@@ -13,6 +13,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [ASIC Design Flow](#ASIC-Design-Flow)
     + [Getting Familiar to EDA tools](#getting-familiar-to-eda-tools)
     + [Starting with OpenLANE and Synthesis](#starting-with-openLANE-and-synthesis)
+    + [Run Logic Synthesis in OpenLANE](#Run-Logic-Synthesis-in-OpenLANE)
 * [Day 2: Good Floorplan vs bad Floorplan and Introduction to Library Cells](#day-2)
     + [Stages of Floorplanning](#Stages-of-floorplanning)
     + [Steps to run and view floorplan using OpenLANE](#steps-to-run-and-view-floorplan-using-openlane)
@@ -252,36 +253,48 @@ docker
 
 
 **NOTE** *Commands to save the github directory in local machine* - `git clone https://github.com/The-OpenROAD-Project/OpenLane.git`
+**NOTE** *Commands to open config.tcl file values in Linux uneder picorv32a folder `less config.tcl`
+    
+- Here `config.tcl` file has a clock period of 5 unit
 
-- To learn more how openlink works and how its is designed [prefer these videos](https://www.youtube.com/playlist?list=PLUg3wIOWD8yoZCg9XpFSgEgljx6MSdm9L).
+- To learn more how openLink works and how its is designed [prefer these videos](https://www.youtube.com/playlist?list=PLUg3wIOWD8yoZCg9XpFSgEgljx6MSdm9L).
 
 **So now we are ready to execute the commands**
 
-### Starting with openLANE and Synthesis
-- Now we would be running our first step which is synthesis in openlane but before that we need to set the file system in the *design setup stage* which will be setting up the data for our data structure for our design. 
-- For that enter `% prep -design picorv32a` command in openlane :
+### Starting with openLANE 
+- Now we would be running our first step which is synthesis in openLane but before that we need to set the file system in the *design setup stage* which will be setting up the data for our data structure for our design. 
+- For that enter this command in openlane :
+```
+    prep -design picorv32a
+```
 - So after this the `runs` directory has been created into picorv32a directory under which folder structures required by the openlink will be created in which all the folders will be empty except `tmp`
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a$ 
 
-#### Run Logic Synthesis in OpenLANE
-In **Logic Synthesis** wo convert the RTL code into a leagel hardware. So the output of Logic Synthesis is the arrangements of flip flops and the gates that will represent our origianl functionality that we have described using an RTL.
+### Run Logic Synthesis in OpenLANE
+In **Logic Synthesis** we convert the RTL code into a leagel hardware. So the output of Logic Synthesis is the arrangements of flip flops and the gates that will represent our origianl functionality that we have described using an RTL.
 
-- The `% run_synthesis` command will run bios synthesis as well as the abc.
-
-#### Calculation of number of flop ratio using synthesis report
-Flop ratio is defined as the ratio of number of D flip flop to total number of cell.
+- The given command will run bios synthesis as well as the abc.
+```
+     run_synthesis
+```
+#### Calculation of number of flop ratio using Synthesis Report
+- Flop ratio is defined as the ratio of number of D flip flop to total number of cell.
 
 All the results will be saved into the run folder and the following reports will be generated:
-![image](https://user-images.githubusercontent.com/120498080/214659318-48f9e2b4-465d-4b35-8f2e-0b92ae1ace8f.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/214659318-48f9e2b4-465d-4b35-8f2e-0b92ae1ace8f.png">
+    
 - Like **synthesis stastistics report** (will give information about number of cells used) will be saved in 
 
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-01_14-57/reports/synthesis$ vim 1-yosys_4.stat.rpt
 - So here we got flop ratio of 0.10843 
 
-![Screenshot (2223)](https://user-images.githubusercontent.com/120498080/214655100-76ddbf8e-d648-4e91-8547-b681faa4ff9e.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/214655100-76ddbf8e-d648-4e91-8547-b681faa4ff9e.png">
 - The chip area report is given as 
 
-![image](https://user-images.githubusercontent.com/120498080/214660310-79b2323c-266e-4585-83af-9add2e5a002c.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/214660310-79b2323c-266e-4585-83af-9add2e5a002c.png">
 
 
 
