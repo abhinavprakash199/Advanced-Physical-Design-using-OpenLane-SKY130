@@ -308,9 +308,14 @@ The placement of logical blocks, library cells, and pins on a silicon chip is kn
 
 1. **The height and width of core and die**
 - The core, which is located in the middle of the die, is where the logic blocks are put. The dimensions of each standard cell on the netlist determine the width and height. 
-- **Utilization Factor** is defined as the ratio of area of occupancy by the netlist to total area of the core. Utilization factor in a realistic situation is between 0.5 and 0.6. Only this space is used for the netlist; the rest space is used for routing and more extra cells. 
+- **Utilization Factor** is defined as the ratio of area of occupancy by the netlist(for hard macros and standard cells or soft macro cells) to total area of the core. Utilization factor in a realistic situation is between 0.5 and 0.6. Only this space is used for the netlist and the rest space is used for routing and more extra cells. 
 - **Aspect Ratio** is defined as the ratio between height and the width of core.
 #### Height and Width of Chip
+    
+ <p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/214807245-9df9caee-65dd-4776-848d-145e3526c8bb.png">
+     
+     
 ![Screenshot (2232)](https://user-images.githubusercontent.com/120498080/214807245-9df9caee-65dd-4776-848d-145e3526c8bb.png)
 
 2. **The location of Preplaced Cell**
