@@ -153,7 +153,8 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
  - OpenLINK has large number of design examples(43 different design with their best configuration, here we will be usibg picrorv32a)
 
 #### OpenLANE ASIC Flow
-![Screenshot (2217)](https://user-images.githubusercontent.com/120498080/214488649-b4a76e24-a8f0-401d-a2aa-455f14c111ae.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/214488649-b4a76e24-a8f0-401d-a2aa-455f14c111ae.png">
 
 - In **RTL Syntheses** the RTL is fead to *Yosys* with the design constrains, Yosys converts the RTL into a logic circuits, this circuit can be optimized and then mapped into a cell using STL(OpenSTA) using *abc* (abc has to be guided during optimization which comes as "abc script" from OpenLANE called synthesis statergies, these scrips are guided for least area or best timing)
 - **Synthesis Explorations** can be used to geneate reports that can show how delay are area are affected be synthesis statergies.
@@ -206,14 +207,14 @@ We would be working on the OpenLINK  tool, but it is not exactly a tool, it is t
 #### OpenLANE Directory structure in detail
 We have several pdk under:
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/pdks$
-1. `skywater-pdk` has all the pdk related files like timing libraries, lef files, techlef, celllef files, etc. These are Silicon foundary files compatable with commertial EDA tools and not for open source EDA tool
+1. `skywater-pdk` has all the pdk related files like timing libraries, lef files, techlef, cell lef files, etc. These are Silicon foundary files compatable with commertial EDA tools and not for open source EDA tool
 2. `open_psk` has set of scripts and files that convert these foundry level pdk to be compatable to open source EDA tools like *magic*, *netgen*
 3. `sky130A` is the pdk varient which has been made compatable to open source enviroment.
 
 
 This `sky130A` pdk file contain 2 files:
 1. `libs.ref` which contain all the process specific file specific to the technology like timimg files, cells files, etc. We would be working on `sky130_fd_sc_hd` pdk  varient
-2. `libs.tech` which contain files specific to the tool like *klayout, ngspice, netgen, magic, qflow, openlane, etc*
+2. `libs.tech` which contain files specific to the tool like **klayout, ngspice, netgen, magic, qflow, openlane, etc**
 
 - We would be working on openlane directory 
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane$ 
@@ -224,7 +225,7 @@ This `sky130A` pdk file contain 2 files:
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs$
 - We will be moving with `pocorv32a` design which contain:
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs$
-1. `src` file contain rtl(verilog forl) and sdc information.
+1. `src` file contain RTL(verilog flow) and sdc information.
 2. `.tcl` file which is pdk specific configuration file.
 3. `config.tcl` file passes any configurations that has been already done like location of verilog files, location of sdc files, clock period, etc.
 
@@ -237,21 +238,20 @@ docker
 ./flow.tcl -interactive
 % package require openlane 0.9
 ```
-- We use `docker` command to open the open lane in working directory.
+- We use `docker` command to open the openLANE in working directory.
 - Then use `./flow.tcl -interactive` which identifies using the script the flow has to move and intractive means we do a step by step process.
 - Then we need to import all the package that are required to run this program by `package require openlane 0.9`
 
 - **NOTE** Command to run fully automated run `./flow.tcl -design picorv32a`
-
-![image](https://user-images.githubusercontent.com/120498080/214596626-8ca8164d-041a-47a6-934b-09403c9222cf.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/214596626-8ca8164d-041a-47a6-934b-09403c9222cf.png">
 
 - [Github Repository for openlane by efabless](https://github.com/efabless/openlane)
 
 
-**NOTE** *Commands to save the github directory in local machine* - 
-> git clone https://github.com/The-OpenROAD-Project/OpenLane.git`
+**NOTE** *Commands to save the github directory in local machine* - `git clone https://github.com/The-OpenROAD-Project/OpenLane.git`
 
-- To learn more how openlink works and how its is designed [prefer this videos](https://www.youtube.com/playlist?list=PLUg3wIOWD8yoZCg9XpFSgEgljx6MSdm9L).
+- To learn more how openlink works and how its is designed [prefer these videos](https://www.youtube.com/playlist?list=PLUg3wIOWD8yoZCg9XpFSgEgljx6MSdm9L).
 
 **So now we are ready to execute the commands**
 
