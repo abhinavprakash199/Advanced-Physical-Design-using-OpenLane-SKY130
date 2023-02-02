@@ -95,7 +95,8 @@ The 3 important factors in Digital ASIC Design process are,
 The main objective of **ASIC Design Flow** is to take the design from RTL to GDSII tool which is the final format used for the final layouts. It as also called as **Automated PnR** or **Physical Implemantation**
 
 #### RTL to GDSII flow
-![Screenshot (2215)](https://user-images.githubusercontent.com/120498080/214480028-4e5a5326-4998-4a2f-9248-f3337c3c562d.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/214480028-4e5a5326-4998-4a2f-9248-f3337c3c562d.png">
 
 1.**Synthesis**
 - Designed RTL is transilated into a circuit made out of components from SCL(Standard Cell Library). The resulatant curcuit is described in HDL and usually refered to as a gate level netlist. The gate level netlist is functionally equivalent to the RTL.
@@ -139,8 +140,8 @@ For Open Source ASIC Flow we need to ba aware about the following in Open Source
 - Missing Tools
 
 **OpenLANE** is the open source flow for a open source tapeout experiment. `striVe` is a family of open everything SoC(Open PDK, Open EDA and Open RTL)
-
-![Screenshot (2216)](https://user-images.githubusercontent.com/120498080/214480079-1bb1d6ad-8820-4acb-a7ef-b176e3c13a42.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/214480079-1bb1d6ad-8820-4acb-a7ef-b176e3c13a42.png">
 
 - So the main goal of OpenLANE is to produce clean GDSII(clean means no DRC, LVS and Timing voilations) with no human intervention.
 - OpenLINK is tuned for SkyWater130nm Open PDK, it also supports XFAB180 and Global Foundry 130.
@@ -243,6 +244,7 @@ docker
 - Then we need to import all the package that are required to run this program by `package require openlane 0.9`
 
 - **NOTE** Command to run fully automated run `./flow.tcl -design picorv32a`
+    
 <p align="center">
     <img src="https://user-images.githubusercontent.com/120498080/214596626-8ca8164d-041a-47a6-934b-09403c9222cf.png">
 
