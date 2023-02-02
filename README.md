@@ -291,6 +291,7 @@ All the results will be saved into the run folder and the following reports will
 
 <p align="center">
     <img src="https://user-images.githubusercontent.com/120498080/214655100-76ddbf8e-d648-4e91-8547-b681faa4ff9e.png">
+    
 - The chip area report is given as 
 
 <p align="center">
