@@ -490,9 +490,11 @@ To open layout in magic use this command in this location
 ```
 magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def
 ```
-`-T <address_of_sky130A.tech_file>` where T is for technology file 
-`lef read <address_of_merged.lef_file>` to read the lef files (we use `lef read` because its a standard industry file)
-`def read <address_of_picorv32a.placement.def_file>` to read the def files (we use `def read` because its a standard industry file)
+- `-T <address_of_sky130A.tech_file>`where T is for technology file
+- `lef read <address_of_merged.lef_file>` to read the lef files (we use `lef read` because its a standard industry file)
+- `def read <address_of_picorv32a.floorplan.def_file>` to read the def files (we use `def read` because its a standard industry file)
+    
+
 - **NOTE** If address of the required file is at the same working loaction then we just need to provide the required file name.
 ![image](https://user-images.githubusercontent.com/120498080/214942710-949bec91-df15-40a9-ad87-02f92be1cea9.png)
 
@@ -601,6 +603,7 @@ The slew timing parameters are listed below. Two inverters are connected in seri
 ### Labs for CMOS inverter ngspice simulations
 --- 
 In this we would be going into depth of one of the cells(inverter cell), we won't build it from scratch rather we would use the github to get the `.mag`(magic) files and from there we will be doing Post Layout simulation in ngspice and post characterizing our sample cell, we would be plugging this cell into a OpenLANE flow, into picorv32a core.
+    
 **NOTE** - In I/O placement in floorplan on OpenLANE, configurations can be modified while in flight. On OpenLANE, for instance, use  `set ::env(FP_IO_MODE) 2` to make I/O mode not equidistant. On mode 2, the I/O pins won't be evenly spaced out(default of 1). View the `.def` layout for magic by launching floorplan once more with `run floorplan`. The configuration will only be available for the current session if it is changed on the fly; it will not be changed in `runs/config.tcl`, whereas `echo $::env(FP_IO_MODE)`is used to output the variable's most recent value.
 
 #### SPICE deck creation for CMOS Inverter
@@ -657,19 +660,20 @@ Magic Tool offers a very user-friendly interface for designing the different lay
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign$ 
 
 ![image](https://user-images.githubusercontent.com/120498080/215192449-2306ab36-1490-4f7c-9197-8bb9c68aac97.png)
-- Then run the following command to invoke magic in `.tech` and `.mac` file
+- Then run the following command to invoke magic in `.tech` and `.mag` file
 ```
 magic -T sky130A.tech sky130_inv.mag &
 ```
-`-T <address_of_sky130A.tech_file>` where T is for technology file. 
-Here we use not `lef read` or `def read` as in for `.def` or `.lef` file because `.mag` is not a  standard industry file).
-`&` is use to free the next command prompt.
+- `-T <address_of_sky130A.tech_file>` where T is for technology file. 
+- Here we use not `lef read` or `def read` as in for `.def` or `.lef` file because `.mag` is not a  standard industry file.
+- `&` is use to free the next command prompt.
 - **NOTE** If address of the required file is at the same working loaction then we just need to provide the required file name.
 
 ![image](https://user-images.githubusercontent.com/120498080/215200075-60cdb6dd-0acc-476e-8520-d8b65a7ffd0b.png)
 
 ***NOTE** linux command to copy a file 
-`cp <address_of_file_need_to_be_copied> <address_of_folder_it_need_to_be_pasted>`*
+`cp <address_of_file_need_to_be_copied> <address_of_folder_it_need_to_be_pasted
+                                                                                
 ![image](https://user-images.githubusercontent.com/120498080/215191310-9e4d6bf7-50ee-4799-a933-d201e326f22d.png)
 **NOTE**
 - This `sky130_inv.mag`(magic) file is 
@@ -723,6 +727,7 @@ Now to know the logical functioning of the inverte we extrace the spice and do s
 ![image](https://user-images.githubusercontent.com/120498080/215250083-2d7d91c7-1797-4d62-ba6b-e9c59a351bc4.png)
 
 - We then modify the `sky130_inv.spice` file as shown below to be able to plot a transient response:
+    
 ![image](https://user-images.githubusercontent.com/120498080/215252810-98f2337f-17a7-41ba-b5e6-67e28a8d2ec0.png)
 
 ```verilog
@@ -760,7 +765,8 @@ run
 
 - Then when we run in ngsice then we got this errors 
 ![image](https://user-images.githubusercontent.com/120498080/215252912-1c7e8ad3-69ad-43ee-a93b-1acf01bf1b44.png)
-
+- Later found that we where getting error because here(generted `sky130_inv.spice` file) nmos and pmos where named as `XO` and `X1` but in ngspice mos as name with 'M'('X' is considered as some differnet component). So we replace `XO` and `X1` with `MO` and `M1` and above code got run.(error was not because of the change in value of `ad, pd, as, ps`)
+    
 - So then we use below files (which was shown in the video) and we got the plots
 - To 0pen the spice file by typing `ngspice sky130_inv_new.spice` and to generate a graph using `plot y vs time a` :
 
@@ -1447,15 +1453,17 @@ run_magic
 ---
 -`.tech` files  contains the metal layer, connectivity between layers, DRC rules, and other definitions needed by Magic layout tool to view a single cell. `sky130A.tech` file is provided by foundary here its provided by pdk of sky130.
 - `.lef` files is combination of tech lef (contains metal layer geometries) and cell lef (contains geometries for all cells in the standard cell library). This lef file does not contain the logic part of cells, only the footprint that is needed by the PnR tool.
+- `nshort.lib` and `nphort.lib` are the spice model files for nmos and pmos which are already provided here.
 - Merged LEF file `merged.lef` are Library Exchange Format files are provided by foundary which contain design rules and abstract information about the standard cells.
 - `.def` file is derived from LEF file and is used to transfer the design data from one EDA tool to another EDA tool and contains connectivity of cells of the design and is just a footprint (does not contain the logic part of cells) that the PnR needs. Each EDA tool to run will need to read first the LEF file   
 - `vim picorv32a.floorplan.def` files are Design Exchange Format files are generated after floorplanning and contains the placement information of macros , standard cells, I/O pins and other physical entities.   
-- `.mag` file is generated file from magic.
+- `sky130_inv.mag` file is generated file from magic and its already provided here.
 - `src` file contain RTL(verilog flow) and sdc information.
 - `.tcl` file which is pdk specific configuration file.
 - `config.tcl` file passes any configurations that has been already done like location of verilog files, location of sdc files, clock period, etc.
 - PDK specific configuration `sky130A_sky130_fd_sc_hd_config.tcl`
 - `smc_025um_model.mod` is the model file which contain the technological parameters of the 0.25um NMOS and PMOS Devices.
+- `sky130_inv.spice` file extraced from magic from `.mag` files
 
 ## References
 ---
