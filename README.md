@@ -768,7 +768,6 @@ run
 - Later found that we where getting error because here(generted `sky130_inv.spice` file) nmos and pmos where named as `XO` and `X1` but in ngspice mos as name with 'M'('X' is considered as some differnet component). So we replace `XO` and `X1` with `MO` and `M1` and above code got run.(error was not because of the change in value of `ad, pd, as, ps`)
     
 - So then we use below files (which was shown in the video) and we got the plots
-- To 0pen the spice file by typing `ngspice sky130_inv_new.spice` and to generate a graph using `plot y vs time a` :
 
 ```verilog
 * SPICE3 file created from sky130_inv_new.ext - technology: sky130A
@@ -802,7 +801,15 @@ run
 .end
 ```
 - `\vsdstdcelldesign-master\libs\nshort.lib` and `\vsdstdcelldesign-master\libs\nphort.lib` are the spice model files for nmos and pmos
-- We change C3(Cload) to 2fF(increase it) to get the higher delay
+- We change C3(Cload) to 2fF(increase it) to get the higher delay.
+- Command to To 0pen the spice file 
+```
+    ngspice sky130_inv_new.spice
+``` 
+- Command to generate a graph 
+```
+    plot y vs time a
+``` 
 #### Plots we got after ngspice simulation
 ![Screenshot (2293)](https://user-images.githubusercontent.com/120498080/215253787-87328018-577a-4b19-91b2-b8439818fdcb.png)
 
@@ -820,37 +827,20 @@ Using this transient response, we will now characterize the cell's slew rate and
 - Fall Delay [delay between 50%(1.65V) of input to 50%(1.65V) of output]:
 > Fall Delay = 8.07770- 8.05075 = 0.02695 ns
 
-- The characterization done above was done at 27 C.
+- The characterization done above was done at 27°C.
 
 **So now we have characterized our inverter.**
+    
 The next goal is to make a `.lef` file using this inverter architecture. We will create a unique cell by plugging this `.lef` into openlane and plugin in this cell into our picorv32a core.
 
-
-
-
-
-
-
-
-
-
-
-
 ***NOTE** Linux command to download  a file `wget <url_of_the_file_to_be_downloaded>`*
-`wget https://skywater-pdk.readthedocs.io/en/main/`
-
-
-
-
-
-
+```
+    wget https://skywater-pdk.readthedocs.io/en/main/
+```
 <!---##  SKY130_D3_SK3 L3 to L9--->
 
-
-
-
-
-
+    
+    
 
 
 
@@ -858,10 +848,10 @@ The next goal is to make a `.lef` file using this inverter architecture. We will
 ---
 ## Pre-layout timing analysis and importance of good clock tree
 ---
-So till now we are done with the design setup,the floorplan, placement and lastly we have learned, given a `.mac` file how to extrace the `.spice` out of it and do the characterization. We where looking into ngspice and magic and now lets see how it is connected to OpenLANE(which is a place and route tool, and for placement of any cell we don't require the `.mac` file simulation(`.mac` file contain all the information in magic) but we only require is the PnR boundary(which contain the power and the rail, input and the output informantion) and that is the `.lef` files). So `.lef` file proctects our ir and macro information.
+So till now we are done with the design setup, the floorplan, placement and lastly we have learned, given a `.mag` file how to extrace the `.spice` out of it and do the characterization. We have looked into ngspice and magic and now lets see how it is connected to OpenLANE(which is a place and route tool, and for placement of any cell we don't require the `.mag` file simulation(`.mag` file contain all the information in magic) but we only require is the PnR boundary(which contain the power and the rail, input and the output informantion) and that is the `.lef` files). So `.lef` file proctects our ir and macro information.
 - **`.lef` files {Library Exchange Format (LEF)}** is a specification for representing the physical layout of an integrated circuit in an ASCII format. It includes design rules and abstract information about the standard cells.LEF only has the basic information required at that level to serve the purpose of the concerned CAD tool. It helps in saving valuable resources by providing only an abstract view and thus consuming less memory overhead. LEF is used in conjunction with Design Exchange Format (DEF) to represent the complete physical layout of an integrated circuit while it is being designed.
-
-![Screenshot (2300)](https://user-images.githubusercontent.com/120498080/215275249-a122a31b-d205-40a4-9a0c-d038bb99550c.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/215275249-a122a31b-d205-40a4-9a0c-d038bb99550c.png">
 
 So next we will extrace a `.lef` file out of this `.mag` file(designed by us) and then we will plug this lef file into the picorv43a flow(till now we was workid with pre build cells) 
 
@@ -874,27 +864,33 @@ But first, we must follow to the PnR tool's instructions for standard cells:
 To check these guidelines, we need to change the grid of Magic to match the actual metal tracks. The `pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tracks.info` contains those metal informations.
 
 - In the tkon terminal, use the `grid` command to match the track information.
-
-![Screenshot (2301)](https://user-images.githubusercontent.com/120498080/215279771-1d996a58-8a86-4b0f-8f79-24e0baf9979e.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/215279771-1d996a58-8a86-4b0f-8f79-24e0baf9979e.png">
 
 - The grids indicate the only locations for the local-internet layer routing, and the wire pitch needed is indicated by the distance between grid lines. The following demonstrates that the requirements are met.
-
-![Screenshot (2302)](https://user-images.githubusercontent.com/120498080/215279845-f51bab17-45eb-4399-b6b2-5e37dc6bea61.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/215279845-f51bab17-45eb-4399-b6b2-5e37dc6bea61.png">
 
 - The LEF file will then be extracted. Cell size, port definitions, and other properties that help the placer and router tool are contained in the LEF file. Thus, it is necessary to first set the port's definition, port class, and use. 
-- The [vsdstdcelldesign repository](https://github.com/nickson-jose/vsdstdcelldesign#create-port-definition) contains the instructions to **covert lables to ports**(declares pin as macro) using Magic.(this is alredy been done here)
+- The [vsdstdcelldesign repository](https://github.com/nickson-jose/vsdstdcelldesign#create-port-definition) contains the instructions to **covert lables to ports**(declares pin as macro) using Magic.(this is already been done here)
 - So after defining the ports we go for [**Port class and Port use**](https://github.com/nickson-jose/vsdstdcelldesign#Set-port-class-and-port-use-attributes-for-a-layout) which tells the tool about the perpous of the ports.(e.g. it is input post, output port, etc)(this is alredy been done here)
 
-- Now, to save the mag file as `sky130 myinverter.mag` type `save sky130_myinverter.mag` in tkcon terminal.
-- Then, on the tkcon terminal, type `lef write` and a lef file with the same name as the mag file `sky130_myinverter.lef` will be produced. 
-
-![image](https://user-images.githubusercontent.com/120498080/215283803-642ff908-9929-416f-b0f4-b77c31e28b6b.png)
+- Now, to save the mag file as `sky130 myinverter.mag` type this command in tkcon terminal.
+```
+    save sky130_myinverter.mag
+```
+- Then, on the tkcon terminal, type this command and a lef file with the same name as the mag file `sky130_myinverter.lef` will be produced. 
+```
+    lef write
+```
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/215283803-642ff908-9929-416f-b0f4-b77c31e28b6b.png">
 
 - Here is the LEF file
 
 ![image](https://user-images.githubusercontent.com/120498080/215284142-68551b1f-b024-45a3-b4d9-a94c10a3a204.png)
 
-### Plug-in the Customized Inverter Cell(lif file) to OpenLane
+### Plug-in the Customized Inverter Cell(lef file) to OpenLane
 - Next is to plug this lef file into our picorv32a flow (before that we will more our file to src folder)
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src$
 
