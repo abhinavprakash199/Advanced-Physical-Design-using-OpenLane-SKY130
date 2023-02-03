@@ -584,8 +584,12 @@ The slew timing parameters are listed below. Two inverters are connected in seri
 #### Propogation Delay and Transition Time
 <p align="center">
     <img src="https://user-images.githubusercontent.com/120498080/215050048-c39ea804-b144-44da-8d7d-bdce9c96187f.png">
+    
 - The timing parameters for propagation delay are listed below.
-![Screenshot (2283)](https://user-images.githubusercontent.com/120498080/215050117-ddf12289-f379-482d-a7f1-c8dd51858358.png)
+    
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/215050117-ddf12289-f379-482d-a7f1-c8dd51858358.png">
+    
 - **Propogation Delay** is defined as time {(out_thr)-time(in_thr)}
 - **Transition Time** is defined as {time(slew_high_rise_thr)-time(slew_low_rise_thr)} or {time(slew_high_fall_thr)-time(slew_low_fall_thr)}
 - It's unexpected to see negative propagation delay because the output occurs before the input. So in that case the designer must select the proper threshold value to create a positive delay. The typical delay threshold is 50% and slew low thresholds is 20% of Vdd and slew high threshold 80% of Vdd.
