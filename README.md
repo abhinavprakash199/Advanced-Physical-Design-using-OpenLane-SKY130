@@ -41,7 +41,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Routing Stage](#Routing-Stage)
     + [Extraction of GRSII file](#Extraction-of-GRSII-file)
 * [All commands to run in openlane](#All-commands-to-run-in-openlane)
-    
+* [Appendix](#Appendix)
 * [References](#references)
 * [Acknowledgement](#acknowledgement)
 * [Inquiries](#inquiries)
@@ -601,13 +601,12 @@ The slew timing parameters are listed below. Two inverters are connected in seri
 ### Labs for CMOS inverter ngspice simulations
 --- 
 In this we would be going into depth of one of the cells(inverter cell), we won't build it from scratch rather we would use the github to get the `.mag`(magic) files and from there we will be doing Post Layout simulation in ngspice and post characterizing our sample cell, we would be plugging this cell into a OpenLANE flow, into picorv32a core.
-#### NOTE - In IO placement in floorplan
-On OpenLANE, configurations can be modified while in flight. On OpenLANE, for instance, use  `% set ::env(FP_IO_MODE) 2` to make IO mode not equidistant. On mode 2, the IO pins won't be evenly spaced out (default of 1). View the def layout for magic by launching floorplan once more with `% run floorplan`.  The configuration will only be available for the current session if it is changed on the fly; it will not be changed in `runs/config.tcl`, `echo $::env(FP_IO_MODE)` to output the variable's most recent value.
+**NOTE** - In I/O placement in floorplan on OpenLANE, configurations can be modified while in flight. On OpenLANE, for instance, use  `set ::env(FP_IO_MODE) 2` to make I/O mode not equidistant. On mode 2, the I/O pins won't be evenly spaced out(default of 1). View the `.def` layout for magic by launching floorplan once more with `run floorplan`. The configuration will only be available for the current session if it is changed on the fly; it will not be changed in `runs/config.tcl`, whereas `echo $::env(FP_IO_MODE)`is used to output the variable's most recent value.
 
-#### SPICE deck creation for CMOS inverter
+#### SPICE deck creation for CMOS Inverter
 First we need to design the library cells:
 
-- The CMOS inverter's **SPICE deck** represents component connections (essentially a netlist).
+- The CMOS inverter's **SPICE deck** represents component connections(essentially a netlist).
 - SPICE deck values equal the W/L value (0.375u/0.25u), which denotes a width of 375nm and a length of 250nm. PMOS shought to be 2 or 3 times broader in width than NMOS. Typically, the gate and supply voltages are multiples of length (in the example, gate voltage can be 2.5V)
 - Place nodes around each component and give it a name. In SPICE, a component can be identified using this.
 
@@ -617,6 +616,10 @@ First we need to design the library cells:
 - PMOS and NMOS descriptor syntax
     + `[component name] [drain] [gate] [source] [substrate] [transistor type] W=[width] L=[length]`
 - Based on nodes and their values, all components are described.
+- For load cap connecivity and value `[name] [node1] [node2] [value]'
+- Supply voltage `[name] [node1] [node2] [value]`
+- Input voltage `[name] [node1] [node2] [value]`
+    
 **SIMULATION COMMANDS**
 - `.op` `.dc Vin 0 2.5 0.05` is the start of SPICE simulation operation where Vin will be sweep from 0 to 2.5 with 0.05 steps
 - `tsmc_025um_model.mod` is the model file which contain the technological parameters of the 0.25um NMOS and PMOS Devices.
@@ -1440,7 +1443,19 @@ gen_pdn
 run_routing
 run_magic
 ```
-
+## Appendix
+---
+-`.tech` files  contains the metal layer, connectivity between layers, DRC rules, and other definitions needed by Magic layout tool to view a single cell. `sky130A.tech` file is provided by foundary here its provided by pdk of sky130.
+- `.lef` files is combination of tech lef (contains metal layer geometries) and cell lef (contains geometries for all cells in the standard cell library). This lef file does not contain the logic part of cells, only the footprint that is needed by the PnR tool.
+- Merged LEF file `merged.lef` are Library Exchange Format files are provided by foundary which contain design rules and abstract information about the standard cells.
+- `.def` file is derived from LEF file and is used to transfer the design data from one EDA tool to another EDA tool and contains connectivity of cells of the design and is just a footprint (does not contain the logic part of cells) that the PnR needs. Each EDA tool to run will need to read first the LEF file   
+- `vim picorv32a.floorplan.def` files are Design Exchange Format files are generated after floorplanning and contains the placement information of macros , standard cells, I/O pins and other physical entities.   
+- `.mag` file is generated file from magic.
+- `src` file contain RTL(verilog flow) and sdc information.
+- `.tcl` file which is pdk specific configuration file.
+- `config.tcl` file passes any configurations that has been already done like location of verilog files, location of sdc files, clock period, etc.
+- PDK specific configuration `sky130A_sky130_fd_sc_hd_config.tcl`
+- `smc_025um_model.mod` is the model file which contain the technological parameters of the 0.25um NMOS and PMOS Devices.
 
 ## References
 ---
