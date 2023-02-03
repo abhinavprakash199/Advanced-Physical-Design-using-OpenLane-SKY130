@@ -26,7 +26,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Characterizing the cell's(CMOS Inverter) slew rate and propagation delay](#Characterizing-the-cell's(CMOS-Inverter)-slew-rate-and-propagation-delay)
 * [Day 4 - Pre-layout timing analysis and importance of good clock tree](#day-4)
     + [Plug-in the Customized Inverter Cell(lif file) to OpenLane](#Plug-in-the-Customized-Inverter-Cell(lif-file)-to-OpenLane)
-    + [Delay](#Delay)
+    + [Delay Table](#Delay-Table)
     + [Fix Negative Slack](Fix-Negative-Slack)
     + [Floorplanning and Placement](#Floorplanning-and-Placement)
     + [Setup Timing Analysis](#Setup-Timing-Analysis)
@@ -873,7 +873,7 @@ To check these guidelines, we need to change the grid of Magic to match the actu
 
 - The LEF file will then be extracted. Cell size, port definitions, and other properties that help the placer and router tool are contained in the LEF file. Thus, it is necessary to first set the port's definition, port class, and use. 
 - The [vsdstdcelldesign repository](https://github.com/nickson-jose/vsdstdcelldesign#create-port-definition) contains the instructions to **covert lables to ports**(declares pin as macro) using Magic.(this is already been done here)
-- So after defining the ports we go for [**Port class and Port use**](https://github.com/nickson-jose/vsdstdcelldesign#Set-port-class-and-port-use-attributes-for-a-layout) which tells the tool about the perpous of the ports.(e.g. it is input post, output port, etc)(this is alredy been done here)
+- So after defining the ports we go for [Port class and Port use](https://github.com/nickson-jose/vsdstdcelldesign#Set-port-class-and-port-use-attributes-for-a-layout) which tells the tool about the perpous of the ports.(e.g. it is input post, output port, etc)(this is alredy been done here)
 
 - Now, to save the mag file as `sky130 myinverter.mag` type this command in tkcon terminal.
 ```
@@ -891,14 +891,14 @@ To check these guidelines, we need to change the grid of Magic to match the actu
 ![image](https://user-images.githubusercontent.com/120498080/215284142-68551b1f-b024-45a3-b4d9-a94c10a3a204.png)
 
 ### Plug-in the Customized Inverter Cell(lef file) to OpenLane
-- Next is to plug this lef file into our picorv32a flow (before that we will more our file to src folder)
+- Next is to plug this lef file into our picorv32a flow (before that we will copy the newly created lef to src folder under picorv32a:)
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src$
 
 - Provided inside the cloned `vsdstdcelldesign` are the liberty files containing the customized inverter cell.
 - Copy the extracted lef file `sky130_myinverter.lef` from `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign/` and the liberty files `sky130*.lib` from `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign/libs/` to the src directory of picorv32a in
 > /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign/libs/
 
-**NOTE** `sky130_fd_sc_hd__typical.lib`,`sky130_fd_sc_hd__slow.lib` and `sky130_fd_sc_hd__fast.lib` are the typical, slow and fas corner timing library file provided by sky130 which are at loaction and would we requied for STA analysis
+**NOTE** `sky130_fd_sc_hd__typical.lib`,`sky130_fd_sc_hd__slow.lib` and `sky130_fd_sc_hd__fast.lib` are the typical, slow and fast corner timing library file provided by sky130 which are at loaction and would we requied for STA analysis
 > /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign/libs/
 
 - Add the folowing to `config.tcl` inside the picorv32a:
@@ -933,7 +933,7 @@ source $filename
 ```
 - This sets the liberty file that will be used for ABC mapping of synthesis (`LIB_SYNTH`) and for STA (`_FASTEST`,`_SLOWEST`,`_TYPICAL`) and also the extra LEF files (`EXTRA_LEFS`) for the customized inverter cell. 
 
-#### `config.tcl` file should contain following information
+#### The `config.tcl` file should contain following information
 ![image](https://user-images.githubusercontent.com/120498080/215290835-5d1ede56-c7ea-457b-9623-15a2d9b70de2.png)
 
 - Run docker and prepare the design picorv32a. Plug the new lef file to the OpenLANE flow via:
@@ -941,8 +941,11 @@ source $filename
 set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
 add_lefs -src $lefs
 ```
-- These command are to ensure that when `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_06-33/tmp/merged.lef` created 
-- Next do `run_synthesis`. 
+- These command are to ensure that when `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_06-33/tmp/merged.lef` created it add our newly created lef file to `merged.lef` file.
+- Then again do (after updating newly created lef file)
+```
+    run_synthesis
+```. 
 - After the run, and as we can see `sky130_myinverter` cell is successfully included in the design
 
 ![image](https://user-images.githubusercontent.com/120498080/215291031-ddea6258-4a59-4a3c-99f0-700d709787b5.png)
@@ -956,7 +959,7 @@ add_lefs -src $lefs
 
 - So here we are not meeting the timing constrains. Hence our next goal is to solve this negative slack
 
-### Delay
+### Delay Table
 
 Problem:
 - The capacitance or the load at the output node of each and every buffer in the complete clock tree is varying.
@@ -966,14 +969,15 @@ To avoid large skew between endpoints of a clock tree (happening due to signal a
 - After splitting the buffers.
 - Buffers on the same level must have same capacitive load to ensure same timing delay or latency on the same level. It means that each buffer at the same level is having same load.
 - Buffers on the same level must also be the same size (different buffer sizes -> different W/L ratio -> different resistance -> different RC constant -> different delay). It means that the buffer at same level should be of same size.
-
-![Screenshot (2304)](https://user-images.githubusercontent.com/120498080/215292143-0514595b-a74d-47aa-a969-693620d905be.png)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/215292143-0514595b-a74d-47aa-a969-693620d905be.png">
 
 Solution:
 - **Delay tables** are the solution. Delay tables are 2D table. Delay of a component is characterised and summaries in a table.
-- The timing model of each cell is recorded and is summarised in delay tables, which are part of the liberty file. The output slew is the main cause of delay. Capacitive load and input slew are also factors that affect output slew. The input slew has its own transition delay table and is a function of the previous buffer's output cap load and input slew.
-
-![Screenshot (2305)](https://user-images.githubusercontent.com/120498080/215292161-f2c410f1-1a33-4eeb-bb6c-a63bcc2a9479.png)
+- The timing model of each cell is recorded and is summarised in delay tables, which are part of the liberty file. The output slew is the main cause of delay.
+- Capacitive load and input slew are also factors that affect output slew. The input slew has its own transition delay table and is a function of the previous buffer's output cap load and input slew.
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/215292161-f2c410f1-1a33-4eeb-bb6c-a63bcc2a9479.png">
 
 ### Fix Negative Slack
 
@@ -982,13 +986,9 @@ Solution:
 tns (total negative slack) = -711.59
 wns (worst negative slack) = -23.89
 ```
+- Slack has to be positive always and negative slack indicates a violation in timing so we will try to maintain a balance between the delay and the area (SYNTH_STRATEGY).
 - Let us change some variables to minimize the negative slack. We will now change the variables "on the flight". 
 - Use `echo $::env(SYNTH_STRATEGY)` to view the current value of the variables before changing it:
-```verilog
-echo $::env ([Varible]) // our case = SYNTH_STRATEGY
-// change the STRATEGY
-```
-- Slack has to be positive always and negative slack indicates a violation in timing so we will try to maintain a balance between the delay and the area (SYNTH_STRATEGY).
 
 ```verilog
 % echo $::env(SYNTH_STRATEGY)
@@ -1005,8 +1005,9 @@ DELAY 0
 sky130_fd_sc_hd__inv_8
 ```
   
-- With `SYNTH_STRATEGY` of `Delay 0`, the tool will focus more on optimizing/minimizing the delay, index can be 0 to 3 where 3 is the most optimized for timing (sacrificing more area). `SYNTH_BUFFERING` of 1 ensures cell buffer will be used on high fanout cells to reduce delay due to high capacitance load. `SYNTH_SIZING` of 1 will enable cell sizing where cell will be upsize or downsized as needed to meet timing. `SYNTH_DRIVING_CELL` is the cell used to drive the input ports and is vital for cells with a lot of fan-outs since it needs higher drive strength (larger driving cell needed). 
+- With `SYNTH_STRATEGY` of `Delay 0`, the tool will focus more on optimizing/minimizing the delay, index can be 0 to 3, where 3 is the most optimized for timing (sacrificing more area). `SYNTH_BUFFERING` of 1 ensures cell buffer will be used on high fanout cells to reduce delay due to high capacitance load. `SYNTH_SIZING` of 1 will enable cell sizing where cell will be upsize or downsized as needed to meet timing. `SYNTH_DRIVING_CELL` is the cell used to drive the input ports and is vital for cells with a lot of fan-outs since it needs higher drive strength (larger driving cell needed). 
 - Use readme files to know about these
+    
 ![image](https://user-images.githubusercontent.com/120498080/215314890-fdfab8f4-a344-4091-8b56-6885fbbe46fd.png)
 
 - Then we do `run_synthesis` and we got and error, but now are ignoring this (slag issue) and move forward
@@ -1459,7 +1460,7 @@ run_magic
 - `config.tcl` file passes any configurations that has been already done like location of verilog files, location of sdc files, clock period, etc.
 - PDK specific configuration `sky130A_sky130_fd_sc_hd_config.tcl`
 - `smc_025um_model.mod` is the model file which contain the technological parameters of the 0.25um NMOS and PMOS Devices.
-- `sky130_inv.spice` file extraced from magic from `.mag` files
+- `sky130_inv.spice` file extraced from magic from `.mag` files and after analysis converted to `sky130_myinverter.lef` file to be used in OpenLane
 
 ## References
 ---
