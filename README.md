@@ -530,20 +530,20 @@ This `sky130A.tech`(technology), `merged.lef`(layout exchange format) and `picor
 ![Screenshot (2258)1](https://user-images.githubusercontent.com/120498080/215010171-00985091-1a73-49db-b6f0-a41816080446.png)
 ![Screenshot (2262)](https://user-images.githubusercontent.com/120498080/215012180-f3731816-d842-46e2-bac5-09cc4850f043.png)
 
-**Library and Vser Defined Specs **
+**Library and user Defined Specs**
 - **Cell height** has been defined as the seperation between power and the ground rail and it is the responsibilty of the cell develepor that cell height is mantained. Cell height depends on the timing information(if the cell height is high then it would be able to drive more longer wire, that is called higher drive strength cells)
-- The standard cells has to operate at a certain **Supply Voltage** which is beign provided by the top level designer and accordingly the library devloper has to take that supply voltage and design the lobrary cell such that it specifies supply voltage.
+- The standard cells has to operate at a certain **Supply Voltage** which is beign provided by the top level designer and accordingly the library devloper has to take that supply voltage and design the library cell such that it specifies supply voltage.
 - **Metal Layer**, **Pin Locations**, **Drawn Gate Length** requirments has to be decided by the library devloper.
 
 #### Design steps Outputs of Cell Design Flow
 ![Screenshot (2265)](https://user-images.githubusercontent.com/120498080/215012572-65ed0b3c-ec01-4f26-bf4e-0f806042625b.png)
 - **Circuit Design** step is mostly based on spice simulations.
-- - From the circuit design step we get output called as **CDL(circuit discription language) file**
-- So from circuit design step onse we known about the W/L rstios of nmos and pmos, then we need to implement it in layout design.
+- From the circuit design step we get output called as **CDL(circuit discription language) file**
+- So from circuit design step onse we known about the W/L ratios of nmos and pmos, then we need to implement it in layout design.
 - **Art of Layout is Eular's path and stick diagram**
 
 ![Screenshot (2267)](https://user-images.githubusercontent.com/120498080/215018399-b678c4bb-a54e-4518-a82a-36590aced59e.png)
-- In **Layout Design** first step is to get the logic implemented with the help of nmos and pmos transistors and get get a nmos and pmos nework graph out of our design and obtain the Eular's path(path wich has been traced only once) and then go for stick diagram out of it. 
+- In **Layout Design** first step is to get the logic implemented with the help of nmos and pmos transistors and get a nmos and pmos nework graph out of our design and obtain the Eular's path(path wich has been traced only once) and then go for stick diagram out of it. 
 
 ![Screenshot (2268)](https://user-images.githubusercontent.com/120498080/215018430-bc2fe61b-6873-4169-8d7b-1be0c9692c5b.png)
 - Later we convert this stick diagram into a proper layout according to the rules which we have got from the input.
@@ -555,7 +555,7 @@ This `sky130A.tech`(technology), `merged.lef`(layout exchange format) and `picor
 ---
 - Next step after we get the extraced step netlist and layout is characterization(*that's what this course is all about*)
 - **Characterization** helps us to get timing, noise and power information.
-- The outpit of characterization is **timing, noise, power.lib files** and the **functionality** of this circuit
+- The output of characterization is **timing, noise, power.lib files** and the **functionality** of this circuit
 
 #### Characterization Flow
 1. Read in the models files
@@ -570,7 +570,7 @@ This `sky130A.tech`(technology), `merged.lef`(layout exchange format) and `picor
 ![Screenshot (2276)](https://user-images.githubusercontent.com/120498080/215031007-3ff42a3f-644f-4099-ac4f-e5e8bc1f9df5.png)
 ![Screenshot (2274)](https://user-images.githubusercontent.com/120498080/215031041-78346fad-4f69-4e82-9485-505c833e0ce8.png)
 
-- Next step is to feed in all these inputs from 1 to 8 as in form of a configuration file to the characterization software called as **GUNA** and this software will generate timing, noise and power modles
+- Next step is to feed in all these inputs from 1 to 8 as in form of a configuration file to the characterization software called as **GUNA** and this software will generate timing, noise and power models.
 
 ![Screenshot (2277)](https://user-images.githubusercontent.com/120498080/215031065-79ccc805-1d5a-4fd8-907a-952628ef3357.png)
 - The output of GUNA(.lib files) are characterized into :
@@ -582,8 +582,9 @@ This `sky130A.tech`(technology), `merged.lef`(layout exchange format) and `picor
 ---
 The slew timing parameters are listed below. Two inverters are connected in series, called as buffers(circuit is shown above)
 #### Propogation Delay and Transition Time
-![Screenshot (2282)](https://user-images.githubusercontent.com/120498080/215050048-c39ea804-b144-44da-8d7d-bdce9c96187f.png)
-The timing parameters for propagation delay are listed below.
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/215050048-c39ea804-b144-44da-8d7d-bdce9c96187f.png">
+- The timing parameters for propagation delay are listed below.
 ![Screenshot (2283)](https://user-images.githubusercontent.com/120498080/215050117-ddf12289-f379-482d-a7f1-c8dd51858358.png)
 - **Propogation Delay** is defined as time {(out_thr)-time(in_thr)}
 - **Transition Time** is defined as {time(slew_high_rise_thr)-time(slew_low_rise_thr)} or {time(slew_high_fall_thr)-time(slew_low_fall_thr)}
