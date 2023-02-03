@@ -1056,8 +1056,8 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 ![Screenshot (13)](https://user-images.githubusercontent.com/120498080/215499423-5ba3de1c-fb8c-4624-9110-cacbdd7acc05.png)
 
-- **NOTE - We where not able to find our inverter because I save `.lsv` file as 'myinverter.lsv` insted of `sky30_vsdinv.lsv`**
-- So we agarin generate the file as `sky30_vsdinv.lsv` then we where able to find the inverter.
+- **NOTE - We where not able to find our inverter because I save `.lvs` file as 'myinverter.lvs` insted of `sky30_vsdinv.lsv`**
+- So we again generate the file as `sky30_vsdinv.lvs` then we where able to find the inverter.
 - Zoom view of 'sky130_vsdinv` inverter in our design
 
 ![image](https://user-images.githubusercontent.com/120498080/215341238-6438b9c2-8581-4252-a142-830df3abc578.png)
