@@ -945,6 +945,11 @@ add_lefs -src $lefs
 - Then again do (after updating newly created lef file)
 
     
+```
+    run_synthesis
+    
+```
+    
 - After the run, and as we can see `sky130_myinverter` cell is successfully included in the design
 
 ![image](https://user-images.githubusercontent.com/120498080/215291031-ddea6258-4a59-4a3c-99f0-700d709787b5.png)
