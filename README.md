@@ -943,9 +943,7 @@ add_lefs -src $lefs
 ```
 - These command are to ensure that when `/home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_06-33/tmp/merged.lef` created it add our newly created lef file to `merged.lef` file.
 - Then again do (after updating newly created lef file)
-```
-    run_synthesis
-```. 
+
     
 - After the run, and as we can see `sky130_myinverter` cell is successfully included in the design
 
