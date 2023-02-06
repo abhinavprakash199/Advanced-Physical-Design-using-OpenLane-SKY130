@@ -30,8 +30,9 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Fix Negative Slack](Fix-Negative-Slack)
     + [Floorplanning and Placement](#Floorplanning-and-Placement)
     + [Pre-Layout Setup Timing Analysis](#Pre-Layout-Setup-Timing-Analysis)
-    + [Run CTS(Clock Tree Synthesis) using TritonCTS](#Run-CTS(Clock-Tree-Synthesis)-using-TritonCTS)
+    + [Pre-Clock Tree Synthesis using TritonCTS](#Pre-Clock-Tree-Synthesis-using-TritonCTS)
     + [Timing Analysis with Real Clocks](#Timing-Analysis-with-Real-Clocks)
+    + [Multi-corner STA for Post-CTS](#Multi-corner-STA-for-Post-CTS)
 * [DAY 5: Final Steps for RTL2GDS using TritonRoute and OpenSTA](#Day-5)
     + [Maze Routing](#Maze-Routing)
     + [DRC Cleaning](#DRC-Cleaning)
@@ -1037,7 +1038,7 @@ wns (worst negative slack) = 00
 ![image](https://user-images.githubusercontent.com/120498080/215316219-86bf602b-b34b-400c-b9fa-23a4c4d14026.png)
 
 - So we go with the following commands to do floorplanning and placement: 
-```vereilog
+```verilog
 init_floorplan
 place_io
 global_placement_or
@@ -1104,11 +1105,11 @@ report_wns
 ```
 ![image](https://user-images.githubusercontent.com/120498080/215347570-0bf8b25b-4a08-4149-bc61-8d0e978afa8c.png)
 
-- After CTS new .v files is created which contain information about new netlist generated(like extra buffers addded during CTS).
+- After CTS new `.v` files is created which contain information about new netlist generated
 - Creating `my_base.sdc` and save this file in the src folder of picorv32a folder.
 - This SDC(Synopsys Design Constraints) file is an ASCII text file (with the extension `.sdc`) that contains design constraints and timing assignments in the industry-standard Design Constraints format.
     
-#### `my_base.sdc` file
+#### The `my_base.sdc` file
 ```
 set ::env(CLOCK_PORT) clk
 set ::env(CLOCK_PERIOD) 12.000
@@ -1157,7 +1158,7 @@ set_load  $cap_load [all_outputs]
 
 - Here we have assumed ideal clock(not done clock tree synthesis) so hold time is not having much significance. Hold analysis comes in significance after CTS.
 
-### Run CTS(Clock Tree Synthesis) using TritonCTS
+### Pre-Clock Tree Synthesis using TritonCTS
 
 There are three parameters that we need to consider when building a clock tree:
 
@@ -1187,9 +1188,13 @@ SKY_L2 - Crosstalk and clock net shielding
 #### Timing contrains met after running CTS
 ![image](https://user-images.githubusercontent.com/120498080/215356354-1b3d382c-237a-4a73-97eb-414e4151ab91.png)
 
-- This will create `picorv32a.cts.def` and `picorv32a.cts.def.png`woll be created at
+- This will create `picorv32a.cts.def` and `picorv32a.cts.def.png` file at
 
 > /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_16-21/results/cts/
+    
+- This will also create `picorv32a.synthesis_cts.v` and `picorv32a.cts.def.png` file at this location which contains information about new netlist generated(like extra buffers added during CTS) 
+
+> /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_16-21/results/synthesis/
 
 #### The `picorv32a.cts.def.png` file
 
@@ -1207,7 +1212,7 @@ Inside the `/OpenLane/scripts/openroad/cts.tcl` contains the configuration varia
 - `CTS_MAX_CAP` = maximum capacitance of the output port of the root clock buffer.
 
 
-<!--- for detail - D4_SK3_L4 and ****--->
+<!--- for detail - D4_SK3_L4 --->
 ![image](https://user-images.githubusercontent.com/120498080/215358032-6b787abc-1f55-462b-bf55-ea938d876c59.png)
 
 
@@ -1236,7 +1241,7 @@ SKY_L2 - Hold timing analysis using real clocks
 ``` --->
 
 
-### Multi-corner STA for Post-CTS:
+### Multi-corner STA for Post-CTS
 - We will now do STA for post clock tree synthesis to include effect of clock buffers. 
 - Similar to pre-layout STA(analysis of clock tree of our circit), this will done on OpenROAD (which will then call OpenSTA), so we enter into openroad and through this we can use the env variables 
 
