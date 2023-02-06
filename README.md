@@ -29,7 +29,7 @@ This repository contains the whole summary of hands on done by Abhinav Prakash (
     + [Delay Table](#Delay-Table)
     + [Fix Negative Slack](Fix-Negative-Slack)
     + [Floorplanning and Placement](#Floorplanning-and-Placement)
-    + [Setup Timing Analysis](#Setup-Timing-Analysis)
+    + [Pre-Layout Setup Timing Analysis](#Pre-Layout-Setup-Timing-Analysis)
     + [Run CTS(Clock Tree Synthesis) using TritonCTS](#Run-CTS(Clock-Tree-Synthesis)-using-TritonCTS)
     + [Timing Analysis with Real Clocks](#Timing-Analysis-with-Real-Clocks)
 * [DAY 5: Final Steps for RTL2GDS using TritonRoute and OpenSTA](#Day-5)
@@ -1071,6 +1071,9 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 
 
 
+    
+
+    
 <!---
 # THEOTY
 ```
@@ -1086,13 +1089,29 @@ SKY_L2 - Introduction to clock jitter and uncertainty
 --->
 
 
-### Setup Timing Analysis 
+### Pre-Layout Setup Timing Analysis 
 We will do Timing Analysis with ideal clock(the clock tree is not build) first to understand what are the basic structure and then we will be using the real clocks and doing the timing analysis
+    
+#### Timing Analysis (Pre-Layout STA using Ideal Clocks):
+Pre-layout STA will not yet include effects of clock buffers and net-delay due to RC parasitics (wire delay will be derived from PDK library wire model).        
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/216943351-ff5d9abe-2484-403d-984a-50fc15f54166.png">
+    
+    
+Setup timing analysis equation is:
+```
+Θ < T - S - SU
+```
+- Θ = Combinational delay which includes clk to Q delay of launch flop and internal propagation delay of all gates between launch and capture flop
+- T = Time period, also called the required time
+- S = Setup time. As demonstrated below, signal must settle on the middle (input of Mux 2) before clock tansists to 1 so the delay due to Mux 1 must be considered, this delay is the setup time.
+- SU = Setup uncertainty due to jitter which is temporary variation of clock period. This is due to non-idealities of PLL/clock source.
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/120498080/216943424-ed22d7d5-aa30-4f7b-995d-3acf8649d4d8.png">
 
-
-### Setup timing analysis in OpenLANE 
+### Pre-Layout Setup timing analysis in OpenLANE 
 - This is done only when after run placement the timing constrain are not met (in our case timing constrains where met then also we do it for confirmation) if we dont get the desiret timing constrains then we need to optimize it 
-- In cts we try to change the netlist by making clock tree.
+- In CTS we try to change the netlist by making clock tree.
 Making the `pre_sta.conf` and save it in the openlane folder.
 ```
 set_cmd_units -time ns -capacitance pF -current mA -voltage V -resistance kOhm -distance um
