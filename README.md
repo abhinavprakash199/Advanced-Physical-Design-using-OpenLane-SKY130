@@ -1066,28 +1066,6 @@ magic -T /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/li
 - Zoom view of 'sky130_vsdinv` inverter in our design
 
 ![image](https://user-images.githubusercontent.com/120498080/215341238-6438b9c2-8581-4252-a142-830df3abc578.png)
- 
-
-
-
-
-    
-
-    
-<!---
-# THEOTY
-```
-Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
-SKY130_D4_SK2 - Timing analysis with ideal clocks using openSTA
-SKY_L1 - Setup timing analysis and introduction to flip-flop setup time
-
-
-Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
-SKY130_D4_SK2 - Timing analysis with ideal clocks using openSTA
-SKY_L2 - Introduction to clock jitter and uncertainty
-```
---->
-
 
 ### Pre-Layout Setup Timing Analysis 
 We will do Timing Analysis with ideal clock(the clock tree is not build) first to understand what are the basic structure and then we will be using the real clocks and doing the timing analysis
@@ -1112,7 +1090,7 @@ Setup timing analysis equation is:
 ### Pre-Layout Setup timing analysis in OpenLANE 
 - This is done only when after run placement the timing constrain are not met (in our case timing constrains where met then also we do it for confirmation) if we dont get the desiret timing constrains then we need to optimize it 
 - In CTS we try to change the netlist by making clock tree.
-Making the `pre_sta.conf` and save it in the openlane folder.
+- Making the `pre_sta.conf`(our main file on which we will be running Pre-Layout Setup timing analysis) and save it in the openlane folder.
 ```
 set_cmd_units -time ns -capacitance pF -current mA -voltage V -resistance kOhm -distance um
 read_liberty -min /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib
@@ -1126,9 +1104,11 @@ report_wns
 ```
 ![image](https://user-images.githubusercontent.com/120498080/215347570-0bf8b25b-4a08-4149-bc61-8d0e978afa8c.png)
 
-- After cts new .v files start getting created.
+- After CTS new .v files is created which contain information about new netlist generated(like extra buffers addded during CTS).
 - Creating `my_base.sdc` and save this file in the src folder of picorv32a folder.
-- This `.sdc` file - An ASCII text file (with the extension . sdc) that contains design constraints and timing assignments in the industry-standard Synopsys® Design Constraints format
+- This SDC(Synopsys Design Constraints) file is an ASCII text file (with the extension `.sdc`) that contains design constraints and timing assignments in the industry-standard Design Constraints format.
+    
+#### `my_base.sdc` file
 ```
 set ::env(CLOCK_PORT) clk
 set ::env(CLOCK_PERIOD) 12.000
@@ -1163,15 +1143,19 @@ set_load  $cap_load [all_outputs]
 
 ```
 - This is replicating the same results as we had after run synthesis stage `pre_sta.conf` will be the fill on which we will be doing our STA analysis.
-- To perform pre STA run the command `sta pre_sta.conf` by opening the terminal in openlane folder which is inside the openlane_working_dir.
+- To perform pre STA run this command after opening the terminal in openlane folder which is inside the openlane_working_dir.
+```
+    sta pre_sta.conf
+```
 
 > abhinavprakash1999@vsd-pd-workshop-01:~/Desktop/work/tools/openlane_working_dir/openlane$ sta pre_sta.conf
 
-#### Setup Timing Analysis timing contrains met
+#### Setup Timing Analysis timing contrains met after running pre sta(got same results after running synthesis)
 
 ![image](https://user-images.githubusercontent.com/120498080/215351729-106666bb-6f4a-4c59-9415-a72ca4f9411c.png)
 - If timing constrains are not met then we need to optimize it.
 
+- Here we have assumed ideal clock(not done clock tree synthesis) so hold time is not having much significance. Hold analysis comes in significance after CTS.
 
 ### Run CTS(Clock Tree Synthesis) using TritonCTS
 
@@ -1196,15 +1180,18 @@ SKY_L2 - Crosstalk and clock net shielding
 ``` --->
 
 - So with Setup Timing Analysis using `my_base.sdc` we confirm that setup time has been met so we go for Clock Tree Synthesis
-- Then use `run_cts` command in openlane to run clock tree synthesis.
-
+- Then use this command in openlane to run clock tree synthesis.
+```
+    run_cts
+```
+#### Timing contrains met after running CTS
 ![image](https://user-images.githubusercontent.com/120498080/215356354-1b3d382c-237a-4a73-97eb-414e4151ab91.png)
 
 - This will create `picorv32a.cts.def` and `picorv32a.cts.def.png`woll be created at
 
 > /home/abhinavprakash1999/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-01_16-21/results/cts/
 
-#### `picorv32a.cts.def.png` file
+#### The `picorv32a.cts.def.png` file
 
 ![image](https://user-images.githubusercontent.com/120498080/215356520-0e5200b8-0c98-4651-8484-e25527562412.png)
 
@@ -1237,7 +1224,7 @@ The goal is to have a positive slack on both setup and hold analysis.
 ![Screenshot (16)](https://user-images.githubusercontent.com/120498080/215503412-118716b9-d510-454d-bc8e-d590afb86294.png)
 
 
-
+<!---
 ``` see also 
 Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
 SKY130_D4_SK4 - Timing analysis with real clocks using openSTA
@@ -1246,7 +1233,7 @@ SKY_L1 - Setup timing analysis using real clocks
 Sky130 Day 4 - Pre-layout timing analysis and importance of good clock tree
 SKY130_D4_SK4 - Timing analysis with real clocks using openSTA
 SKY_L2 - Hold timing analysis using real clocks
-```
+``` --->
 
 
 ### Multi-corner STA for Post-CTS:
@@ -1340,6 +1327,7 @@ Slack for typical cornor
 Skew is the time delta between the actual and expected arrival time of a clock signal. Skew can be either extrinsic or intrinsic. The latter is internal to the driver (generator circuitry) and defined as the difference in propagation delays between the device outputs.
 #### Hold and Setup Skew Report 
 - It should be less that the 10% time period of clock
+    
 ![Screenshot (17)](https://user-images.githubusercontent.com/120498080/215508032-2a19d5c9-d7c8-4007-aa29-93d1de79f8cc.png)
 
 
@@ -1484,7 +1472,8 @@ run_magic
 - `config.tcl` file passes any configurations that has been already done like location of verilog files, location of sdc files, clock period, etc.
 - PDK specific configuration `sky130A_sky130_fd_sc_hd_config.tcl`
 - `smc_025um_model.mod` is the model file which contain the technological parameters of the 0.25um NMOS and PMOS Devices.
-- `sky130_inv.spice` file extraced from magic from `.mag` files and after analysis converted to `sky130_myinverter.lef` file to be used in OpenLane
+- `sky130_inv.spice` file extraced from magic from `.mag` files and after analysis converted to `sky130_myinverter.lef` file to be used in OpenLane.
+- This `my_base.sdc`(Synopsys Design Constraints) file is an ASCII text file (with the extension .sdc) that contains design constraints and timing assignments in the industry-standard Design Constraints format.
 
 ## References
 ---
