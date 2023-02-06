@@ -946,6 +946,7 @@ add_lefs -src $lefs
 ```
     run_synthesis
 ```. 
+    
 - After the run, and as we can see `sky130_myinverter` cell is successfully included in the design
 
 ![image](https://user-images.githubusercontent.com/120498080/215291031-ddea6258-4a59-4a3c-99f0-700d709787b5.png)
@@ -982,6 +983,7 @@ Solution:
 ### Fix Negative Slack
 
 - Let's try to fix the slack. Currently the value of slack is
+    
 ```
 tns (total negative slack) = -711.59
 wns (worst negative slack) = -23.89
