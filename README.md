@@ -1502,8 +1502,10 @@ run_magic
 Finally, I would like to express my sincere gratitude to [Kunal Ghosh](https://www.linkedin.com/in/kunal-ghosh-vlsisystemdesign-com-28084836/){Co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd.} and [Nickson Jose, VLSI Engineer](https://www.linkedin.com/in/nickson-jose/) {ASoC Physical Design Engineer} for tremendous assistance in planning and presenting this workshop on Advanced-Physical-Design-using-OpenLane-SKY130. The workshop was excellent and well designed, this workshop taught me a lot of new things about the design of GDSII file from RTL using OpenLANE, open source tool.   
 
 ## Accreditation
+---
 ![Advanced-Physical-Design-using-OpenLane-SKY130_page-0001](https://user-images.githubusercontent.com/120498080/232224464-6390efb6-d7fd-4452-86c2-8ffb49d29380.jpg)
 
 ## Inquiries
+---
 - Connect with me at [LinkedIn](https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile)
 
