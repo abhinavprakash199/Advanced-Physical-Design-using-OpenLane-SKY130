@@ -1,0 +1,82 @@
+Mon Jan 30 09:24:49 UTC 2023 - Executing "python3 /openLANE_flow/scripts/extract_metal_layers.py -t /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd.tlef -o /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/met_layers_list.txt"
+
+Mon Jan 30 09:24:49 UTC 2023 - Executing "/openLANE_flow/scripts/mergeLef.py -i /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd.tlef {/home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_ef_sc_hd__decap_12.lef /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_ef_sc_hd__fill_12.lef /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_ef_sc_hd__fakediode_2.lef} -o /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged_unpadded.lef |& tee >&@stdout"
+
+Mon Jan 30 09:24:49 UTC 2023 - Executing "/openLANE_flow/scripts/mergeLef.py -i /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged_unpadded.lef /openLANE_flow/designs/picorv32a/src/sky130_vsdinv.lef -o /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged_unpadded.lef |& tee >&@stdout"
+
+Mon Jan 30 09:24:49 UTC 2023 - Executing "/openLANE_flow/scripts/libtrim.pl /openLANE_flow/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/trimmed.lib.exclude.list > /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/trimmed.lib"
+
+Mon Jan 30 09:24:49 UTC 2023 - Executing "echo {openlane v0.21} > /openLANE_flow/designs/picorv32a/runs/29-01_16-21/OPENLANE_VERSION"
+
+Mon Jan 30 09:26:30 UTC 2023 - Executing "sed -E {s/^([[:space:]]+)pg_pin(.*)/\1pin\2\n\1    direction : "inout";/g} /openLANE_flow/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib > /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/sky130_fd_sc_hd__typical.no_pg.lib"
+
+Mon Jan 30 09:26:30 UTC 2023 - Executing "yosys -c /openLANE_flow/scripts/synth.tcl -l /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/synthesis/4-yosys.log |& tee >&@stdout"
+
+Mon Jan 30 09:27:30 UTC 2023 - Executing "sed -i -e {s/\(set ::env(CURRENT_NETLIST)\).*/\1 \/openLANE_flow\/designs\/picorv32a\/runs\/29-01_16-21\/results\/synthesis\/picorv32a.synthesis.v/} /openLANE_flow/designs/picorv32a/runs/29-01_16-21/config.tcl"
+
+Mon Jan 30 09:27:30 UTC 2023 - Executing "sed -i -e {s/\(set ::env(PREV_NETLIST)\).*/\1 \/openLANE_flow\/designs\/picorv32a\/runs\/29-01_16-21\/results\/synthesis\/picorv32a.synthesis.v/} /openLANE_flow/designs/picorv32a/runs/29-01_16-21/config.tcl"
+
+Mon Jan 30 09:27:30 UTC 2023 - Executing "sed -i /defparam/d /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/synthesis/picorv32a.synthesis.v"
+
+Mon Jan 30 09:27:31 UTC 2023 - Executing "sta /openLANE_flow/scripts/sta.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/synthesis/5-opensta"
+
+Mon Jan 30 09:27:53 UTC 2023 - Executing "openroad -exit /openLANE_flow/scripts/openroad/or_floorplan.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/floorplan/6-verilog2def.openroad.log"
+
+Mon Jan 30 09:28:30 UTC 2023 - Executing "openroad -exit /openLANE_flow/scripts/openroad/or_ioplacer.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/floorplan/7-ioPlacer.log"
+
+Mon Jan 30 09:28:52 UTC 2023 - Executing "openroad -exit /openLANE_flow/scripts/openroad/or_replace.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/placement/8-replace.log"
+
+Mon Jan 30 09:29:44 UTC 2023 - Executing "opendp -lef /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged.lef -def /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/placement/8-replace.def -output_def /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/placement/picorv32a.placement.def |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/placement/9-opendp.log"
+
+Mon Jan 30 09:30:01 UTC 2023 - Executing "openroad -exit /openLANE_flow/scripts/openroad/or_tapcell.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/floorplan/10-tapcell.log"
+
+Mon Jan 30 09:30:20 UTC 2023 - Executing "opendp -lef /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged.lef -def /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/floorplan/picorv32a.floorplan.def -output_def /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/placement/picorv32a.placement.def |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/placement/11-opendp.log"
+
+Mon Jan 30 09:30:38 UTC 2023 - Executing "/openLANE_flow/scripts/libtrim.pl /openLANE_flow/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/cts.lib.exclude.list > /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/cts.lib"
+
+Mon Jan 30 09:30:38 UTC 2023 - Executing "openroad -exit /openLANE_flow/scripts/openroad/or_cts.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/cts/12-cts.log"
+
+Mon Jan 30 09:32:39 UTC 2023 - Executing "openroad -exit /openLANE_flow/scripts/openroad/or_write_verilog.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/13-write_verilog.log"
+
+Mon Jan 30 09:32:42 UTC 2023 - Executing "sed -i -e {s/\(set ::env(CURRENT_NETLIST)\).*/\1 \/openLANE_flow\/designs\/picorv32a\/runs\/29-01_16-21\/results\/synthesis\/picorv32a.synthesis_cts.v/} /openLANE_flow/designs/picorv32a/runs/29-01_16-21/config.tcl"
+
+Mon Jan 30 09:32:42 UTC 2023 - Executing "sed -i -e {s/\(set ::env(PREV_NETLIST)\).*/\1 \/openLANE_flow\/designs\/picorv32a\/runs\/29-01_16-21\/results\/synthesis\/picorv32a.synthesis.v/} /openLANE_flow/designs/picorv32a/runs/29-01_16-21/config.tcl"
+
+Mon Jan 30 09:32:42 UTC 2023 - Executing "bash /openLANE_flow/scripts/klayout/scrotLayout.sh /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/klayout/sky130A.lyt /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/cts/picorv32a.cts.def |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/klayout/14-klayout.scrot.log"
+
+Mon Jan 30 09:33:50 UTC 2023 - Executing "openroad -exit /openLANE_flow/scripts/openroad/or_pdn.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/floorplan/15-pdn.log"
+
+Mon Jan 30 09:34:11 UTC 2023 - Executing "openroad -exit /openLANE_flow/scripts/openroad/or_groute.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/routing/16-fastroute.log"
+
+Mon Jan 30 09:34:31 UTC 2023 - Executing "openroad -exit /openLANE_flow/scripts/openroad/or_fill.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/routing/17-addspacers.log"
+
+Mon Jan 30 09:34:34 UTC 2023 - Executing "openroad -exit /openLANE_flow/scripts/openroad/or_write_verilog.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/18-write_verilog.log"
+
+Mon Jan 30 09:34:36 UTC 2023 - Executing "sed -i -e {s/\(set ::env(CURRENT_NETLIST)\).*/\1 \/openLANE_flow\/designs\/picorv32a\/runs\/29-01_16-21\/results\/synthesis\/picorv32a.synthesis_preroute.v/} /openLANE_flow/designs/picorv32a/runs/29-01_16-21/config.tcl"
+
+Mon Jan 30 09:34:36 UTC 2023 - Executing "sed -i -e {s/\(set ::env(PREV_NETLIST)\).*/\1 \/openLANE_flow\/designs\/picorv32a\/runs\/29-01_16-21\/results\/synthesis\/picorv32a.synthesis_cts.v/} /openLANE_flow/designs/picorv32a/runs/29-01_16-21/config.tcl"
+
+Mon Jan 30 09:34:36 UTC 2023 - Executing "envsubst < /openLANE_flow/scripts/tritonRoute.param > /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/routing/19-tritonRoute.param"
+
+Mon Jan 30 09:34:36 UTC 2023 - Executing "TritonRoute /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/routing/19-tritonRoute.param |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/routing/19-tritonRoute.log"
+
+Mon Jan 30 09:52:29 UTC 2023 - Executing "python3 /openLANE_flow/scripts/tr2klayout.py -i /openLANE_flow/designs/picorv32a/runs/29-01_16-21/reports/routing/19-tritonRoute.drc -o /openLANE_flow/designs/picorv32a/runs/29-01_16-21/reports/routing/19-tritonRoute.klayout.xml --design-name picorv32a"
+
+Mon Jan 30 09:52:30 UTC 2023 - Executing "bash /openLANE_flow/scripts/klayout/scrotLayout.sh /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/klayout/sky130A.lyt /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/routing/picorv32a.def |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/klayout/20-klayout.scrot.log"
+
+Mon Jan 30 09:52:42 UTC 2023 - Executing "python3 /openLANE_flow/scripts/spef_extractor/main.py -l /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged_unpadded.lef -d /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/routing/picorv32a.def -mw L -ec 1 |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/routing/21-spef_extraction.log"
+
+Mon Jan 30 09:53:09 UTC 2023 - Executing "sta /openLANE_flow/scripts/sta.tcl |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/synthesis/22-opensta_spef"
+
+Mon Jan 30 09:54:43 UTC 2023 - Executing "magic -noconsole -dnull -rcfile /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.magicrc /openLANE_flow/scripts/magic/mag_gds.tcl </dev/null |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/magic/23-magic.log"
+
+Mon Jan 30 09:55:18 UTC 2023 - Executing "bash /openLANE_flow/scripts/klayout/scrotLayout.sh /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/klayout/sky130A.lyt /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/magic/picorv32a.gds |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/klayout/24-klayout.scrot.log"
+
+Mon Jan 30 09:55:27 UTC 2023 - Executing "magic -noconsole -dnull -rcfile /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.magicrc /openLANE_flow/scripts/magic/gds_pointers.tcl </dev/null |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/magic/25-magic.mag.gds_ptrs.log"
+
+Mon Jan 30 09:55:54 UTC 2023 - Executing "sed -i -n {/^<< properties >>/,/^<< end >>/p} /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/magic/magic_gds_ptrs.mag"
+
+Mon Jan 30 09:55:55 UTC 2023 - Executing "magic -noconsole -dnull -rcfile /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.magicrc /openLANE_flow/scripts/magic/lef.tcl </dev/null |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/magic/26-magic.lef.log"
+
+Mon Jan 30 09:56:28 UTC 2023 - Executing "magic -noconsole -dnull -rcfile /home/kunalg123/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.magicrc /openLANE_flow/scripts/magic/maglef.tcl </dev/null |& tee >&@stdout /openLANE_flow/designs/picorv32a/runs/29-01_16-21/logs/magic/27-magic.maglef.log"
+

@@ -1,0 +1,71 @@
+===========================================================================
+   Open Source Mixed-Height Standard Cell Detail Placer < OpenDP_v1.0 >    
+   Developers : SangGi Do, Mingyu Woo                                      
+===========================================================================
+Parsed 10000 number of lines!!
+Parsed 20000 number of lines!!
+Parsed 30000 number of lines!!
+Parsed 40000 number of lines!!
+Parsed 50000 number of lines!!
+Parsed 60000 number of lines!!
+Reading /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged.lef is Done
+
+-------------------- INPUT FILES ----------------------------------
+ benchmark name    : placement
+ directory         : /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp
+ lef               : /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/merged.lef
+ def               : /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/placement/8-replace.def
+-------------------------------------------------------------------
+Parsed 10000 number of lines!!
+Parsed 20000 number of lines!!
+Parsed 30000 number of lines!!
+Parsed 40000 number of lines!!
+CoreArea: 
+5520.000000 : 10880.000000 - 755320.000000 : 758880.000000
+DieArea: 
+0.000000 : 0.000000 - 749800.000000 : 748000.000000
+Reading /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/placement/8-replace.def is Done
+-------------------- DESIGN ANALYSIS ------------------------------
+  total cells              : 20121
+  multi cells              : 0
+  fixed cells              : 0
+  total nets               : 20223
+  design area              : 5.6085e+11
+  total f_area             : 0
+  total m_area             : 1.96833e+11
+  design util              : 35.0954
+  num rows                 : 275
+  row height               : 2720
+-------------------------------------------------------------------
+ non_group_cell_region_assign done ..
+ - - - - - - - - - - - - - - - - - - - - - - - - 
+ non_group_cell_placement done .. 
+ - - - - - - - - - - - - - - - - - - - - - - - - 
+Reading /openLANE_flow/designs/picorv32a/runs/29-01_16-21/tmp/placement/8-replace.def is Done
+ DEF file write success !! 
+ location : /openLANE_flow/designs/picorv32a/runs/29-01_16-21/results/placement/picorv32a.placement.def
+-------------------------------------------------------------------
+ tasks                          Wtime      Ctime
+ Parser                         0.872      0.850
+ resgin assign                  0.874      0.850
+ pre-placement                  0.874      0.850
+ non Group cell placement       0.900      0.880
+ All                            0.903      0.880
+ - - - - - EVALUATION - - - - - 
+ AVG_displacement : 1771.5
+ SUM_displacement : 3.56444e+07
+ MAX_displacement : 8761
+ - - - - - - - - - - - - - - - - 
+ GP HPWL          : 887543
+ HPWL             : 916084
+ avg_Disp_site    : 3.8511
+ avg_Disp_row     : 0.651288
+ delta_HPWL       : 3.21572
+ ==== CHECK LEGALITY ==== 
+ row_check ==>> PASS 
+ site_check ==>> PASS 
+ power_check ==>> PASS 
+ edge_check ==>> PASS 
+ placed_check ==>> PASS 
+ overlap_check ==>> PASS 
+ - - - - - < Program END > - - - - - 
