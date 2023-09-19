@@ -1466,7 +1466,7 @@ run_magic
 ```
 ## Appendix
 ---
--`.tech` files  contains the metal layer, connectivity between layers, DRC rules, and other definitions needed by Magic layout tool to view a single cell. `sky130A.tech` file is provided by foundary here its provided by pdk of sky130.
+- `.tech` files  contains the metal layer, connectivity between layers, DRC rules, and other definitions needed by Magic layout tool to view a single cell. `sky130A.tech` file is provided by foundary here its provided by pdk of sky130.
 - `.lef` files is combination of tech lef (contains metal layer geometries) and cell lef (contains geometries for all cells in the standard cell library). This lef file does not contain the logic part of cells, only the footprint that is needed by the PnR tool.
 - `nshort.lib` and `nphort.lib` are the spice model files for nmos and pmos which are already provided here.
 - Merged LEF file `merged.lef` are Library Exchange Format files are provided by foundary which contain design rules and abstract information about the standard cells.
